@@ -31,19 +31,19 @@ const FOLDERS_DATA = {
       "include": "N",
       "maps": [
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 1",
           "include": "N"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 2",
           "include": "N"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 3",
           "include": "N"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 4",
           "include": "N"
         },
         {
