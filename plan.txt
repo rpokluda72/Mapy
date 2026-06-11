@@ -162,3 +162,64 @@ Improvement - Filtering by type :
 - show main menu item (folder) if some of the maps suit to filter conditions
 - show submenu item (map) if the map suit to filter conditions
 So, do not show items if no map suit to filter conditions. I would like to see suit ones.
+
+I noticed that images of folder maps are different than in mapy.com. For example folder "Lipno":
+- share link is https://mapy.com/s/fucujuzeza - I copied image to lipno.png
+- image for this folder is images/folder_7.png
+You can compare images and you will see the difference. Ii can be caused by fetch delay, because all included maps has to be shown on folder map. You can add some wait period to the details script.
+We can test it on folder Lipno. Images of concrete maps are ok.
+If I set include attribute to Y on folder level and maps in folder have N, so all maps/images will be created once again, probably. Am I right ? In this reload folder images it could reload folder map only.
+
+Folder menu items have span on the right side with number of maps in folder.
+What do you think about this improvement to show type icons with number of maps for this type.
+Icon and number will be shown if type included in folder.
+
+I run script details with F option on folders. Some map images were not correct, so increase delay a bit.
+
+Improvement: If I click on folder menu item first time, submenu items (maps) are shown. If I click second time on the same opened menu it will be closed. It is fine.
+Could you close
+
+I removed some maps in folder and run details script with include Y on the folder, but content of map folder did not change. Is it possible to remove those maps in json/html, so number of folder maps will be the same like in origin mapy.com. Remove related map images from images folder.
+
+Next ideas:
+1. remove "summary-text" component from map page (Distance & Time ... it is duplicated info and not needed)
+2. is it possible to have option to choose size of map visible on the right size. 2-3 sizes are fine (origin/full, middle, small). Remember last setting.
+3. is it possible to have option to choose orientation on the right panel ?
+3.1 right panel for the map folder have two parts:
+ A - folder map image + green header (map-hero) + note if exists
+ B - table with folder maps/routes
+ 3.2 right panel for the map folder have two parts:
+ A - folder map image + green header (map-hero) + note if exists ("summary-text" component was removed in step 1)
+ B - elevation profile image
+ Add horizontal and vertical buttons/icons to choose orientation of those parts A,B (next or above). Remember last setting.
+
+ Add total value of maps to the header.
+
+Improvements:
+- Remove the smallest image size, it is ok to have 2 sizes only (origin/full, middle).
+- Width of map-hero and comment has to be same as map image. In case of side-by-side it is ok.
+- Full map on side-by-side is not working. Middle size visible.
+- size and layout icons are big and do not look good. Is it possible to move it to the header (last components on the right side) ?
+- you can remove text "Open in mapy.com" on open-btn in map-hero. It is ok to have icon only.
+- could you change comment panel ? it would be better to look like map-hero (rounded corners and yellow)
+
+Improvements/bugs:
+- side-by-side icon is awful. Use similar one to Stacked icon, but with different oriented lines.
+- could you change maps panel (on folder page only) ? it would be better to look like map-hero or comment (table in panel with rounded corners)
+- maps table on folder page in stacked orientation : set width as map image and comment panel. So all components should have same width. In case of long map names, set width as less as possible. Make minimal spaces between columns.
+- impossible to see full map size of screen in case of side-by-side orientation
+
+image/map sizing:
+- stacked orientation : switch medium/full map is ok
+- side-by-side orientation : switch medium/full map is not working. Click on size button has no effect. Image/map size is larger than medium and smaller than full in case of stacked orientation
+
+1. stacked orientation : image size is ok for all size types.
+2. side-by-side orientation : set identical image size as in stacked orientation
+
+Sizing on side-by-side orientation : Previous version was better. Size difference between medium/full is minimal. Small is too small.
+I recommend width for both orientations: small-480px, medium-760px, full is 1040.
+In case of side-by-side & full size, set width of maps table as less as possible and image/map size as much as possible, so to see it in row, side by side together.
+
+1. stacked orientation : image size is perfect for all size types.
+2. side-by-side orientation : image size is perfect for small and medium size option (same as for stacked). But image size for full is smaller than medium. Why ? I can see a lot of space on page. See picture size-1.png.
+Do not change stacked orientation and side-by-side-small/medium. Fix side-by-side-full only.

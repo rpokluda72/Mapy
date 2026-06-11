@@ -5,18 +5,6 @@ const FOLDERS_DATA = {
       "include": "N",
       "maps": [
         {
-          "name": "Kolejowa 46",
-          "include": "N"
-        },
-        {
-          "name": "Bike route",
-          "include": "N"
-        },
-        {
-          "name": "Car route",
-          "include": "N"
-        },
-        {
           "name": "Turbacz",
           "include": "N"
         },
@@ -451,274 +439,6 @@ const FOLDERS_DATA = {
       ]
     },
     {
-      "name": "Lipno",
-      "include": "N",
-      "maps": [
-        {
-          "name": "kolem Lipna 3",
-          "include": "N"
-        },
-        {
-          "name": "Kolem Lipna 2",
-          "include": "N"
-        },
-        {
-          "name": "Svatý Tomáš",
-          "include": "N"
-        },
-        {
-          "name": "Plešné jezero 3",
-          "include": "N"
-        },
-        {
-          "name": "Okolo Lipna",
-          "include": "N"
-        },
-        {
-          "name": "Plešné jezero",
-          "include": "N"
-        },
-        {
-          "name": "Rožmberk - Horní Dvořiště",
-          "include": "N"
-        },
-        {
-          "name": "Zátoň-Rožmberk-2",
-          "include": "N"
-        }
-      ]
-    },
-    {
-      "name": "Znojmo",
-      "include": "N",
-      "maps": [
-        {
-          "name": "Hardegska vyhlidka",
-          "include": "N"
-        },
-        {
-          "name": "Jaroslavice 2",
-          "include": "N"
-        },
-        {
-          "name": "R P 2",
-          "include": "N"
-        },
-        {
-          "name": "Petr Romana",
-          "include": "N"
-        },
-        {
-          "name": "Vranov 2",
-          "include": "N"
-        },
-        {
-          "name": "Jaroslavice",
-          "include": "N"
-        },
-        {
-          "name": "Hnanice-Nový Hrádek",
-          "include": "N"
-        },
-        {
-          "name": "Hnanice-Nový Hrádek-Hardegg",
-          "include": "N"
-        },
-        {
-          "name": "Jevišovice",
-          "include": "N"
-        },
-        {
-          "name": "Hostěradice",
-          "include": "N"
-        },
-        {
-          "name": "Šatov-Hnanice-Nový Hrádek-Hardegg",
-          "include": "N"
-        },
-        {
-          "name": "Vranov",
-          "include": "N"
-        },
-        {
-          "name": "Bítov-Vranov",
-          "include": "N"
-        },
-        {
-          "name": "Bítov-Vranov-2",
-          "include": "N"
-        },
-        {
-          "name": "Moravský Krumlov",
-          "include": "N"
-        },
-        {
-          "name": "Moravský Krumlov-2",
-          "include": "N"
-        },
-        {
-          "name": "Jaroměřice-Jevišovice",
-          "include": "N"
-        },
-        {
-          "name": "Niederfladnitz-Retz",
-          "include": "N"
-        }
-      ]
-    },
-    {
-      "name": "Cyklotrasy",
-      "include": "N",
-      "maps": [
-        {
-          "name": "Bílý Kříž 2",
-          "include": "N"
-        },
-        {
-          "name": "Bílý Kříž 1",
-          "include": "N"
-        },
-        {
-          "name": "Čeladná-Pustevny",
-          "include": "N"
-        },
-        {
-          "name": "Frýdlant-Ostravice-Staškov-Malenovice",
-          "include": "N"
-        },
-        {
-          "name": "Hůrky-Ondřejník",
-          "include": "N"
-        },
-        {
-          "name": "Brušperk-Příbor-Sklenov",
-          "include": "N"
-        },
-        {
-          "name": "Ostravice-Visalaje-Krásná",
-          "include": "N"
-        },
-        {
-          "name": "Ostravice - kolem Šance",
-          "include": "N"
-        }
-      ]
-    },
-    {
-      "name": "Pěší trasy",
-      "include": "N",
-      "maps": [
-        {
-          "name": "Štramberk-Bílá hora",
-          "include": "N"
-        },
-        {
-          "name": "Kopřivnice-Červený kámen",
-          "include": "N"
-        },
-        {
-          "name": "Čeladná-Čertův mlýn-Pustevny",
-          "include": "N"
-        },
-        {
-          "name": "Velký Javorník 2",
-          "include": "N"
-        },
-        {
-          "name": "Velký Javorník 1",
-          "include": "N"
-        }
-      ]
-    },
-    {
-      "name": "Lysá hora",
-      "include": "N",
-      "maps": [
-        {
-          "name": "LH1",
-          "include": "N"
-        },
-        {
-          "name": "LH10",
-          "include": "N"
-        },
-        {
-          "name": "LH11",
-          "include": "N"
-        },
-        {
-          "name": "LH12",
-          "include": "N"
-        },
-        {
-          "name": "LH13",
-          "include": "N"
-        },
-        {
-          "name": "LH14",
-          "include": "N"
-        },
-        {
-          "name": "LH15",
-          "include": "N"
-        },
-        {
-          "name": "LH2",
-          "include": "N"
-        },
-        {
-          "name": "LH3",
-          "include": "N"
-        },
-        {
-          "name": "LH4",
-          "include": "N"
-        },
-        {
-          "name": "LH5",
-          "include": "N"
-        },
-        {
-          "name": "LH6",
-          "include": "N"
-        },
-        {
-          "name": "LH7",
-          "include": "N"
-        },
-        {
-          "name": "LH8",
-          "include": "N"
-        },
-        {
-          "name": "LH9",
-          "include": "N"
-        },
-        {
-          "name": "Mazák-LH-Zbuj-LH-Mazák",
-          "include": "N"
-        }
-      ]
-    },
-    {
-      "name": "TJ Sokol",
-      "include": "N",
-      "maps": [
-        {
-          "name": "Velký Javorník 2",
-          "include": "N"
-        },
-        {
-          "name": "Cyklovýlet-Brušperk-Trnávka",
-          "include": "N"
-        },
-        {
-          "name": "Trasa z Lietavská Závadka do Sůlov",
-          "include": "N"
-        }
-      ]
-    },
-    {
       "name": "Stezka Českem na kole",
       "include": "N",
       "maps": [
@@ -800,6 +520,274 @@ const FOLDERS_DATA = {
         },
         {
           "name": "20-Český les na kole",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Lipno",
+      "include": "N",
+      "maps": [
+        {
+          "name": "kolem Lipna 3",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Lipna 2",
+          "include": "N"
+        },
+        {
+          "name": "Svatý Tomáš",
+          "include": "N"
+        },
+        {
+          "name": "Plešné jezero 3",
+          "include": "N"
+        },
+        {
+          "name": "Okolo Lipna",
+          "include": "N"
+        },
+        {
+          "name": "Plešné jezero",
+          "include": "N"
+        },
+        {
+          "name": "Rožmberk - Horní Dvořiště",
+          "include": "N"
+        },
+        {
+          "name": "Zátoň-Rožmberk-2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Znojmo",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Hardegska vyhlidka",
+          "include": "N"
+        },
+        {
+          "name": "Jaroslavice 2",
+          "include": "N"
+        },
+        {
+          "name": "Vranov 2",
+          "include": "N"
+        },
+        {
+          "name": "Jaroslavice",
+          "include": "N"
+        },
+        {
+          "name": "Hnanice-Nový Hrádek",
+          "include": "N"
+        },
+        {
+          "name": "Hnanice-Nový Hrádek-Hardegg",
+          "include": "N"
+        },
+        {
+          "name": "Jevišovice",
+          "include": "N"
+        },
+        {
+          "name": "Hostěradice",
+          "include": "N"
+        },
+        {
+          "name": "Šatov-Hnanice-Nový Hrádek-Hardegg",
+          "include": "N"
+        },
+        {
+          "name": "Vranov",
+          "include": "N"
+        },
+        {
+          "name": "Bítov-Vranov",
+          "include": "N"
+        },
+        {
+          "name": "Bítov-Vranov-2",
+          "include": "N"
+        },
+        {
+          "name": "Moravský Krumlov",
+          "include": "N"
+        },
+        {
+          "name": "Moravský Krumlov-2",
+          "include": "N"
+        },
+        {
+          "name": "Jaroměřice-Jevišovice",
+          "include": "N"
+        },
+        {
+          "name": "Niederfladnitz-Retz",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Cyklotrasy",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Brušperk-Příbor-Sklenov",
+          "include": "N"
+        },
+        {
+          "name": "Bílý Kříž 2",
+          "include": "N"
+        },
+        {
+          "name": "Bílý Kříž 1",
+          "include": "N"
+        },
+        {
+          "name": "Čeladná-Pustevny",
+          "include": "N"
+        },
+        {
+          "name": "Frýdlant-Ostravice-Staškov-Malenovice",
+          "include": "N"
+        },
+        {
+          "name": "Hůrky-Ondřejník",
+          "include": "N"
+        },
+        {
+          "name": "Brušperk-Příbor-Sklenov",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Visalaje-Krásná",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice - kolem Šance",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Pěší trasy",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Radhošť 2",
+          "include": "Y"
+        },
+        {
+          "name": "Radhošť 1",
+          "include": "Y"
+        },
+        {
+          "name": "Metylovice-Ondřejník-Skalka",
+          "include": "Y"
+        },
+        {
+          "name": "Štramberk-Bílá hora",
+          "include": "N"
+        },
+        {
+          "name": "Kopřivnice-Červený kámen",
+          "include": "N"
+        },
+        {
+          "name": "Čeladná-Čertův mlýn-Pustevny",
+          "include": "N"
+        },
+        {
+          "name": "Velký Javorník 1",
+          "include": "N"
+        },
+        {
+          "name": "Velký Javorník 2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Lysá hora",
+      "include": "N",
+      "maps": [
+        {
+          "name": "LH1",
+          "include": "N"
+        },
+        {
+          "name": "LH10",
+          "include": "N"
+        },
+        {
+          "name": "LH11",
+          "include": "N"
+        },
+        {
+          "name": "LH12",
+          "include": "N"
+        },
+        {
+          "name": "LH13",
+          "include": "N"
+        },
+        {
+          "name": "LH14",
+          "include": "N"
+        },
+        {
+          "name": "LH15",
+          "include": "N"
+        },
+        {
+          "name": "LH2",
+          "include": "N"
+        },
+        {
+          "name": "LH3",
+          "include": "N"
+        },
+        {
+          "name": "LH4",
+          "include": "N"
+        },
+        {
+          "name": "LH5",
+          "include": "N"
+        },
+        {
+          "name": "LH6",
+          "include": "N"
+        },
+        {
+          "name": "LH7",
+          "include": "N"
+        },
+        {
+          "name": "LH8",
+          "include": "N"
+        },
+        {
+          "name": "LH9",
+          "include": "N"
+        },
+        {
+          "name": "Mazák-LH-Zbuj-LH-Mazák",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "TJ Sokol",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Cyklovýlet-Brušperk-Trnávka",
           "include": "N"
         }
       ]
@@ -985,23 +973,7 @@ const FOLDERS_DATA = {
           "include": "N"
         },
         {
-          "name": "Lysůvky-Maximus-Znojmo",
-          "include": "N"
-        },
-        {
-          "name": "Lysůvky-Znojmo",
-          "include": "N"
-        },
-        {
-          "name": "Vlčina Frenštát pod Radhoštěm",
-          "include": "N"
-        },
-        {
           "name": "Brno Míša",
-          "include": "N"
-        },
-        {
-          "name": "Velký Javorník 1",
           "include": "N"
         },
         {
@@ -1009,31 +981,11 @@ const FOLDERS_DATA = {
           "include": "N"
         },
         {
-          "name": "Brušperk-Příbor-Sklenov",
-          "include": "N"
-        },
-        {
-          "name": "Metylovice-Ondřejník-Skalka",
-          "include": "N"
-        },
-        {
-          "name": "Chlebovice - Mločí studánka",
+          "name": "běh Brušperk",
           "include": "N"
         },
         {
           "name": "běh Brušperk 2",
-          "include": "N"
-        },
-        {
-          "name": "Radhošť 2",
-          "include": "N"
-        },
-        {
-          "name": "Radhošť 1",
-          "include": "N"
-        },
-        {
-          "name": "běh Brušperk",
           "include": "N"
         }
       ]

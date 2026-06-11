@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "TJ Tatry-Gorce 2026",
-      "share_link": "https://mapy.com/s/mosuganocu",
+      "share_link": "https://mapy.com/s/jamofadave",
       "embed_src": "",
       "maps": [
         {
@@ -17,42 +17,6 @@
           "screenshot": "images/mosuganocu.png",
           "elevation_img": "images/mosuganocu_elev.png",
           "note": "Sobotní trasa"
-        },
-        {
-          "name": "Kolejowa 46",
-          "description": "Adresa",
-          "type": "adr",
-          "share_link": "https://mapy.com/s/hurufamava",
-          "embed_src": "https://mapy.com/s/hurufamava",
-          "points": [],
-          "summary": "Adresa",
-          "elevation_text": "",
-          "screenshot": "images/hurufamava.png",
-          "elevation_img": ""
-        },
-        {
-          "name": "Bike route",
-          "description": "Trasa 4,8 km • 20 min",
-          "type": "bike",
-          "share_link": "https://mapy.com/s/jocelusela",
-          "embed_src": "https://mapy.com/s/jocelusela",
-          "points": [],
-          "summary": "Trasa 4,8 km • 20 min",
-          "elevation_text": "",
-          "screenshot": "images/jocelusela.png",
-          "elevation_img": "images/jocelusela_elev.png"
-        },
-        {
-          "name": "Car route",
-          "description": "Trasa 8,6 km • 22 min",
-          "type": "car",
-          "share_link": "https://mapy.com/s/hutavaguto",
-          "embed_src": "https://mapy.com/s/hutavaguto",
-          "points": [],
-          "summary": "Trasa 8,6 km • 22 min",
-          "elevation_text": "",
-          "screenshot": "images/hutavaguto.png",
-          "elevation_img": "images/hutavaguto_elev.png"
         },
         {
           "name": "Neděle",
@@ -1419,30 +1383,6 @@
           "elevation_img": "images/jedupujaga_elev.png"
         },
         {
-          "name": "R P 2",
-          "description": "Trasa 63,7 km • 3:59 h",
-          "type": "bike",
-          "share_link": "https://mapy.com/s/nuhulecetu",
-          "embed_src": "https://mapy.com/s/nuhulecetu",
-          "points": [],
-          "summary": "Trasa 63,7 km • 3:59 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/nuhulecetu.png",
-          "elevation_img": "images/nuhulecetu_elev.png"
-        },
-        {
-          "name": "Petr Romana",
-          "description": "Trasa 85,8 km • 5:24 h",
-          "type": "bike",
-          "share_link": "https://mapy.com/s/cumefemono",
-          "embed_src": "https://mapy.com/s/cumefemono",
-          "points": [],
-          "summary": "Trasa 85,8 km • 5:24 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/cumefemono.png",
-          "elevation_img": "images/cumefemono_elev.png"
-        },
-        {
           "name": "Vranov 2",
           "description": "Trasa 58,2 km • 4:02 h",
           "type": "bike",
@@ -1781,9 +1721,48 @@
           "elevation_text": "Výškový profil",
           "screenshot": "images/kanuhumuve.png",
           "elevation_img": "images/kanuhumuve_elev.png"
+        },
+        {
+          "name": "Radhošť 2",
+          "description": "Trasa 12,4 km • 4:31 h",
+          "type": "hiking",
+          "note": "",
+          "share_link": "https://mapy.com/s/fejudobefa",
+          "embed_src": "https://mapy.com/s/fejudobefa",
+          "points": [],
+          "summary": "Trasa 12,4 km • 4:31 h",
+          "elevation_text": "",
+          "screenshot": "images/fejudobefa.png",
+          "elevation_img": "images/fejudobefa_elev.png"
+        },
+        {
+          "name": "Radhošť 1",
+          "description": "Trasa 20,5 km • 6:52 h",
+          "type": "hiking",
+          "note": "",
+          "share_link": "https://mapy.com/s/gonopefemo",
+          "embed_src": "https://mapy.com/s/gonopefemo",
+          "points": [],
+          "summary": "Trasa 20,5 km • 6:52 h",
+          "elevation_text": "",
+          "screenshot": "images/gonopefemo.png",
+          "elevation_img": "images/gonopefemo_elev.png"
+        },
+        {
+          "name": "Metylovice-Ondřejník-Skalka",
+          "description": "Trasa 15,6 km • 5:28 h",
+          "type": "hiking",
+          "note": "",
+          "share_link": "https://mapy.com/s/lusumeceje",
+          "embed_src": "https://mapy.com/s/lusumeceje",
+          "points": [],
+          "summary": "Trasa 15,6 km • 5:28 h",
+          "elevation_text": "",
+          "screenshot": "images/lusumeceje.png",
+          "elevation_img": "images/lusumeceje_elev.png"
         }
       ],
-      "screenshot": "images/folder_10.png"
+      "screenshot": "images/folder_11.png"
     },
     {
       "name": "Lysá hora",
@@ -1990,31 +1969,6 @@
       "share_link": "https://mapy.com/s/dolapesehe",
       "embed_src": "",
       "maps": [
-        {
-          "name": "Trasa z Lietavská Závadka do Sůlov",
-          "description": "Trasa 8,3 km • 3:15 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/decohoseco",
-          "embed_src": "https://mapy.com/s/decohoseco",
-          "points": [],
-          "summary": "Trasa 8,3 km • 3:15 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/decohoseco.png",
-          "elevation_img": "images/decohoseco_elev.png"
-        },
-        {
-          "name": "Velký Javorník 2",
-          "description": "Trasa 4,1 km • 2:04 h",
-          "type": "hiking",
-          "note": "",
-          "share_link": "https://mapy.com/s/dadabazumo",
-          "embed_src": "https://mapy.com/s/dadabazumo",
-          "points": [],
-          "summary": "Trasa 4,1 km • 2:04 h",
-          "elevation_text": "",
-          "screenshot": "images/dadabazumo.png",
-          "elevation_img": "images/dadabazumo_elev.png"
-        },
         {
           "name": "Cyklovýlet-Brušperk-Trnávka",
           "description": "Trasa 41,3 km • 2:52 h",
@@ -2277,7 +2231,7 @@
           "elevation_img": "images/hupurodapa_elev.png"
         }
       ],
-      "screenshot": "images/folder_13.png"
+      "screenshot": "images/folder_7.png"
     },
     {
       "name": "Smrk - cyklo",
@@ -2773,42 +2727,6 @@
           "elevation_img": "images/cururerolu_elev.png"
         },
         {
-          "name": "Lysůvky-Maximus-Znojmo",
-          "description": "Trasa 257 km • 2:51 h",
-          "type": "car",
-          "share_link": "https://mapy.com/s/cavelupovo",
-          "embed_src": "https://mapy.com/s/cavelupovo",
-          "points": [],
-          "summary": "Trasa 257 km • 2:51 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/cavelupovo.png",
-          "elevation_img": "images/cavelupovo_elev.png"
-        },
-        {
-          "name": "Lysůvky-Znojmo",
-          "description": "Trasa 226,7 km • 2:15 h",
-          "type": "car",
-          "share_link": "https://mapy.com/s/bomusovose",
-          "embed_src": "https://mapy.com/s/bomusovose",
-          "points": [],
-          "summary": "Trasa 226,7 km • 2:15 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/bomusovose.png",
-          "elevation_img": "images/bomusovose_elev.png"
-        },
-        {
-          "name": "Vlčina Frenštát pod Radhoštěm",
-          "description": "Trasa 22,3 km • 28 min",
-          "type": "car",
-          "share_link": "https://mapy.com/s/lukalesero",
-          "embed_src": "https://mapy.com/s/lukalesero",
-          "points": [],
-          "summary": "Trasa 22,3 km • 28 min",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/lukalesero.png",
-          "elevation_img": "images/lukalesero_elev.png"
-        },
-        {
           "name": "Brno Míša",
           "description": "Trasa 163,2 km • 1:35 h",
           "type": "car",
@@ -2819,18 +2737,6 @@
           "elevation_text": "Výškový profil",
           "screenshot": "images/bucobusero.png",
           "elevation_img": "images/bucobusero_elev.png"
-        },
-        {
-          "name": "Velký Javorník 1",
-          "description": "Trasa 3,9 km • 1:52 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/lacalozoha",
-          "embed_src": "https://mapy.com/s/lacalozoha",
-          "points": [],
-          "summary": "Trasa 3,9 km • 1:52 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/lacalozoha.png",
-          "elevation_img": "images/lacalozoha_elev.png"
         },
         {
           "name": "Černá cesta 119/47",
@@ -2844,42 +2750,6 @@
           "screenshot": "images/pehupujela.png"
         },
         {
-          "name": "Brušperk-Příbor-Sklenov",
-          "description": "Trasa 46 km • 3:13 h",
-          "type": "bike",
-          "share_link": "https://mapy.com/s/pubamamuja",
-          "embed_src": "https://mapy.com/s/pubamamuja",
-          "points": [],
-          "summary": "Trasa 46 km • 3:13 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/pubamamuja.png",
-          "elevation_img": "images/pubamamuja_elev.png"
-        },
-        {
-          "name": "Metylovice-Ondřejník-Skalka",
-          "description": "Trasa 15,6 km • 5:28 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/lusumeceje",
-          "embed_src": "https://mapy.com/s/lusumeceje",
-          "points": [],
-          "summary": "Trasa 15,6 km • 5:28 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/lusumeceje.png",
-          "elevation_img": "images/lusumeceje_elev.png"
-        },
-        {
-          "name": "Chlebovice - Mločí studánka",
-          "description": "Trasa 8,7 km • 2:47 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/pumajuneze",
-          "embed_src": "https://mapy.com/s/pumajuneze",
-          "points": [],
-          "summary": "Trasa 8,7 km • 2:47 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/pumajuneze.png",
-          "elevation_img": "images/pumajuneze_elev.png"
-        },
-        {
           "name": "běh Brušperk 2",
           "description": "Trasa 20,8 km • 5:43 h",
           "type": "hiking",
@@ -2890,30 +2760,6 @@
           "elevation_text": "Výškový profil",
           "screenshot": "images/fejajebada.png",
           "elevation_img": "images/fejajebada_elev.png"
-        },
-        {
-          "name": "Radhošť 2",
-          "description": "Trasa 12,4 km • 4:31 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/fejudobefa",
-          "embed_src": "https://mapy.com/s/fejudobefa",
-          "points": [],
-          "summary": "Trasa 12,4 km • 4:31 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/fejudobefa.png",
-          "elevation_img": "images/fejudobefa_elev.png"
-        },
-        {
-          "name": "Radhošť 1",
-          "description": "Trasa 20,5 km • 6:52 h",
-          "type": "hiking",
-          "share_link": "https://mapy.com/s/gonopefemo",
-          "embed_src": "https://mapy.com/s/gonopefemo",
-          "points": [],
-          "summary": "Trasa 20,5 km • 6:52 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/gonopefemo.png",
-          "elevation_img": "images/gonopefemo_elev.png"
         },
         {
           "name": "běh Brušperk",

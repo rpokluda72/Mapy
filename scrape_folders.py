@@ -152,9 +152,16 @@ async def run() -> None:
                 removed_folders.append(fo["name"])
                 continue
             live_maps = live_folders[fo["name"]]
-            gone = [m["name"] for m in fo["maps"] if m["name"] not in live_maps]
+            gone_maps = [m for m in fo["maps"] if m["name"] not in live_maps]
             fo["maps"] = [m for m in fo["maps"] if m["name"] in live_maps]
-            removed_maps.extend(f"{fo['name']} / {m}" for m in gone)
+            for gm in gone_maps:
+                for img_field in ("screenshot", "elevation_img"):
+                    img_path = gm.get(img_field, "")
+                    if img_path:
+                        p = DATA_FILE.parent / img_path
+                        if p.exists():
+                            p.unlink()
+            removed_maps.extend(f"{fo['name']} / {gm['name']}" for gm in gone_maps)
             pruned_folders.append(fo)
         mapy_data["folders"] = pruned_folders
 

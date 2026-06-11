@@ -33,10 +33,18 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 .btn-all-y:hover { background: #c8e6c9; }
 .btn-all-n { background: #fafafa; border-color: #bbb; color: #666; }
 .btn-all-n:hover { background: #efefef; }
+.btn-all-f { background: #e3f2fd; border-color: #64b5f6; color: #1565c0; }
+.btn-all-f:hover { background: #bbdefb; }
 .status-msg { font-size: 13px; color: #555; }
 .status-msg.ok { color: #2e7d32; font-weight: 600; }
 .status-msg.err { color: #c62828; font-weight: 600; }
 .static-badge { font-size: 11px; padding: 2px 7px; background: #fff8e1; border: 1px solid #f0c040; color: #795548; border-radius: 3px; }
+
+/* ── Type count pills (shared by both tabs) ── */
+.folder-type-counts { display:flex; gap:4px; align-items:center; flex-shrink:0; }
+.ftc { display:flex; align-items:center; gap:2px; background:#e8f0eb; border-radius:10px; padding:1px 6px; white-space:nowrap; }
+.ftc .type-icon-img { width:13px; height:13px; }
+.ftc-num { font-size:11px; color:#4a7a5a; font-weight:600; }
 
 /* ── Folders tab ── */
 .folder-block { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
@@ -66,10 +74,11 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 .map-row:hover { background: #fafafa; }
 .map-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #333; }
 
-/* Y/N toggle */
+/* Y/N/F toggle */
 .yn { width: 34px; height: 24px; border-radius: 4px; border: 1px solid; cursor: pointer; font-size: 12px; font-weight: 700; text-align: center; line-height: 22px; flex-shrink: 0; transition: background .1s; }
 .yn.y { background: #e8f5e9; border-color: #66bb6a; color: #2e7d32; }
 .yn.n { background: #f7f7f7; border-color: #ccc; color: #aaa; }
+.yn.f { background: #e3f2fd; border-color: #64b5f6; color: #1565c0; }
 
 /* small inline buttons */
 .ibtn { font-size: 11px; padding: 2px 7px; border-radius: 3px; border: 1px solid #bbb; background: #fff; cursor: pointer; color: #555; white-space: nowrap; }
@@ -124,6 +133,7 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
     <h2>folders.json</h2>
     <button class="btn" id="expand-folders-btn" onclick="toggleExpandFolders()">Expand all</button>
     <button class="btn btn-all-y" onclick="setAll('Y')">All folders Y</button>
+    <button class="btn btn-all-f" onclick="setAllFolders('F')">All folders F</button>
     <button class="btn btn-all-n" onclick="setAll('N')">All folders N</button>
     <button class="btn btn-primary" id="save-btn" onclick="save()">Save</button>
     <span id="status" class="status-msg"></span>
@@ -176,13 +186,15 @@ let foldersExpanded = false;
 
 async function loadFolders() {
   try {
-    // eslint-disable-next-line no-undef
-    if (typeof FOLDERS_DATA !== 'undefined') {
-      // eslint-disable-next-line no-undef
-      foldersData = JSON.parse(JSON.stringify(FOLDERS_DATA)); // deep copy
-    } else if (!IS_STATIC) {
+    if (!IS_STATIC) {
+      // Server mode: always fetch live from disk
       const r = await fetch('/folders.json');
       foldersData = await r.json();
+    // eslint-disable-next-line no-undef
+    } else if (typeof FOLDERS_DATA !== 'undefined') {
+      // Static mode: use pre-built snapshot
+      // eslint-disable-next-line no-undef
+      foldersData = JSON.parse(JSON.stringify(FOLDERS_DATA)); // deep copy
     } else {
       document.getElementById('folder-list').textContent =
         'Run "run build" to generate folders_data.js, then reload.';
@@ -232,7 +244,7 @@ function renderFolders() {
       <div class="folder-actions" onclick="event.stopPropagation()">
         <button class="ibtn iy" onclick="setFolderAll(${fi},'Y')">All Y</button>
         <button class="ibtn in_" onclick="setFolderAll(${fi},'N')">All N</button>
-        <button class="yn ${folder.include==='Y'?'y':'n'}" id="fi-${fi}" onclick="toggleFolder(${fi})">${folder.include}</button>
+        <button class="yn ${folder.include==='Y'?'y':folder.include==='F'?'f':'n'}" id="fi-${fi}" onclick="toggleFolder(${fi})" title="${folder.include==='F'?'F = folder screenshot only':''}">${folder.include}</button>
       </div>
     `;
     row.addEventListener('click', () => {
@@ -264,12 +276,13 @@ function setYnBtn(id, val) {
   const btn = document.getElementById(id);
   if (!btn) return;
   btn.textContent = val;
-  btn.className = `yn ${val==='Y'?'y':'n'}`;
+  btn.className = `yn ${val==='Y'?'y':val==='F'?'f':'n'}`;
+  btn.title = val==='F' ? 'F = folder screenshot only' : '';
 }
 
 function toggleFolder(fi) {
   const f = foldersData.folders[fi];
-  f.include = f.include === 'Y' ? 'N' : 'Y';
+  f.include = f.include === 'Y' ? 'F' : f.include === 'F' ? 'N' : 'Y';
   setYnBtn(`fi-${fi}`, f.include);
 }
 
@@ -293,6 +306,13 @@ function setFolderAll(fi, val) {
 
 function setAll(val) {
   foldersData.folders.forEach((_, fi) => setFolderAll(fi, val));
+}
+
+function setAllFolders(val) {
+  foldersData.folders.forEach((folder, fi) => {
+    folder.include = val;
+    setYnBtn(`fi-${fi}`, val);
+  });
 }
 
 let foldersExpanded2 = false;
@@ -395,13 +415,19 @@ function renderData(data) {
     const folderLink = folder.share_link
       ? `<a class="share-link" href="${esc(folder.share_link)}" target="_blank" onclick="event.stopPropagation()" style="margin-left:8px">${esc(folder.share_link.split('/').pop())}</a>`
       : '';
+    const typePills = ['bike','hiking','car','adr'].map(tk => {
+      const cnt = folder.maps.filter(m => m.type === tk).length;
+      return cnt > 0
+        ? `<span class="ftc" data-type="${tk}"><img src="${TYPE_ICONS[tk]}" class="type-icon-img" alt="${tk}"><span class="ftc-num">${cnt}</span></span>`
+        : '';
+    }).join('');
     hdr.innerHTML = `
       <span class="arrow">▶</span>
       <strong>${esc(folder.name)}</strong>
-      <span style="color:#aaa;font-size:12px;margin-left:4px">${folder.maps.length} maps</span>
       <span style="flex:1"></span>
-      ${folderLink}
       ${fTags}
+      <span class="folder-type-counts">${typePills}</span>
+      ${folderLink}
     `;
     hdr.addEventListener('click', () => {
       hdr.classList.toggle('open');

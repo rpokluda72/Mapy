@@ -19,8 +19,8 @@ run install
 
 | Command | What it does |
 |---|---|
-| `run folders` | Scan mapy.com structure → `folders.json` (also prunes deleted items from `mapy_data.json`) |
-| `run details` | Full scrape of `include=Y` items → screenshots, share links, notes → `mapy_data.json` |
+| `run folders` | Scan mapy.com structure → `folders.json`; removes deleted items from `mapy_data.json` and their images |
+| `run details` | Full scrape of `include=Y/F` items → screenshots, share links, notes → `mapy_data.json` |
 | `run types` | Lightweight headless pass → updates `type` and `note` fields for already-scraped maps |
 | `run build` | Generate `index.html` + `data.js` from `mapy_data.json` |
 | `run serve` | Serve at `http://localhost:8000` (enables hide/restore and admin panel) |
@@ -62,9 +62,10 @@ run build
 
 ### A map or folder was deleted on mapy.com
 ```
-run folders    ← automatically removes deleted items from mapy_data.json
+run folders    ← removes deleted items from mapy_data.json and deletes their images
 run build
 ```
+> **Note:** `run details` does not remove deleted maps — always use `run folders` to sync deletions.
 
 ### You want to update map types or notes for all existing maps
 ```
@@ -73,8 +74,13 @@ run build
 ```
 
 ### You want to re-scrape a specific folder from scratch
-1. Edit `folders.json` — set `"include": "Y"` on the folder
+1. Edit `folders.json` — set `"include": "Y"` on the folder (or use admin panel)
 2. `run details`
+3. `run build`
+
+### The folder map image looks wrong (missing routes)
+1. Set `"include": "F"` on the folder in the admin panel (click the folder's Y/N button until it shows **F**)
+2. `run details` — retakes only the folder map screenshot, skips individual maps (fast)
 3. `run build`
 
 ### You modified the HTML template (`templates/index.html.j2`)
@@ -99,7 +105,7 @@ The admin panel has two tabs: **Folders** (edit `include` flags) and **Data view
 
 1. `run serve`
 2. `run admin` (or open `http://localhost:8000/admin.html`)
-3. Toggle Y/N flags, use **All Y** / **All N** per folder or globally
+3. Toggle Y/N/F flags, use **All Y** / **All N** per folder or globally
 4. Click **Save** — writes `folders.json` immediately
 5. `run details` / `run build` as needed
 
@@ -123,6 +129,7 @@ Correct order: `folders` → `details` → `types` → `build`
 `folders.json` controls what gets (re-)scraped:
 
 - **Folder `include=Y`** — scrape all maps in the folder, regardless of map-level flags
+- **Folder `include=F`** — retake the folder map screenshot only; skip all individual maps
 - **Folder `include=N`, map `include=Y`** — scrape only that specific map
 - **Both `include=N`** — skip entirely
 
@@ -175,7 +182,7 @@ python scrape_details.py
 ```
 
 **Source:** `folders.json` (which items to process) + mapy.com (live browser session)  
-**Background:** Processes only items marked `include=Y`. For each map: clicks into it, takes a map screenshot and an elevation-chart screenshot, reads the route note, opens the Share dialog to extract the share link and embed URL. Resets `include` to `N` after each folder so the run is safe to interrupt and resume.  
+**Background:** Processes items marked `include=Y` or `include=F`. For `include=Y`: clicks into each map, takes a map screenshot and elevation-chart screenshot, reads the route note, opens the Share dialog to extract the share link and embed URL. For `include=F`: takes only the folder map screenshot (skips individual maps — useful when the folder image is missing routes). Resets `include` to `N` after each folder so the run is safe to interrupt and resume.  
 **Result:** Merges data into `mapy_data.json`; saves screenshots to `images/`.
 
 ---

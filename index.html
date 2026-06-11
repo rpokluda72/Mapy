@@ -67,15 +67,10 @@
   }
   .folder-header.open .folder-arrow { transform: rotate(90deg); }
 
-  .folder-count {
-    font-size: 11px;
-    background: #e8f0eb;
-    color: #4a7a5a;
-    border-radius: 10px;
-    padding: 1px 7px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
+  .folder-type-counts { display:flex; gap:4px; align-items:center; flex-shrink:0; }
+  .ftc { display:flex; align-items:center; gap:2px; background:#e8f0eb; border-radius:10px; padding:1px 6px; white-space:nowrap; }
+  .ftc .type-icon-img { width:13px; height:13px; }
+  .ftc-num { font-size:11px; color:#4a7a5a; font-weight:600; }
 
   .folder-maps { display: none; background: #fafbfc; }
   .folder-maps.open { display: block; }
@@ -146,7 +141,8 @@
     background: #fff;
   }
 
-  .detail-panel { padding: 28px 32px; max-width: 860px; }
+  .detail-panel { padding: 28px 32px; max-width: 1100px; }
+  body.horiz-full .detail-panel { max-width: none; }
 
   /* Map hero card */
   .map-hero {
@@ -169,10 +165,10 @@
   .map-hero .subtitle { font-size: 14px; opacity: .85; }
 
   .open-btn {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center;
     background: #fff; color: #1a7340;
     font-size: 15px; font-weight: 700;
-    padding: 12px 22px; border-radius: 8px;
+    padding: 10px 14px; border-radius: 8px;
     text-decoration: none; white-space: nowrap;
     border: none; cursor: pointer;
     transition: background .15s, transform .1s;
@@ -212,12 +208,14 @@
   table.map-table th {
     text-align: left; padding: 7px 10px;
     background: #f0f7f3; border-bottom: 2px solid #c8e0d0;
-    font-weight: 600; color: #2a6040;
+    font-weight: 600; color: #2a6040; white-space: nowrap;
   }
-  table.map-table td { padding: 8px 10px; border-bottom: 1px solid #eef0f3; vertical-align: middle; }
+  table.map-table td { padding: 5px 8px; border-bottom: 1px solid #eef0f3; vertical-align: middle; }
   table.map-table tr:hover td { background: #f6fbf8; }
   table.map-table .col-name { font-weight: 500; cursor: pointer; color: #1a5c30; }
   table.map-table .col-name:hover { text-decoration: underline; }
+  table.map-table .col-desc { white-space: nowrap; color: #666; }
+  table.map-table .col-icon { width: 1%; white-space: nowrap; padding-right: 2px; }
 
   .tbl-link {
     font-size: 12px; color: #1a7340; text-decoration: none;
@@ -227,9 +225,34 @@
   .tbl-link:hover { background: #d0eedd; }
 
   /* Route detail */
-  .summary-text { font-size: 14px; font-weight: 600; color: #333; }
   .elevation-text { font-size: 12px; color: #555; white-space: pre-wrap; background: #f8fafb; padding: 8px; border-radius: 4px; }
-  .user-note { font-size: 13px; color: #444; background: #fffbe6; border-left: 3px solid #f0c040; padding: 8px 12px; border-radius: 0 4px 4px 0; white-space: pre-wrap; margin-bottom: 18px; }
+  .user-note { font-size: 13px; color: #5a4000; background: #fffbe6; border: 1px solid #f0c040; padding: 14px 18px; border-radius: 10px; white-space: pre-wrap; margin-bottom: 0; }
+
+  /* A/B panel layout */
+  .panel-ab { display:flex; flex-direction:column; gap:20px; }
+  .panel-ab.horiz { flex-direction:row; align-items:flex-start; gap:24px; }
+  .panel-ab.horiz .panel-a { flex:1; min-width:0; max-width:none; }
+  .panel-ab.horiz .panel-b { flex:1; min-width:0; }
+  .panel-ab.sz-small  { max-width:  480px; }
+  .panel-ab.sz-medium { max-width:  760px; }
+  .panel-ab.sz-full   { max-width: 1040px; }
+  .panel-ab.horiz.sz-small  { max-width: none; }
+  .panel-ab.horiz.sz-medium { max-width: none; }
+  .panel-ab.horiz.sz-full   { max-width: none; }
+  .panel-ab.horiz .panel-a.sz-small  { flex:none; max-width:  480px; }
+  .panel-ab.horiz .panel-a.sz-medium { flex:none; max-width:  760px; }
+  .panel-ab.horiz.sz-full .panel-b   { flex:0 0 auto; width:fit-content; max-width:300px; }
+
+  /* Map table card (folder view) */
+  .map-table-card { border-radius: 10px; border: 1px solid #c8e0d0; overflow: hidden; }
+  .map-table-card table.map-table th:last-child, .map-table-card table.map-table td:last-child { border-right: none; }
+  .map-table-card table.map-table tr:last-child td { border-bottom: none; }
+
+  /* View controls (in header) */
+  .vc-sep   { width:1px; height:14px; background:rgba(255,255,255,.3); margin:0 2px; }
+  .vc-btn   { font-size:12px; padding:2px 7px; border:1px solid rgba(255,255,255,.4); border-radius:4px; background:rgba(255,255,255,.15); cursor:pointer; color:rgba(255,255,255,.85); line-height:1.3; }
+  .vc-btn:hover  { background:rgba(255,255,255,.3); }
+  .vc-btn.active { background:#fff; color:#1a7340; border-color:#fff; }
 
   .map-screenshot {
     width: 100%; border-radius: 8px; display: block;
@@ -256,7 +279,7 @@
 </head>
 <body>
 
-<header style="display:flex;align-items:center"><span style="flex:1">My Maps — mapy.com</span><a href="admin.html" target="_blank" style="font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:400" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">Admin ↗</a></header>
+<header style="display:flex;align-items:center"><span style="flex:1">My Maps — mapy.com</span><span style="font-size:12px;color:rgba(255,255,255,.6);margin-right:16px">259 maps in 22 folders</span><div style="display:flex;align-items:center;gap:5px;margin-right:12px"><button class="vc-btn" data-size="small"  title="Small map"  onclick="setSetting('size','small')"  style="font-size:9px;padding:3px 8px">+</button><button class="vc-btn" data-size="medium" title="Medium map" onclick="setSetting('size','medium')" style="font-size:13px">+</button><button class="vc-btn" data-size="full"   title="Full map"   onclick="setSetting('size','full')"   style="font-size:18px;padding:1px 6px">+</button><span class="vc-sep"></span><button class="vc-btn" data-layout="vert" title="Stacked" onclick="setSetting('layout','vert')">☰</button><button class="vc-btn" data-layout="horiz" title="Side by side" onclick="setSetting('layout','horiz')">⦀</button></div><a href="admin.html" target="_blank" style="font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:400" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">Admin ↗</a></header>
 
 <div class="layout">
   <nav id="nav">
@@ -280,7 +303,7 @@
       <div class="folder-header" id="fh-0" onclick="toggleFolder(0)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">TJ Tatry-Gorce 2026</span>
-        <span class="folder-count" id="fc-0">5</span>
+        <span class="folder-type-counts" id="fc-0"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">2</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-0">
@@ -296,40 +319,7 @@
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 0)" title="Hide map">×</button>
         </div>
         
-        <div class="map-item" id="mi-0-1" data-fi="0" data-mi="1" data-type="adr" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Kolejowa 46</div>
-            
-            <div class="map-item-desc">Adresa</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 1)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-0-2" data-fi="0" data-mi="2" data-type="bike" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Bike route</div>
-            
-            <div class="map-item-desc">Trasa 4,8 km • 20 min</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 2)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-0-3" data-fi="0" data-mi="3" data-type="car" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Car route</div>
-            
-            <div class="map-item-desc">Trasa 8,6 km • 22 min</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 3)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-0-4" data-fi="0" data-mi="4" data-type="hiking" data-hidden="false">
+        <div class="map-item" id="mi-0-1" data-fi="0" data-mi="1" data-type="hiking" data-hidden="false">
           <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
             <div class="map-item-name">Neděle</div>
@@ -337,7 +327,7 @@
             <div class="map-item-desc">Trasa 16,2 km • 5:53 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 4)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 1)" title="Hide map">×</button>
         </div>
         
       </div>
@@ -347,7 +337,7 @@
       <div class="folder-header" id="fh-1" onclick="toggleFolder(1)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Loučeň</span>
-        <span class="folder-count" id="fc-1">10</span>
+        <span class="folder-type-counts" id="fc-1"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">10</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-1">
@@ -469,7 +459,7 @@
       <div class="folder-header" id="fh-2" onclick="toggleFolder(2)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Velichovky</span>
-        <span class="folder-count" id="fc-2">8</span>
+        <span class="folder-type-counts" id="fc-2"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">8</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-2">
@@ -569,7 +559,7 @@
       <div class="folder-header" id="fh-3" onclick="toggleFolder(3)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Olomučany</span>
-        <span class="folder-count" id="fc-3">18</span>
+        <span class="folder-type-counts" id="fc-3"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">16</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">2</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-3">
@@ -779,7 +769,7 @@
       <div class="folder-header" id="fh-4" onclick="toggleFolder(4)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Valašské Meziříčí</span>
-        <span class="folder-count" id="fc-4">23</span>
+        <span class="folder-type-counts" id="fc-4"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">17</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">6</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-4">
@@ -1044,7 +1034,7 @@
       <div class="folder-header" id="fh-5" onclick="toggleFolder(5)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ludvíkov</span>
-        <span class="folder-count" id="fc-5">15</span>
+        <span class="folder-type-counts" id="fc-5"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">12</span></span><span class="ftc" data-type="car"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">3</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-5">
@@ -1221,7 +1211,7 @@
       <div class="folder-header" id="fh-6" onclick="toggleFolder(6)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Stezka Českem</span>
-        <span class="folder-count" id="fc-6">23</span>
+        <span class="folder-type-counts" id="fc-6"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">23</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-6">
@@ -1486,7 +1476,7 @@
       <div class="folder-header" id="fh-7" onclick="toggleFolder(7)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lipno</span>
-        <span class="folder-count" id="fc-7">8</span>
+        <span class="folder-type-counts" id="fc-7"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">7</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">1</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-7">
@@ -1586,7 +1576,7 @@
       <div class="folder-header" id="fh-8" onclick="toggleFolder(8)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Znojmo</span>
-        <span class="folder-count" id="fc-8">18</span>
+        <span class="folder-type-counts" id="fc-8"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">16</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-8">
@@ -1616,9 +1606,9 @@
         <div class="map-item" id="mi-8-2" data-fi="8" data-mi="2" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">R P 2</div>
+            <div class="map-item-name">Vranov 2</div>
             
-            <div class="map-item-desc">Trasa 63,7 km • 3:59 h</div>
+            <div class="map-item-desc">Trasa 58,2 km • 4:02 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 2)" title="Hide map">×</button>
@@ -1627,9 +1617,9 @@
         <div class="map-item" id="mi-8-3" data-fi="8" data-mi="3" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Petr Romana</div>
+            <div class="map-item-name">Jaroslavice</div>
             
-            <div class="map-item-desc">Trasa 85,8 km • 5:24 h</div>
+            <div class="map-item-desc">Trasa 55,6 km • 3:31 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 3)" title="Hide map">×</button>
@@ -1638,9 +1628,9 @@
         <div class="map-item" id="mi-8-4" data-fi="8" data-mi="4" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Vranov 2</div>
+            <div class="map-item-name">Hnanice-Nový Hrádek</div>
             
-            <div class="map-item-desc">Trasa 58,2 km • 4:02 h</div>
+            <div class="map-item-desc">Trasa 49,8 km • 3:36 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 4)" title="Hide map">×</button>
@@ -1649,9 +1639,9 @@
         <div class="map-item" id="mi-8-5" data-fi="8" data-mi="5" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Jaroslavice</div>
+            <div class="map-item-name">Hnanice-Nový Hrádek-Hardegg</div>
             
-            <div class="map-item-desc">Trasa 55,6 km • 3:31 h</div>
+            <div class="map-item-desc">Trasa 65 km • 4:36 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 5)" title="Hide map">×</button>
@@ -1660,9 +1650,9 @@
         <div class="map-item" id="mi-8-6" data-fi="8" data-mi="6" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Hnanice-Nový Hrádek</div>
+            <div class="map-item-name">Jevišovice</div>
             
-            <div class="map-item-desc">Trasa 49,8 km • 3:36 h</div>
+            <div class="map-item-desc">Trasa 53,6 km • 3:41 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 6)" title="Hide map">×</button>
@@ -1671,9 +1661,9 @@
         <div class="map-item" id="mi-8-7" data-fi="8" data-mi="7" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Hnanice-Nový Hrádek-Hardegg</div>
+            <div class="map-item-name">Hostěradice</div>
             
-            <div class="map-item-desc">Trasa 65 km • 4:36 h</div>
+            <div class="map-item-desc">Trasa 69,2 km • 4:39 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 7)" title="Hide map">×</button>
@@ -1682,9 +1672,9 @@
         <div class="map-item" id="mi-8-8" data-fi="8" data-mi="8" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Jevišovice</div>
+            <div class="map-item-name">Šatov-Hnanice-Nový Hrádek-Hardegg</div>
             
-            <div class="map-item-desc">Trasa 53,6 km • 3:41 h</div>
+            <div class="map-item-desc">Trasa 56,8 km • 4:02 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 8)" title="Hide map">×</button>
@@ -1693,9 +1683,9 @@
         <div class="map-item" id="mi-8-9" data-fi="8" data-mi="9" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Hostěradice</div>
+            <div class="map-item-name">Vranov</div>
             
-            <div class="map-item-desc">Trasa 69,2 km • 4:39 h</div>
+            <div class="map-item-desc">Trasa 65,7 km • 4:33 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 9)" title="Hide map">×</button>
@@ -1704,9 +1694,9 @@
         <div class="map-item" id="mi-8-10" data-fi="8" data-mi="10" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Šatov-Hnanice-Nový Hrádek-Hardegg</div>
+            <div class="map-item-name">Bítov-Vranov</div>
             
-            <div class="map-item-desc">Trasa 56,8 km • 4:02 h</div>
+            <div class="map-item-desc">Trasa 94,6 km • 6:37 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 10)" title="Hide map">×</button>
@@ -1715,9 +1705,9 @@
         <div class="map-item" id="mi-8-11" data-fi="8" data-mi="11" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Vranov</div>
+            <div class="map-item-name">Bítov-Vranov-2</div>
             
-            <div class="map-item-desc">Trasa 65,7 km • 4:33 h</div>
+            <div class="map-item-desc">Trasa 92,7 km • 6:28 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 11)" title="Hide map">×</button>
@@ -1726,9 +1716,9 @@
         <div class="map-item" id="mi-8-12" data-fi="8" data-mi="12" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Bítov-Vranov</div>
+            <div class="map-item-name">Moravský Krumlov</div>
             
-            <div class="map-item-desc">Trasa 94,6 km • 6:37 h</div>
+            <div class="map-item-desc">Trasa 96,6 km • 6:26 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 12)" title="Hide map">×</button>
@@ -1737,9 +1727,9 @@
         <div class="map-item" id="mi-8-13" data-fi="8" data-mi="13" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Bítov-Vranov-2</div>
+            <div class="map-item-name">Moravský Krumlov-2</div>
             
-            <div class="map-item-desc">Trasa 92,7 km • 6:28 h</div>
+            <div class="map-item-desc">Trasa 88,1 km • 5:59 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 13)" title="Hide map">×</button>
@@ -1748,9 +1738,9 @@
         <div class="map-item" id="mi-8-14" data-fi="8" data-mi="14" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Moravský Krumlov</div>
+            <div class="map-item-name">Jaroměřice-Jevišovice</div>
             
-            <div class="map-item-desc">Trasa 96,6 km • 6:26 h</div>
+            <div class="map-item-desc">Trasa 86,8 km • 5:45 h</div>
             
           </div>
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 14)" title="Hide map">×</button>
@@ -1759,34 +1749,12 @@
         <div class="map-item" id="mi-8-15" data-fi="8" data-mi="15" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Moravský Krumlov-2</div>
-            
-            <div class="map-item-desc">Trasa 88,1 km • 5:59 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 15)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-8-16" data-fi="8" data-mi="16" data-type="bike" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Jaroměřice-Jevišovice</div>
-            
-            <div class="map-item-desc">Trasa 86,8 km • 5:45 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 16)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-8-17" data-fi="8" data-mi="17" data-type="bike" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
             <div class="map-item-name">Niederfladnitz-Retz</div>
             
             <div class="map-item-desc">Trasa 72,2 km • 5:08 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 17)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 15)" title="Hide map">×</button>
         </div>
         
       </div>
@@ -1796,7 +1764,7 @@
       <div class="folder-header" id="fh-9" onclick="toggleFolder(9)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Cyklotrasy</span>
-        <span class="folder-count" id="fc-9">8</span>
+        <span class="folder-type-counts" id="fc-9"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">8</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-9">
@@ -1896,7 +1864,7 @@
       <div class="folder-header" id="fh-10" onclick="toggleFolder(10)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pěší trasy</span>
-        <span class="folder-count" id="fc-10">5</span>
+        <span class="folder-type-counts" id="fc-10"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">8</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-10">
@@ -1956,6 +1924,39 @@
           <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 4)" title="Hide map">×</button>
         </div>
         
+        <div class="map-item" id="mi-10-5" data-fi="10" data-mi="5" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Radhošť 2</div>
+            
+            <div class="map-item-desc">Trasa 12,4 km • 4:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-6" data-fi="10" data-mi="6" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Radhošť 1</div>
+            
+            <div class="map-item-desc">Trasa 20,5 km • 6:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-7" data-fi="10" data-mi="7" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Metylovice-Ondřejník-Skalka</div>
+            
+            <div class="map-item-desc">Trasa 15,6 km • 5:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 7)" title="Hide map">×</button>
+        </div>
+        
       </div>
     </div>
     
@@ -1963,7 +1964,7 @@
       <div class="folder-header" id="fh-11" onclick="toggleFolder(11)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lysá hora</span>
-        <span class="folder-count" id="fc-11">16</span>
+        <span class="folder-type-counts" id="fc-11"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">16</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-11">
@@ -2151,34 +2152,12 @@
       <div class="folder-header" id="fh-12" onclick="toggleFolder(12)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">TJ Sokol</span>
-        <span class="folder-count" id="fc-12">3</span>
+        <span class="folder-type-counts" id="fc-12"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">1</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-12">
         
-        <div class="map-item" id="mi-12-0" data-fi="12" data-mi="0" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Trasa z Lietavská Závadka do Sůlov</div>
-            
-            <div class="map-item-desc">Trasa 8,3 km • 3:15 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 0)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-12-1" data-fi="12" data-mi="1" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Velký Javorník 2</div>
-            
-            <div class="map-item-desc">Trasa 4,1 km • 2:04 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 1)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-12-2" data-fi="12" data-mi="2" data-type="bike" data-hidden="false">
+        <div class="map-item" id="mi-12-0" data-fi="12" data-mi="0" data-type="bike" data-hidden="false">
           <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
             <div class="map-item-name">Cyklovýlet-Brušperk-Trnávka</div>
@@ -2186,7 +2165,7 @@
             <div class="map-item-desc">Trasa 41,3 km • 2:52 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 2)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 0)" title="Hide map">×</button>
         </div>
         
       </div>
@@ -2196,7 +2175,7 @@
       <div class="folder-header" id="fh-13" onclick="toggleFolder(13)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Stezka Českem na kole</span>
-        <span class="folder-count" id="fc-13">20</span>
+        <span class="folder-type-counts" id="fc-13"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">20</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-13">
@@ -2428,7 +2407,7 @@
       <div class="folder-header" id="fh-14" onclick="toggleFolder(14)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Smrk - cyklo</span>
-        <span class="folder-count" id="fc-14">5</span>
+        <span class="folder-type-counts" id="fc-14"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">5</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-14">
@@ -2495,7 +2474,7 @@
       <div class="folder-header" id="fh-15" onclick="toggleFolder(15)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lednice</span>
-        <span class="folder-count" id="fc-15">5</span>
+        <span class="folder-type-counts" id="fc-15"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">4</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">1</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-15">
@@ -2562,7 +2541,7 @@
       <div class="folder-header" id="fh-16" onclick="toggleFolder(16)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bike-Ostravice</span>
-        <span class="folder-count" id="fc-16">15</span>
+        <span class="folder-type-counts" id="fc-16"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">15</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-16">
@@ -2739,7 +2718,7 @@
       <div class="folder-header" id="fh-17" onclick="toggleFolder(17)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Vysočina</span>
-        <span class="folder-count" id="fc-17">12</span>
+        <span class="folder-type-counts" id="fc-17"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">9</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">3</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-17">
@@ -2883,7 +2862,7 @@
       <div class="folder-header" id="fh-18" onclick="toggleFolder(18)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ostatní</span>
-        <span class="folder-count" id="fc-18">14</span>
+        <span class="folder-type-counts" id="fc-18"><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">2</span></span><span class="ftc" data-type="car"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">2</span></span><span class="ftc" data-type="adr"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">1</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-18">
@@ -2902,59 +2881,15 @@
         <div class="map-item" id="mi-18-1" data-fi="18" data-mi="1" data-type="car" data-hidden="false">
           <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
-            <div class="map-item-name">Lysůvky-Maximus-Znojmo</div>
-            
-            <div class="map-item-desc">Trasa 257 km • 2:51 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 1)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-2" data-fi="18" data-mi="2" data-type="car" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Lysůvky-Znojmo</div>
-            
-            <div class="map-item-desc">Trasa 226,7 km • 2:15 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 2)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-3" data-fi="18" data-mi="3" data-type="car" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Vlčina Frenštát pod Radhoštěm</div>
-            
-            <div class="map-item-desc">Trasa 22,3 km • 28 min</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 3)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-4" data-fi="18" data-mi="4" data-type="car" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
             <div class="map-item-name">Brno Míša</div>
             
             <div class="map-item-desc">Trasa 163,2 km • 1:35 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 4)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 1)" title="Hide map">×</button>
         </div>
         
-        <div class="map-item" id="mi-18-5" data-fi="18" data-mi="5" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Velký Javorník 1</div>
-            
-            <div class="map-item-desc">Trasa 3,9 km • 1:52 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 5)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-6" data-fi="18" data-mi="6" data-type="adr" data-hidden="false">
+        <div class="map-item" id="mi-18-2" data-fi="18" data-mi="2" data-type="adr" data-hidden="false">
           <span class="type-icon"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
             <div class="map-item-name">Černá cesta 119/47</div>
@@ -2962,43 +2897,10 @@
             <div class="map-item-desc">Adresa</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 6)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 2)" title="Hide map">×</button>
         </div>
         
-        <div class="map-item" id="mi-18-7" data-fi="18" data-mi="7" data-type="bike" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Brušperk-Příbor-Sklenov</div>
-            
-            <div class="map-item-desc">Trasa 46 km • 3:13 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 7)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-8" data-fi="18" data-mi="8" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Metylovice-Ondřejník-Skalka</div>
-            
-            <div class="map-item-desc">Trasa 15,6 km • 5:28 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 8)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-9" data-fi="18" data-mi="9" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Chlebovice - Mločí studánka</div>
-            
-            <div class="map-item-desc">Trasa 8,7 km • 2:47 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 9)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-10" data-fi="18" data-mi="10" data-type="hiking" data-hidden="false">
+        <div class="map-item" id="mi-18-3" data-fi="18" data-mi="3" data-type="hiking" data-hidden="false">
           <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
             <div class="map-item-name">běh Brušperk 2</div>
@@ -3006,32 +2908,10 @@
             <div class="map-item-desc">Trasa 20,8 km • 5:43 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 10)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 3)" title="Hide map">×</button>
         </div>
         
-        <div class="map-item" id="mi-18-11" data-fi="18" data-mi="11" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Radhošť 2</div>
-            
-            <div class="map-item-desc">Trasa 12,4 km • 4:31 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 11)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-12" data-fi="18" data-mi="12" data-type="hiking" data-hidden="false">
-          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
-          <div class="map-item-text">
-            <div class="map-item-name">Radhošť 1</div>
-            
-            <div class="map-item-desc">Trasa 20,5 km • 6:52 h</div>
-            
-          </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 12)" title="Hide map">×</button>
-        </div>
-        
-        <div class="map-item" id="mi-18-13" data-fi="18" data-mi="13" data-type="hiking" data-hidden="false">
+        <div class="map-item" id="mi-18-4" data-fi="18" data-mi="4" data-type="hiking" data-hidden="false">
           <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
           <div class="map-item-text">
             <div class="map-item-name">běh Brušperk</div>
@@ -3039,7 +2919,7 @@
             <div class="map-item-desc">Trasa 19,7 km • 5:33 h</div>
             
           </div>
-          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 13)" title="Hide map">×</button>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 4)" title="Hide map">×</button>
         </div>
         
       </div>
@@ -3049,7 +2929,7 @@
       <div class="folder-header" id="fh-19" onclick="toggleFolder(19)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Beskydy</span>
-        <span class="folder-count" id="fc-19">12</span>
+        <span class="folder-type-counts" id="fc-19"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">6</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">6</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-19">
@@ -3193,7 +3073,7 @@
       <div class="folder-header" id="fh-20" onclick="toggleFolder(20)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Hůrky</span>
-        <span class="folder-count" id="fc-20">15</span>
+        <span class="folder-type-counts" id="fc-20"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">15</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-20">
@@ -3370,7 +3250,7 @@
       <div class="folder-header" id="fh-21" onclick="toggleFolder(21)">
         <span class="folder-arrow">▶</span>
         <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Jeseníky</span>
-        <span class="folder-count" id="fc-21">14</span>
+        <span class="folder-type-counts" id="fc-21"><span class="ftc" data-type="bike"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">8</span></span><span class="ftc" data-type="hiking"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">4</span></span><span class="ftc" data-type="car"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""><span class="ftc-num">2</span></span></span>
         <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21)" title="Hide folder">×</button>
       </div>
       <div class="folder-maps" id="folder-maps-21">
@@ -3561,9 +3441,9 @@ function esc(s) {
 
 function heroBtn(url, label) {
   if (url) {
-    return `<a class="open-btn" href="${esc(url)}" target="_blank">${OPEN_ICON} ${label}</a>`;
+    return `<a class="open-btn" href="${esc(url)}" target="_blank" title="${label}">${OPEN_ICON}</a>`;
   }
-  return `<span class="no-link-note">No share link available</span>`;
+  return `<span class="no-link-note">No share link</span>`;
 }
 
 function clearActive() {
@@ -3585,55 +3465,86 @@ function toggleFolder(fi) {
   }
 }
 
+// ── Settings (size + layout, persisted in localStorage) ──────────────────
+function getSetting(key, def) {
+  return localStorage.getItem('mapy_' + key) || def;
+}
+function setSetting(key, val) {
+  localStorage.setItem('mapy_' + key, val);
+  applySettings();
+}
+function applySettings() {
+  const size = getSetting('size', 'full');
+  const layout = getSetting('layout', 'vert');
+  document.querySelectorAll('.panel-ab').forEach(el => {
+    el.classList.toggle('sz-small',  size === 'small');
+    el.classList.toggle('sz-medium', size === 'medium');
+    el.classList.toggle('sz-full',   size === 'full');
+  });
+  document.querySelectorAll('.panel-a').forEach(el => {
+    el.classList.toggle('sz-small',  size === 'small'  && layout === 'horiz');
+    el.classList.toggle('sz-medium', size === 'medium' && layout === 'horiz');
+  });
+  const ab = document.getElementById('panel-ab');
+  if (ab) ab.classList.toggle('horiz', layout === 'horiz');
+  document.body.classList.toggle('horiz-full', layout === 'horiz' && size === 'full');
+  document.querySelectorAll('.vc-btn[data-size]').forEach(b =>
+    b.classList.toggle('active', b.dataset.size === size));
+  document.querySelectorAll('.vc-btn[data-layout]').forEach(b =>
+    b.classList.toggle('active', b.dataset.layout === layout));
+}
+
 function showFolder(fi) {
   clearActive();
   document.getElementById("fh-" + fi).classList.add("active");
   const folder = DATA.folders[fi];
   const folderUrl = folder.share_link || (folder.maps[0] && folder.maps[0].share_link) || "";
 
-  let html = "";
+  let panelA = "";
+  let panelB = "";
 
-  // Folder map screenshot (shows all routes)
+  // Panel A: screenshot + hero + note
   if (folder.screenshot) {
-    html += `<a href="${esc(folderUrl)}" target="_blank">
+    panelA += `<a href="${esc(folderUrl)}" target="_blank">
       <img class="map-screenshot" src="${esc(folder.screenshot)}" alt="${esc(folder.name)}" loading="lazy">
     </a>`;
   }
-
-  html += `<div class="map-hero">
+  panelA += `<div class="map-hero">
     <div class="map-hero-info">
       <h2>📁 ${esc(folder.name)}</h2>
       <div class="subtitle">${folder.maps.length} route(s)</div>
     </div>
     ${heroBtn(folderUrl, "Open in mapy.com")}
   </div>`;
-
   if (folder.note) {
-    html += `<div class="user-note">${esc(folder.note)}</div>`;
+    panelA += `<div class="user-note">${esc(folder.note)}</div>`;
   }
 
+  // Panel B: routes table
   if (!folder.maps.length) {
-    html += `<p style="color:#aaa;font-style:italic">No maps in this folder.</p>`;
+    panelB += `<p style="color:#aaa;font-style:italic">No maps in this folder.</p>`;
   } else {
-    html += `<table class="map-table"><thead><tr>
-      <th></th><th>Name</th><th>Distance / Time</th><th>Open</th>
+    panelB += `<div class="map-table-card"><table class="map-table"><thead><tr>
+      <th></th><th>Name</th><th>Distance / Time</th><th></th>
     </tr></thead><tbody>`;
     folder.maps.forEach((map, mi) => {
       const icon = TYPE_ICONS[map.type] || TYPE_ICONS[""];
       const desc = map.description || map.summary || "";
       const link = map.share_link
-        ? `<a class="tbl-link" href="${esc(map.share_link)}" target="_blank">Open ↗</a>` : "";
-      html += `<tr>
-        <td class="type-icon">${icon}</td>
+        ? `<a class="tbl-link" href="${esc(map.share_link)}" target="_blank">↗</a>` : "";
+      panelB += `<tr>
+        <td class="col-icon">${icon}</td>
         <td class="col-name" onclick="openMapFromTable(${fi},${mi})">${esc(map.name)}</td>
-        <td>${esc(desc)}</td>
+        <td class="col-desc">${esc(desc)}</td>
         <td>${link}</td>
       </tr>`;
     });
-    html += `</tbody></table>`;
+    panelB += `</tbody></table></div>`;
   }
 
-  document.getElementById("detail-panel").innerHTML = html;
+  document.getElementById("detail-panel").innerHTML =
+    `<div class="panel-ab" id="panel-ab"><div class="panel-a">${panelA}</div><div class="panel-b">${panelB}</div></div>`;
+  applySettings();
 }
 
 function openMapFromTable(fi, mi) {
@@ -3656,49 +3567,44 @@ function showMap(fi, mi) {
   const typeLabel = TYPE_LABELS[map.type] || "";
   const subtitle  = [typeLabel, map.description].filter(Boolean).join(" · ");
 
-  let html = "";
+  let panelA = "";
+  let panelB = "";
 
-  // Map screenshot
+  // Panel A: screenshot + hero + note
   if (map.screenshot) {
-    html += `<a href="${esc(url)}" target="_blank">
+    panelA += `<a href="${esc(url)}" target="_blank">
       <img class="map-screenshot" src="${esc(map.screenshot)}" alt="${esc(map.name)}" loading="lazy">
     </a>`;
   }
-
-  html += `<div class="map-hero">
+  panelA += `<div class="map-hero">
     <div class="map-hero-info">
       <h2>${esc(map.name)}</h2>
       ${subtitle ? `<div class="subtitle">${esc(subtitle)}</div>` : ""}
     </div>
     ${heroBtn(url, "Open in mapy.com")}
   </div>`;
-
   if (map.note) {
-    html += `<div class="user-note">${esc(map.note)}</div>`;
+    panelA += `<div class="user-note">${esc(map.note)}</div>`;
   }
 
-  if (map.summary && map.summary !== map.description) {
-    html += `<div class="section-title">Distance &amp; Time</div>
-      <div class="summary-text">${esc(map.summary)}</div>`;
-  }
-
+  // Panel B: points + elevation
   if (map.points && map.points.length) {
-    html += `<div class="section-title">Route Points (${map.points.length})</div>
+    panelB += `<div class="section-title">Route Points (${map.points.length})</div>
       <ol class="points-list">`;
-    map.points.forEach(pt => { html += `<li>${esc(pt)}</li>`; });
-    html += `</ol>`;
+    map.points.forEach(pt => { panelB += `<li>${esc(pt)}</li>`; });
+    panelB += `</ol>`;
   }
-
-  // Elevation screenshot
   if (map.elevation_img) {
-    html += `<div class="section-title">Elevation Profile</div>
+    panelB += `<div class="section-title">Elevation Profile</div>
       <img class="elev-screenshot" src="${esc(map.elevation_img)}" alt="Elevation profile" loading="lazy">`;
   } else if (map.elevation_text) {
-    html += `<div class="section-title">Elevation</div>
+    panelB += `<div class="section-title">Elevation</div>
       <div class="elevation-text">${esc(map.elevation_text)}</div>`;
   }
 
-  document.getElementById("detail-panel").innerHTML = html;
+  document.getElementById("detail-panel").innerHTML =
+    `<div class="panel-ab" id="panel-ab"><div class="panel-a">${panelA}</div><div class="panel-b">${panelB}</div></div>`;
+  applySettings();
 }
 
 document.querySelectorAll(".map-item").forEach(el => {
@@ -3723,16 +3629,23 @@ function applyFilter() {
     const folderHidden = entry.dataset.hidden === "true";
 
     let visibleCount = 0;
+    const typeCounts = {};
     entry.querySelectorAll(".map-item").forEach(el => {
       const itemHidden = el.dataset.hidden === "true";
       const typeOk = checked.has(typeToFilterKey(el.dataset.type || ""));
       const hiddenOk = mode === "all" || (mode === "active" ? !itemHidden : itemHidden);
       const show = typeOk && hiddenOk;
       el.style.display = show ? "" : "none";
-      if (show) visibleCount++;
+      if (show) { visibleCount++; const t = el.dataset.type || ""; typeCounts[t] = (typeCounts[t] || 0) + 1; }
     });
     const countEl = document.getElementById("fc-" + entry.dataset.fi);
-    if (countEl) countEl.textContent = visibleCount;
+    if (countEl) {
+      countEl.querySelectorAll(".ftc").forEach(pill => {
+        const n = typeCounts[pill.dataset.type] || 0;
+        pill.style.display = n > 0 ? "" : "none";
+        pill.querySelector(".ftc-num").textContent = n;
+      });
+    }
 
     entry.style.display = visibleCount > 0 ? "" : "none";
   });

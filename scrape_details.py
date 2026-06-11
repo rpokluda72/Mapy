@@ -34,6 +34,7 @@ DATA_FILE = Path(__file__).parent / "mapy_data.json"
 IMAGES_DIR = Path(__file__).parent / "images"
 HEADLESS = False
 TAKE_SCREENSHOTS = True
+FOLDER_SCREENSHOT_EXTRA_WAIT = 7000  # ms extra wait before folder screenshot (increase if routes missing)
 
 
 async def detect_type_from_item(page, mi: int) -> str:
@@ -266,6 +267,7 @@ async def run(types_mode: bool = False) -> None:
     else:
         total_work = sum(
             len(fo["maps"]) if fo["include"] == "Y"
+            else 1 if fo["include"] == "F"
             else sum(1 for m in fo["maps"] if m["include"] == "Y")
             for fo in folders_ctrl
         )
@@ -298,14 +300,17 @@ async def run(types_mode: bool = False) -> None:
             # Which map indices to process?
             if types_mode or folder_include == "Y":
                 maps_to_scrape = set(range(len(folder_ctrl["maps"])))
+            elif folder_include == "F":
+                maps_to_scrape = set()      # folder screenshot only
             else:
                 maps_to_scrape = {mi for mi, m in enumerate(folder_ctrl["maps"]) if m["include"] == "Y"}
 
-            if not maps_to_scrape:
+            if not maps_to_scrape and folder_include != "F":
                 print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  (skip)")
                 continue
 
-            print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  ({len(maps_to_scrape)} maps)")
+            label = "folder only" if folder_include == "F" else f"{len(maps_to_scrape)} maps"
+            print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  ({label})")
 
             # Return to main page before opening folder
             if page.url != MAPY_URL:
@@ -345,7 +350,7 @@ async def run(types_mode: bool = False) -> None:
 
             # Read all map names + descriptions before any clicking (avoids stale reads)
             list_count = await page.locator("ul.items.sortable li.item").count()
-            if folder_include == "Y":
+            if types_mode or folder_include == "Y":
                 maps_to_scrape = set(range(list_count))
             list_meta: list[dict] = []
             for mi in range(list_count):
@@ -368,6 +373,7 @@ async def run(types_mode: bool = False) -> None:
 
             # Folder-level screenshot (all routes visible)
             if screenshots:
+                await page.wait_for_timeout(FOLDER_SCREENSHOT_EXTRA_WAIT)  # extra wait for all routes to render
                 folder_map_img = await take_map_screenshot(page, f"folder_{fi}")
                 if folder_map_img:
                     mapy_folder["screenshot"] = folder_map_img
@@ -490,7 +496,7 @@ async def run(types_mode: bool = False) -> None:
                 json.dump(mapy_data, f, ensure_ascii=False, indent=2)
 
             # Reset this folder's include flags to N (safe for interrupts)
-            if not types_mode:
+            if not types_mode and folder_ctrl["include"] in ("Y", "F"):
                 folder_ctrl["include"] = "N"
                 for m in folder_ctrl["maps"]:
                     m["include"] = "N"
