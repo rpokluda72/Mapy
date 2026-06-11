@@ -77,7 +77,7 @@ const DATA = {
       "embed_src": "",
       "maps": [
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 1",
           "description": "Trasa 37,4 km • 2:21 h",
           "type": "bike",
           "share_link": "https://mapy.com/s/jevapelelo",
@@ -89,7 +89,7 @@ const DATA = {
           "elevation_img": "images/jevapelelo_elev.png"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 2",
           "description": "Trasa 40,4 km • 2:34 h",
           "type": "bike",
           "share_link": "https://mapy.com/s/kuvahuhave",
@@ -101,7 +101,7 @@ const DATA = {
           "elevation_img": "images/kuvahuhave_elev.png"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 3",
           "description": "Trasa 88,6 km • 5:23 h",
           "type": "bike",
           "share_link": "https://mapy.com/s/rakadocale",
@@ -113,7 +113,7 @@ const DATA = {
           "elevation_img": "images/rakadocale_elev.png"
         },
         {
-          "name": "Trasa z Loučeň do Loučeň",
+          "name": "Trasa z Loučeň do Loučeň 4",
           "description": "Trasa 88,6 km • 5:23 h",
           "type": "bike",
           "share_link": "https://mapy.com/s/rakadocale",
@@ -2287,7 +2287,7 @@ const DATA = {
         {
           "name": "Kolem Smrku 4",
           "description": "Trasa 74,7 km • 5:28 h",
-          "type": "",
+          "type": "bike",
           "share_link": "https://mapy.com/s/katukugaba",
           "embed_src": "https://mapy.com/s/katukugaba",
           "points": [],
