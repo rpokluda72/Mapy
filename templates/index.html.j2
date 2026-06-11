@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Maps</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    background: #f0f2f5;
+    color: #222;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: #1a7340;
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    flex-shrink: 0;
+  }
+
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Left nav ── */
+  nav {
+    width: 340px;
+    min-width: 260px;
+    background: #fff;
+    border-right: 1px solid #dde1e7;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .folder-header {
+    display: flex;
+    align-items: center;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1a5c30;
+    border-bottom: 1px solid #eef0f3;
+    user-select: none;
+    gap: 7px;
+    transition: background .12s;
+  }
+  .folder-header:hover { background: #f4faf6; }
+  .folder-header.active { background: #e8f5ee; }
+
+  .folder-arrow {
+    display: inline-block;
+    width: 14px;
+    font-size: 10px;
+    transition: transform .18s;
+    color: #888;
+  }
+  .folder-header.open .folder-arrow { transform: rotate(90deg); }
+
+  .folder-count {
+    font-size: 11px;
+    background: #e8f0eb;
+    color: #4a7a5a;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .folder-maps { display: none; background: #fafbfc; }
+  .folder-maps.open { display: block; }
+
+  .map-item {
+    display: flex;
+    align-items: center;
+    padding: 7px 14px 7px 34px;
+    cursor: pointer;
+    border-bottom: 1px solid #eef0f3;
+    gap: 7px;
+    color: #333;
+    transition: background .12s;
+  }
+  .map-item:hover { background: #eef6f1; }
+  .map-item.active { background: #d4eddf; color: #145228; font-weight: 600; }
+
+  .type-icon { width: 20px; text-align: center; flex-shrink: 0; }
+  .type-icon-img { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 7px 14px 6px;
+    background: #f0f6f2;
+    border-bottom: 1px solid #dde1e7;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+  .filter-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; flex-shrink: 0; }
+  .filter-item { display: flex; align-items: center; gap: 3px; font-size: 12px; cursor: pointer; user-select: none; white-space: nowrap; }
+  .filter-item input { cursor: pointer; accent-color: #1a7340; }
+  .filter-item img { width: 16px; height: 16px; object-fit: contain; }
+
+  /* ── Hide/restore button ── */
+  .del-btn {
+    display: none;
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    border-radius: 3px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .del-btn:hover { background: #fde8e6; }
+  .del-btn.restore { color: #1a7340; }
+  .del-btn.restore:hover { background: #e8f5ee; }
+  .folder-header:hover .del-btn,
+  .map-item:hover .del-btn { display: block; }
+
+  /* ── Hidden items ── */
+  .map-item.is-hidden { opacity: 0.4; }
+  .map-item.is-hidden .map-item-name { text-decoration: line-through; }
+  .folder-entry.is-hidden > .folder-header { opacity: 0.4; }
+  .map-item-text { overflow: hidden; }
+  .map-item-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .map-item-desc { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── Right panel ── */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+  }
+
+  .detail-panel { padding: 28px 32px; max-width: 860px; }
+
+  /* Map hero card */
+  .map-hero {
+    background: linear-gradient(135deg, #1a7340 0%, #2a9456 100%);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .map-hero-info { flex: 1; min-width: 0; }
+  .map-hero h2 {
+    font-size: 22px; font-weight: 700; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .map-hero .subtitle { font-size: 14px; opacity: .85; }
+
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: #1a7340;
+    font-size: 15px; font-weight: 700;
+    padding: 12px 22px; border-radius: 8px;
+    text-decoration: none; white-space: nowrap;
+    border: none; cursor: pointer;
+    transition: background .15s, transform .1s;
+    flex-shrink: 0;
+  }
+  .open-btn:hover { background: #e8f5ee; transform: translateY(-1px); }
+  .open-btn svg { flex-shrink: 0; }
+
+  .no-link-note {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 13px;
+    opacity: .9;
+    flex-shrink: 0;
+  }
+
+  .empty-hero {
+    background: #f0f2f5; border-radius: 10px;
+    padding: 48px 32px; margin-bottom: 24px;
+    text-align: center; color: #aaa; font-size: 15px;
+  }
+
+  /* Folder subtitle */
+  .folder-subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+  /* Section titles */
+  .section-title {
+    font-size: 12px; font-weight: 700; color: #555;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: 8px; margin-top: 20px;
+  }
+
+  /* Map table */
+  table.map-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.map-table th {
+    text-align: left; padding: 7px 10px;
+    background: #f0f7f3; border-bottom: 2px solid #c8e0d0;
+    font-weight: 600; color: #2a6040;
+  }
+  table.map-table td { padding: 8px 10px; border-bottom: 1px solid #eef0f3; vertical-align: middle; }
+  table.map-table tr:hover td { background: #f6fbf8; }
+  table.map-table .col-name { font-weight: 500; cursor: pointer; color: #1a5c30; }
+  table.map-table .col-name:hover { text-decoration: underline; }
+
+  .tbl-link {
+    font-size: 12px; color: #1a7340; text-decoration: none;
+    background: #e8f5ee; padding: 3px 9px; border-radius: 4px;
+    border: 1px solid #b5d9c3; white-space: nowrap;
+  }
+  .tbl-link:hover { background: #d0eedd; }
+
+  /* Route detail */
+  .summary-text { font-size: 14px; font-weight: 600; color: #333; }
+  .elevation-text { font-size: 12px; color: #555; white-space: pre-wrap; background: #f8fafb; padding: 8px; border-radius: 4px; }
+  .user-note { font-size: 13px; color: #444; background: #fffbe6; border-left: 3px solid #f0c040; padding: 8px 12px; border-radius: 0 4px 4px 0; white-space: pre-wrap; margin-bottom: 18px; }
+
+  .map-screenshot {
+    width: 100%; border-radius: 8px; display: block;
+    margin-bottom: 0; border: 1px solid #dde1e7;
+    cursor: pointer;
+  }
+  .elev-screenshot {
+    max-width: 100%; height: auto; border-radius: 6px; display: block;
+    border: 1px solid #dde1e7;
+  }
+
+  .points-list { list-style: none; counter-reset: pt; }
+  .points-list li {
+    counter-increment: pt; padding: 5px 0 5px 28px; position: relative;
+    border-bottom: 1px solid #f0f2f5; font-size: 13px;
+  }
+  .points-list li::before {
+    content: counter(pt); position: absolute; left: 0; top: 5px;
+    background: #1a7340; color: #fff; width: 18px; height: 18px;
+    border-radius: 50%; text-align: center; font-size: 11px;
+    line-height: 18px; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header style="display:flex;align-items:center"><span style="flex:1">My Maps — mapy.com</span><a href="/admin.html" target="_blank" style="font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:400" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">Admin ↗</a></header>
+
+<div class="layout">
+  <nav id="nav">
+    <div class="filter-bar">
+      <div class="filter-row">
+        <span class="filter-label">Filter:</span>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="car" checked><img src="icons/route-car-2-icon.png" alt=""> Car</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="bike" checked><img src="icons/route-cyc-2-icon.png" alt=""> Bike</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="hiking" checked><img src="icons/route-ped-2-icon.png" alt=""> Walk</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="other" checked><img src="icons/route-adr-2-icon.png" alt=""> Other</label>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Show:</span>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="active" checked> Active</label>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="all"> All</label>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="hidden"> Hidden</label>
+      </div>
+    </div>
+    {% for folder in folders %}{% set fi = loop.index0 %}
+    <div class="folder-entry{% if folder.hidden %} is-hidden{% endif %}" data-fi="{{ fi }}" data-hidden="{{ 'true' if folder.hidden else 'false' }}">
+      <div class="folder-header" id="fh-{{ fi }}" onclick="toggleFolder({{ fi }})">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ folder.name }}</span>
+        <span class="folder-count" id="fc-{{ fi }}">{{ folder.maps|length }}</span>
+        <button class="del-btn{% if folder.hidden %} restore{% endif %}" onclick="event.stopPropagation(); toggleHide({{ fi }})" title="{% if folder.hidden %}Restore folder{% else %}Hide folder{% endif %}">{% if folder.hidden %}↩{% else %}×{% endif %}</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-{{ fi }}">
+        {% for map in folder.maps %}{% set mi = loop.index0 %}
+        <div class="map-item{% if map.hidden %} is-hidden{% endif %}" id="mi-{{ fi }}-{{ mi }}" data-fi="{{ fi }}" data-mi="{{ mi }}" data-type="{{ map.type }}" data-hidden="{{ 'true' if map.hidden else 'false' }}">
+          <span class="type-icon">{{ icons.get(map.type, icons['']) }}</span>
+          <div class="map-item-text">
+            <div class="map-item-name">{{ map.name }}</div>
+            {% if map.description %}
+            <div class="map-item-desc">{{ map.description }}</div>
+            {% endif %}
+          </div>
+          <button class="del-btn{% if map.hidden %} restore{% endif %}" onclick="event.stopPropagation(); toggleHide({{ fi }}, {{ mi }})" title="{% if map.hidden %}Restore map{% else %}Hide map{% endif %}">{% if map.hidden %}↩{% else %}×{% endif %}</button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </nav>
+
+  <main>
+    <div class="detail-panel" id="detail-panel">
+      <div class="empty-hero">← Select a folder or map from the menu</div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script>
+const TYPE_LABELS = { bike: "Cycling", hiking: "Hiking", car: "Driving", adr: "Address" };
+const TYPE_ICONS  = {
+  bike:   '<img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt="">',
+  hiking: '<img src="icons/route-ped-2-icon.png" class="type-icon-img" alt="">',
+  car:    '<img src="icons/route-car-2-icon.png" class="type-icon-img" alt="">',
+  adr:    '<img src="icons/route-adr-2-icon.png" class="type-icon-img" alt="">',
+  "":     '<img src="icons/route-adr-2-icon.png" class="type-icon-img" alt="">',
+};
+
+const OPEN_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+function esc(s) {
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function heroBtn(url, label) {
+  if (url) {
+    return `<a class="open-btn" href="${esc(url)}" target="_blank">${OPEN_ICON} ${label}</a>`;
+  }
+  return `<span class="no-link-note">No share link available</span>`;
+}
+
+function clearActive() {
+  document.querySelectorAll(".folder-header.active").forEach(e => e.classList.remove("active"));
+  document.querySelectorAll(".map-item.active").forEach(e => e.classList.remove("active"));
+}
+
+function toggleFolder(fi) {
+  const header = document.getElementById("fh-" + fi);
+  const maps   = document.getElementById("folder-maps-" + fi);
+  const isOpen = maps.classList.contains("open");
+  if (isOpen) {
+    maps.classList.remove("open");
+    header.classList.remove("open", "active");
+  } else {
+    maps.classList.add("open");
+    header.classList.add("open");
+    showFolder(fi);
+  }
+}
+
+function showFolder(fi) {
+  clearActive();
+  document.getElementById("fh-" + fi).classList.add("active");
+  const folder = DATA.folders[fi];
+  const folderUrl = folder.share_link || (folder.maps[0] && folder.maps[0].share_link) || "";
+
+  let html = "";
+
+  // Folder map screenshot (shows all routes)
+  if (folder.screenshot) {
+    html += `<a href="${esc(folderUrl)}" target="_blank">
+      <img class="map-screenshot" src="${esc(folder.screenshot)}" alt="${esc(folder.name)}" loading="lazy">
+    </a>`;
+  }
+
+  html += `<div class="map-hero">
+    <div class="map-hero-info">
+      <h2>📁 ${esc(folder.name)}</h2>
+      <div class="subtitle">${folder.maps.length} route(s)</div>
+    </div>
+    ${heroBtn(folderUrl, "Open in mapy.com")}
+  </div>`;
+
+  if (folder.note) {
+    html += `<div class="user-note">${esc(folder.note)}</div>`;
+  }
+
+  if (!folder.maps.length) {
+    html += `<p style="color:#aaa;font-style:italic">No maps in this folder.</p>`;
+  } else {
+    html += `<table class="map-table"><thead><tr>
+      <th></th><th>Name</th><th>Distance / Time</th><th>Open</th>
+    </tr></thead><tbody>`;
+    folder.maps.forEach((map, mi) => {
+      const icon = TYPE_ICONS[map.type] || TYPE_ICONS[""];
+      const desc = map.description || map.summary || "";
+      const link = map.share_link
+        ? `<a class="tbl-link" href="${esc(map.share_link)}" target="_blank">Open ↗</a>` : "";
+      html += `<tr>
+        <td class="type-icon">${icon}</td>
+        <td class="col-name" onclick="openMapFromTable(${fi},${mi})">${esc(map.name)}</td>
+        <td>${esc(desc)}</td>
+        <td>${link}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+
+  document.getElementById("detail-panel").innerHTML = html;
+}
+
+function openMapFromTable(fi, mi) {
+  const mapsEl = document.getElementById("folder-maps-" + fi);
+  const header = document.getElementById("fh-" + fi);
+  if (!mapsEl.classList.contains("open")) {
+    mapsEl.classList.add("open");
+    header.classList.add("open");
+  }
+  showMap(fi, mi);
+}
+
+function showMap(fi, mi) {
+  clearActive();
+  const itemEl = document.getElementById("mi-" + fi + "-" + mi);
+  if (itemEl) itemEl.classList.add("active");
+
+  const map = DATA.folders[fi].maps[mi];
+  const url = map.share_link || map.embed_src || "";
+  const typeLabel = TYPE_LABELS[map.type] || "";
+  const subtitle  = [typeLabel, map.description].filter(Boolean).join(" · ");
+
+  let html = "";
+
+  // Map screenshot
+  if (map.screenshot) {
+    html += `<a href="${esc(url)}" target="_blank">
+      <img class="map-screenshot" src="${esc(map.screenshot)}" alt="${esc(map.name)}" loading="lazy">
+    </a>`;
+  }
+
+  html += `<div class="map-hero">
+    <div class="map-hero-info">
+      <h2>${esc(map.name)}</h2>
+      ${subtitle ? `<div class="subtitle">${esc(subtitle)}</div>` : ""}
+    </div>
+    ${heroBtn(url, "Open in mapy.com")}
+  </div>`;
+
+  if (map.note) {
+    html += `<div class="user-note">${esc(map.note)}</div>`;
+  }
+
+  if (map.summary && map.summary !== map.description) {
+    html += `<div class="section-title">Distance &amp; Time</div>
+      <div class="summary-text">${esc(map.summary)}</div>`;
+  }
+
+  if (map.points && map.points.length) {
+    html += `<div class="section-title">Route Points (${map.points.length})</div>
+      <ol class="points-list">`;
+    map.points.forEach(pt => { html += `<li>${esc(pt)}</li>`; });
+    html += `</ol>`;
+  }
+
+  // Elevation screenshot
+  if (map.elevation_img) {
+    html += `<div class="section-title">Elevation Profile</div>
+      <img class="elev-screenshot" src="${esc(map.elevation_img)}" alt="Elevation profile" loading="lazy">`;
+  } else if (map.elevation_text) {
+    html += `<div class="section-title">Elevation</div>
+      <div class="elevation-text">${esc(map.elevation_text)}</div>`;
+  }
+
+  document.getElementById("detail-panel").innerHTML = html;
+}
+
+document.querySelectorAll(".map-item").forEach(el => {
+  el.addEventListener("click", () => {
+    showMap(parseInt(el.dataset.fi), parseInt(el.dataset.mi));
+  });
+});
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function typeToFilterKey(t) {
+  return (t === "car" || t === "bike" || t === "hiking") ? t : "other";
+}
+
+function applyFilter() {
+  const checked = new Set(
+    [...document.querySelectorAll(".filter-cb:checked")].map(cb => cb.dataset.type)
+  );
+  const mode = document.querySelector('input[name="hidden-filter"]:checked').value;
+  // mode: "active" = non-hidden only, "all" = everything, "hidden" = hidden only
+
+  document.querySelectorAll(".folder-entry").forEach(entry => {
+    const folderHidden = entry.dataset.hidden === "true";
+
+    let visibleCount = 0;
+    entry.querySelectorAll(".map-item").forEach(el => {
+      const itemHidden = el.dataset.hidden === "true";
+      const typeOk = checked.has(typeToFilterKey(el.dataset.type || ""));
+      const hiddenOk = mode === "all" || (mode === "active" ? !itemHidden : itemHidden);
+      const show = typeOk && hiddenOk;
+      el.style.display = show ? "" : "none";
+      if (show) visibleCount++;
+    });
+    const countEl = document.getElementById("fc-" + entry.dataset.fi);
+    if (countEl) countEl.textContent = visibleCount;
+
+    entry.style.display = visibleCount > 0 ? "" : "none";
+  });
+}
+
+document.querySelectorAll(".filter-cb").forEach(cb => cb.addEventListener("change", applyFilter));
+document.querySelectorAll('input[name="hidden-filter"]').forEach(r => r.addEventListener("change", applyFilter));
+applyFilter();
+
+// ── Hide / Restore ────────────────────────────────────────────────────────
+async function toggleHide(fi, mi = null) {
+  const el = mi === null
+    ? document.querySelector(`.folder-entry[data-fi="${fi}"]`)
+    : document.getElementById(`mi-${fi}-${mi}`);
+  const hidden = !(el.dataset.hidden === "true");
+  const body = mi === null
+    ? {type: "folder", folder_index: fi, hidden}
+    : {type: "map", folder_index: fi, map_index: mi, hidden};
+  const r = await fetch("/api/hide", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body),
+  });
+  if (r.ok) location.reload();
+  else alert("Failed — is the server running? (run serve)");
+}
+</script>
+</body>
+</html>

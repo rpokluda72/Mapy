@@ -1,0 +1,1224 @@
+{
+  "folders": [
+    {
+      "name": "TJ Tatry-Gorce 2026",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Kolejowa 46",
+          "include": "N"
+        },
+        {
+          "name": "Bike route",
+          "include": "N"
+        },
+        {
+          "name": "Car route",
+          "include": "N"
+        },
+        {
+          "name": "Turbacz",
+          "include": "N"
+        },
+        {
+          "name": "Neděle",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Loučeň",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Trasa z Loučeň do Loučeň",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň",
+          "include": "N"
+        },
+        {
+          "name": "Mnichovo Hradiště-Boleslav",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Brandýs-Lysá",
+          "include": "N"
+        },
+        {
+          "name": "Dětenice-Kopidlno",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Poděbrady-Kolín",
+          "include": "N"
+        },
+        {
+          "name": "Dětenice-Jičín",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Poděbrady-Chlumec",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Velichovky",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Hradec",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Hustířanská 209 do Velichovky",
+          "include": "N"
+        },
+        {
+          "name": "Smiřice-Jaroměř-Nové město-Náchod",
+          "include": "N"
+        },
+        {
+          "name": "Dvůr-Kostelec-Skalice",
+          "include": "N"
+        },
+        {
+          "name": "Hradec Králové",
+          "include": "N"
+        },
+        {
+          "name": "Hradec-Třebechovice",
+          "include": "N"
+        },
+        {
+          "name": "Kuks",
+          "include": "N"
+        },
+        {
+          "name": "Hořice-Bělohrad-Miletín",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Olomučany",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Rájec Lysice",
+          "include": "N"
+        },
+        {
+          "name": "Boskovice 5",
+          "include": "N"
+        },
+        {
+          "name": "Boskovice 4",
+          "include": "N"
+        },
+        {
+          "name": "Boskovice 3",
+          "include": "N"
+        },
+        {
+          "name": "Boskovice 2",
+          "include": "N"
+        },
+        {
+          "name": "Boskovice",
+          "include": "N"
+        },
+        {
+          "name": "Brno",
+          "include": "N"
+        },
+        {
+          "name": "Moravský kras 2",
+          "include": "N"
+        },
+        {
+          "name": "Moravský kras",
+          "include": "N"
+        },
+        {
+          "name": "Olšovec-Bukovinka 3",
+          "include": "N"
+        },
+        {
+          "name": "Olšovec-Bukovinka 2",
+          "include": "N"
+        },
+        {
+          "name": "Olšovec-Bukovinka",
+          "include": "N"
+        },
+        {
+          "name": "Olšovec-Křtiny",
+          "include": "N"
+        },
+        {
+          "name": "Černá hora",
+          "include": "N"
+        },
+        {
+          "name": "Adamov",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Olomučan",
+          "include": "N"
+        },
+        {
+          "name": "Olomučany pěší",
+          "include": "N"
+        },
+        {
+          "name": "Olomučany pěší 2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Valašské Meziříčí",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Rožnov Bečva",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov 5",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov 4",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov 3",
+          "include": "N"
+        },
+        {
+          "name": "Lipník 2",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Sokolská do Komenského",
+          "include": "N"
+        },
+        {
+          "name": "Bystřička-Vsetín4",
+          "include": "N"
+        },
+        {
+          "name": "Bystřička-Vsetín 3",
+          "include": "N"
+        },
+        {
+          "name": "Dolní Bečva - Radhošť",
+          "include": "N"
+        },
+        {
+          "name": "ValMez-Medůvka",
+          "include": "N"
+        },
+        {
+          "name": "Kelčský Javorník-Kyčera",
+          "include": "N"
+        },
+        {
+          "name": "Ptáčnice",
+          "include": "N"
+        },
+        {
+          "name": "Tanečnice",
+          "include": "N"
+        },
+        {
+          "name": "Lešná-Rožnov",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov 2",
+          "include": "N"
+        },
+        {
+          "name": "Rožnov-Bystřička-Vsetín",
+          "include": "N"
+        },
+        {
+          "name": "Bystřička",
+          "include": "N"
+        },
+        {
+          "name": "Bystřička-Vsetín",
+          "include": "N"
+        },
+        {
+          "name": "Bystřička-Vsetín 2",
+          "include": "N"
+        },
+        {
+          "name": "Kelč-Teplice-Lešná",
+          "include": "N"
+        },
+        {
+          "name": "Kelč-Teplice-Lipník-Lešná",
+          "include": "N"
+        },
+        {
+          "name": "Kateřinice",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Ludvíkov",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Karlova Studanka-praded",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Karlova Studánka",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Sokolí skály",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-rozhledna Na Skalce",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-okolo Žárového vrchu",
+          "include": "N"
+        },
+        {
+          "name": "Lysůvky-Krnov-Ludvíkov",
+          "include": "N"
+        },
+        {
+          "name": "Lysůvky-Bruntál-Ludvíkov",
+          "include": "N"
+        },
+        {
+          "name": "Lysůvky-Bruntál-Malá MorávkaLudvíkov",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Anenský vrch-neděle",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Solná cesta-Bílý potok-sobota",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Anenský vrch-Freudenštejn",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Solná cesta-Bílý potok",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Karlova Studánka-Anenský vrch",
+          "include": "N"
+        },
+        {
+          "name": "Vidly-Švýcárna",
+          "include": "N"
+        },
+        {
+          "name": "Karlova Studánka - Praděd",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Stezka Českem",
+      "include": "N",
+      "maps": [
+        {
+          "name": "01_Krásná -Klínovec",
+          "include": "N"
+        },
+        {
+          "name": "02_Krušné_Hory-Boží Dar-Děčínský Sněžník",
+          "include": "N"
+        },
+        {
+          "name": "03_Č- Švýcarsko- Lužické_hory",
+          "include": "N"
+        },
+        {
+          "name": "04_Jizerky_Krkonoše-Chrastava - Žacléř",
+          "include": "N"
+        },
+        {
+          "name": "05_Adršpach_Broumov-Žacléř - Velké Poříčí",
+          "include": "N"
+        },
+        {
+          "name": "06_Orlické_hory-Velké Poříčí-Králíky",
+          "include": "N"
+        },
+        {
+          "name": "07_Králíky-Jeseník_Budiš nad Budišovkou",
+          "include": "N"
+        },
+        {
+          "name": "08_Budišov nad Budišovkou_Hodslavice",
+          "include": "N"
+        },
+        {
+          "name": "09_Beskydy_Hodslavice-Nejvychodnejsi bod ČR",
+          "include": "N"
+        },
+        {
+          "name": "10_Rychlebske hory-alternativní",
+          "include": "N"
+        },
+        {
+          "name": "11_Beskydy, Javorníky",
+          "include": "N"
+        },
+        {
+          "name": "12_Bílé Karpaty",
+          "include": "N"
+        },
+        {
+          "name": "13_Dolnomoravský úval",
+          "include": "N"
+        },
+        {
+          "name": "14_Podyjí",
+          "include": "N"
+        },
+        {
+          "name": "15_Česká Kanada",
+          "include": "N"
+        },
+        {
+          "name": "16_Novohradské hory",
+          "include": "N"
+        },
+        {
+          "name": "17_Jižní Šumava",
+          "include": "N"
+        },
+        {
+          "name": "18_Šumava",
+          "include": "N"
+        },
+        {
+          "name": "19_Západní Šumava",
+          "include": "N"
+        },
+        {
+          "name": "20_Český les",
+          "include": "N"
+        },
+        {
+          "name": "30: Alternativa Vejprty",
+          "include": "N"
+        },
+        {
+          "name": "31: Alternativa Nejsevernější bod ČR",
+          "include": "N"
+        },
+        {
+          "name": "32: Alternativa_Východní_bod",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Lipno",
+      "include": "N",
+      "maps": [
+        {
+          "name": "kolem Lipna 3",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Lipna 2",
+          "include": "N"
+        },
+        {
+          "name": "Svatý Tomáš",
+          "include": "N"
+        },
+        {
+          "name": "Plešné jezero 3",
+          "include": "N"
+        },
+        {
+          "name": "Okolo Lipna",
+          "include": "N"
+        },
+        {
+          "name": "Plešné jezero",
+          "include": "N"
+        },
+        {
+          "name": "Rožmberk - Horní Dvořiště",
+          "include": "N"
+        },
+        {
+          "name": "Zátoň-Rožmberk-2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Znojmo",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Hardegska vyhlidka",
+          "include": "N"
+        },
+        {
+          "name": "Jaroslavice 2",
+          "include": "N"
+        },
+        {
+          "name": "R P 2",
+          "include": "N"
+        },
+        {
+          "name": "Petr Romana",
+          "include": "N"
+        },
+        {
+          "name": "Vranov 2",
+          "include": "N"
+        },
+        {
+          "name": "Jaroslavice",
+          "include": "N"
+        },
+        {
+          "name": "Hnanice-Nový Hrádek",
+          "include": "N"
+        },
+        {
+          "name": "Hnanice-Nový Hrádek-Hardegg",
+          "include": "N"
+        },
+        {
+          "name": "Jevišovice",
+          "include": "N"
+        },
+        {
+          "name": "Hostěradice",
+          "include": "N"
+        },
+        {
+          "name": "Šatov-Hnanice-Nový Hrádek-Hardegg",
+          "include": "N"
+        },
+        {
+          "name": "Vranov",
+          "include": "N"
+        },
+        {
+          "name": "Bítov-Vranov",
+          "include": "N"
+        },
+        {
+          "name": "Bítov-Vranov-2",
+          "include": "N"
+        },
+        {
+          "name": "Moravský Krumlov",
+          "include": "N"
+        },
+        {
+          "name": "Moravský Krumlov-2",
+          "include": "N"
+        },
+        {
+          "name": "Jaroměřice-Jevišovice",
+          "include": "N"
+        },
+        {
+          "name": "Niederfladnitz-Retz",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Cyklotrasy",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Bílý Kříž 2",
+          "include": "N"
+        },
+        {
+          "name": "Bílý Kříž 1",
+          "include": "N"
+        },
+        {
+          "name": "Čeladná-Pustevny",
+          "include": "N"
+        },
+        {
+          "name": "Frýdlant-Ostravice-Staškov-Malenovice",
+          "include": "N"
+        },
+        {
+          "name": "Hůrky-Ondřejník",
+          "include": "N"
+        },
+        {
+          "name": "Brušperk-Příbor-Sklenov",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Visalaje-Krásná",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice - kolem Šance",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Pěší trasy",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Štramberk-Bílá hora",
+          "include": "N"
+        },
+        {
+          "name": "Kopřivnice-Červený kámen",
+          "include": "N"
+        },
+        {
+          "name": "Čeladná-Čertův mlýn-Pustevny",
+          "include": "N"
+        },
+        {
+          "name": "Velký Javorník 2",
+          "include": "N"
+        },
+        {
+          "name": "Velký Javorník 1",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Lysá hora",
+      "include": "N",
+      "maps": [
+        {
+          "name": "LH1",
+          "include": "N"
+        },
+        {
+          "name": "LH10",
+          "include": "N"
+        },
+        {
+          "name": "LH11",
+          "include": "N"
+        },
+        {
+          "name": "LH12",
+          "include": "N"
+        },
+        {
+          "name": "LH13",
+          "include": "N"
+        },
+        {
+          "name": "LH14",
+          "include": "N"
+        },
+        {
+          "name": "LH15",
+          "include": "N"
+        },
+        {
+          "name": "LH2",
+          "include": "N"
+        },
+        {
+          "name": "LH3",
+          "include": "N"
+        },
+        {
+          "name": "LH4",
+          "include": "N"
+        },
+        {
+          "name": "LH5",
+          "include": "N"
+        },
+        {
+          "name": "LH6",
+          "include": "N"
+        },
+        {
+          "name": "LH7",
+          "include": "N"
+        },
+        {
+          "name": "LH8",
+          "include": "N"
+        },
+        {
+          "name": "LH9",
+          "include": "N"
+        },
+        {
+          "name": "Mazák-LH-Zbuj-LH-Mazák",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "TJ Sokol",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Velký Javorník 2",
+          "include": "N"
+        },
+        {
+          "name": "Cyklovýlet-Brušperk-Trnávka",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Lietavská Závadka do Sůlov",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Stezka Českem na kole",
+      "include": "N",
+      "maps": [
+        {
+          "name": "01-Krásná-Klínovec na kole",
+          "include": "N"
+        },
+        {
+          "name": "02- Krušné hory na kole",
+          "include": "N"
+        },
+        {
+          "name": "03-České Švýcarsko-Lužické hory na kole",
+          "include": "N"
+        },
+        {
+          "name": "04-Jizerky a Krkonoše na kole",
+          "include": "N"
+        },
+        {
+          "name": "05-Adršpach- Broumovsko na kole",
+          "include": "N"
+        },
+        {
+          "name": "06-Orlické na kole",
+          "include": "N"
+        },
+        {
+          "name": "07-Jeseníky na kole",
+          "include": "N"
+        },
+        {
+          "name": "08-Podbeskydí na kole",
+          "include": "N"
+        },
+        {
+          "name": "09-Beskydy na kole",
+          "include": "N"
+        },
+        {
+          "name": "10-Rychlebky na kole alternativa",
+          "include": "N"
+        },
+        {
+          "name": "11-Beskydy, Javorníky na kole",
+          "include": "N"
+        },
+        {
+          "name": "12- Bílé Karpaty na kole",
+          "include": "N"
+        },
+        {
+          "name": "13-Dolnomoravský úval na kole",
+          "include": "N"
+        },
+        {
+          "name": "14-Podyjí na kole",
+          "include": "N"
+        },
+        {
+          "name": "15-Česká Kanada na kole",
+          "include": "N"
+        },
+        {
+          "name": "16- Novohradské hory na kole",
+          "include": "N"
+        },
+        {
+          "name": "17- Jižní Šumava na kole",
+          "include": "N"
+        },
+        {
+          "name": "18-Šumava na kole",
+          "include": "N"
+        },
+        {
+          "name": "19-Západní Šumava na kole",
+          "include": "N"
+        },
+        {
+          "name": "20-Český les na kole",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Smrk - cyklo",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Kolem Smrku 4",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Smrku 2",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Smrku 3",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Smrku 4",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Smrku",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Lednice",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Pavlov-Stolová hora",
+          "include": "N"
+        },
+        {
+          "name": "Lednice a okolí",
+          "include": "N"
+        },
+        {
+          "name": "Břeclav-Lanžhot",
+          "include": "N"
+        },
+        {
+          "name": "Mikulov-Valtice",
+          "include": "N"
+        },
+        {
+          "name": "Nové mlýny",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Bike-Ostravice",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Kolem Smrku",
+          "include": "N"
+        },
+        {
+          "name": "Čeladná-Pustevny",
+          "include": "N"
+        },
+        {
+          "name": "Bílý kříž 2",
+          "include": "N"
+        },
+        {
+          "name": "Bílý kříž 1",
+          "include": "N"
+        },
+        {
+          "name": "Zbuj",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-LH3",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Lysa hora",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-LH2",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Butořanka-Zbuj",
+          "include": "N"
+        },
+        {
+          "name": "Kolem Šance-Podolánky",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Butořanka",
+          "include": "N"
+        },
+        {
+          "name": "BT-Frýdlant-Grůň",
+          "include": "N"
+        },
+        {
+          "name": "Ondráš-Mazák",
+          "include": "N"
+        },
+        {
+          "name": "Zbuj-Mazák",
+          "include": "N"
+        },
+        {
+          "name": "Zbuj-Mazák-2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Vysočina",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Herálec-Hlinsko",
+          "include": "N"
+        },
+        {
+          "name": "Herálec-Milovy-Kamenice",
+          "include": "N"
+        },
+        {
+          "name": "Herálec-ŽnS-NMaM",
+          "include": "N"
+        },
+        {
+          "name": "Devět skal-Perníčky",
+          "include": "N"
+        },
+        {
+          "name": "Trasa x",
+          "include": "N"
+        },
+        {
+          "name": "Kučerů mlýn",
+          "include": "N"
+        },
+        {
+          "name": "Karlštejn",
+          "include": "N"
+        },
+        {
+          "name": "Devět skal",
+          "include": "N"
+        },
+        {
+          "name": "Perníčky",
+          "include": "N"
+        },
+        {
+          "name": "Žďár nad Sázavou",
+          "include": "N"
+        },
+        {
+          "name": "Nové Město na Moravě",
+          "include": "N"
+        },
+        {
+          "name": "Jimramov",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Ostatní",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Turzovka-Vyšný Koniec 465",
+          "include": "N"
+        },
+        {
+          "name": "Lysůvky-Maximus-Znojmo",
+          "include": "N"
+        },
+        {
+          "name": "Lysůvky-Znojmo",
+          "include": "N"
+        },
+        {
+          "name": "Vlčina Frenštát pod Radhoštěm",
+          "include": "N"
+        },
+        {
+          "name": "Brno Míša",
+          "include": "N"
+        },
+        {
+          "name": "Velký Javorník 1",
+          "include": "N"
+        },
+        {
+          "name": "Černá cesta 119/47",
+          "include": "N"
+        },
+        {
+          "name": "Brušperk-Příbor-Sklenov",
+          "include": "N"
+        },
+        {
+          "name": "Metylovice-Ondřejník-Skalka",
+          "include": "N"
+        },
+        {
+          "name": "Chlebovice - Mločí studánka",
+          "include": "N"
+        },
+        {
+          "name": "běh Brušperk 2",
+          "include": "N"
+        },
+        {
+          "name": "Radhošť 2",
+          "include": "N"
+        },
+        {
+          "name": "Radhošť 1",
+          "include": "N"
+        },
+        {
+          "name": "běh Brušperk",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Beskydy",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Velká Čantoryje",
+          "include": "N"
+        },
+        {
+          "name": "Javorový",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-IC-Zbuj-LH",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Opicarna-LH",
+          "include": "N"
+        },
+        {
+          "name": "Malenovice-LH",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Grůň-Ostravice",
+          "include": "N"
+        },
+        {
+          "name": "Prašivá-Kotař-Ropička",
+          "include": "N"
+        },
+        {
+          "name": "kolem Šance",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Palkovice 288 do Hraniční 28",
+          "include": "N"
+        },
+        {
+          "name": "Malenovice-Lysá hora",
+          "include": "N"
+        },
+        {
+          "name": "Ostravice-Martina-Pustevny-Raztoka-Ostravice",
+          "include": "N"
+        },
+        {
+          "name": "Kolo Ostravice-Grun-BK-Podolanky-Ostravice",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Hůrky",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Přes Hůrky 2",
+          "include": "N"
+        },
+        {
+          "name": "Přes Hůrky 1",
+          "include": "N"
+        },
+        {
+          "name": "33-Fryčovice-Kubánkov",
+          "include": "N"
+        },
+        {
+          "name": "Fryčovice-Kubánkov",
+          "include": "N"
+        },
+        {
+          "name": "Fryčovice-Ml.stud.-Hukvaldy-Fryčovice",
+          "include": "N"
+        },
+        {
+          "name": "Fryčovice-Ml.stud.-Hukvaldy-Fryčovice 2",
+          "include": "N"
+        },
+        {
+          "name": "Fryčovice-Ml.stud.",
+          "include": "N"
+        },
+        {
+          "name": "33-Minipivovar",
+          "include": "N"
+        },
+        {
+          "name": "33-Rybí",
+          "include": "N"
+        },
+        {
+          "name": "33-Košice-Rybí",
+          "include": "N"
+        },
+        {
+          "name": "33-Košice-Rybí-Ml.stud.-33",
+          "include": "N"
+        },
+        {
+          "name": "Hukvaldy-Ml.stud.-Hůrky",
+          "include": "N"
+        },
+        {
+          "name": "Fryčovice-Rybí",
+          "include": "N"
+        },
+        {
+          "name": "Rybí-Ondřejník",
+          "include": "N"
+        },
+        {
+          "name": "33-Rybí-Ondřejník",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Jeseníky",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Karlov-Alfrédka-Vysoká hole",
+          "include": "N"
+        },
+        {
+          "name": "Bělá-ŠvýcárnaVidly",
+          "include": "N"
+        },
+        {
+          "name": "Červená hora-Keprník-2",
+          "include": "N"
+        },
+        {
+          "name": "Červená hora-Keprník",
+          "include": "N"
+        },
+        {
+          "name": "Ludvíkov-Filipovice",
+          "include": "N"
+        },
+        {
+          "name": "Zelinkovice-Ludvíkov",
+          "include": "N"
+        },
+        {
+          "name": "Mnichov-Praděd",
+          "include": "N"
+        },
+        {
+          "name": "Mnichov-Rejvíz",
+          "include": "N"
+        },
+        {
+          "name": "Trasa Mnichov-Praděd 27.6.2020",
+          "include": "N"
+        },
+        {
+          "name": "Trasa Mnichov-Praděd 2",
+          "include": "N"
+        },
+        {
+          "name": "Trasa Mnichov-Praděd",
+          "include": "N"
+        },
+        {
+          "name": "Jeseníky 2",
+          "include": "N"
+        },
+        {
+          "name": "Jeseníky 3",
+          "include": "N"
+        },
+        {
+          "name": "Jeseníky 4",
+          "include": "N"
+        }
+      ]
+    }
+  ]
+}

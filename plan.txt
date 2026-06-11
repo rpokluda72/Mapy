@@ -1,0 +1,164 @@
+I like maps - https://mapy.com. If I open this link left part of the page is map and right part have some buttons, history list, etc.
+I have many saved maps/routes : https://mapy.com/en/turisticka?moje-mapy&cat=mista-trasy
+Map and route is the same for me. It is route from start point throw several others to end point.
+Maps are saved in map folders.
+I have many map folders with maps (saved maps)
+List of map folders are specified later.
+If I open map folder I can see routes in map on left part and list of maps on right part. Each map has name , basic info (Route km and time, share options and actions under "three dots" button).
+If I select map from the list I can see route with point on the left map part and details on the right part. Important parts on right side are points, time, distance and Elevation. "Concrete map" will be specified later.
+
+List of map folders: <ul class="folders sortable"
+Map folder : <li class="folder public"
+Map folder name : <div class="bar"><h2 class="title overflow-ellipsis">TJ Tatry-Gorce 2026</h2></div>
+Actions menu on map folder : <span class="opts">
+
+Folder maps:
+List of maps: <ul class="items sortable"
+Map : <li class="item public"
+Map name + detail : <div class="text-cover"><div><h2 class="title overflow-ellipsis">Turbacz</h2><h3 class="desc overflow-ellipsis">Route 14.3&nbsp;km • 5:00&nbsp;h</h3></div></div>
+Actions menu on map : <span class="opts">
+Buttons in opened actions menu:
+<div class="ui-popover ui-contextmenu ui-popover--bottom-end"
+ <button class="ui-contextmenuitem"
+
+ Concrete map:
+ Points: <div class="route-items">
+ Time and distance: <div class="route-summary alt-0 i-0 alt-1">
+ Elevation : <div class="module-content route-height-profile content open">
+
+ It is possible to Share or Export map folder or concrete map. There are several ways how to do it. It depends on current page (list of map folders, list of maps in folder or concrete map). It can be button on right part or button in actions menu (three dots).
+ It is possible to share map:
+ 1. Send link (allow to copy html link - for example https://mapy.com/s/jamofadave)
+ 2. Embed map on my website: (allow to copy html code - for example <iframe style="border:none" src="https://mapy.com/s/muluvomebo" width="400" height="280" frameborder="0"></iframe>
+
+ Export is possible to GPX file.
+
+ I would like to (if it is possible and has sense):
+ - create static html pages
+ - left part with menu items
+ - right part with details
+
+ Left part - menu items:
+ - map folders as menu items
+ - menu items on the main level will contain submenu items-folder maps
+ - if I select main menu item or submenu item I will see details of folder maps or concrete map on the right part
+
+ Right part with details:
+ 1. Map folder selected:
+ - list of maps with type (bike, hiking, car,...) name, distance, time and share-link. So similar to right part in origin mapy.com if folder selected.
+ - routes in map. So similar to left part in origin mapy.com if folder selected.
+
+ 1. Concrete map from folder selected:
+ - list of points, Time & distance, Elevation and share-link. So similar to right part in origin mapy.com if concrete folder map selected.
+ - route in map. So similar to left part in origin mapy.com if concrete folder map selected.
+
+ Check content and functionalities in mapy.com. You will need to use my account. I'm logged locally in firefox browser now.
+  Check what is possible.
+
+
+It was not good idea to transform all map folders at first time. It would be better to check functionality of 2-3 folders as test only.
+
+Can you check my siggestions for improvements before you start ?
+Improvements for the next times:
+Could you divide first step (scrape) to two parts / two run scripts:
+1. scrape map folders - create list of map folders and create json file with that. Included maps are not needed to include in this step-scrape map details. Put include attribute to this json, which will be used for the next step. Attribute values will be "Y", "N".
+Set value "Y" if folder map was not included in last scrape of details (new folder). You should remember last json file from first step and compare it with the current map folders. It is not needed to scrape details for the already scraped folders.
+The maps are not changes so often. If I will need to re-scrape details, I will change it to "Y". In most cases I create new folder for the group of maps.
+Set value "N" for already scraped folders in past.
+If you mean that json file created in this step should contain list of folder with maps included in folder and have include attribute on map level, so you can do it. I can set re-scrape action for concrete map. If include attribute set on folder level to "Y", it means that I need to re-scrape map detail for all maps included in folder and ignore include attribute with "N" on map level in folder.
+
+2. scrape map details - go throw json file mentioned in previous step a scrape details for map folders with attribute include="Y".
+
+Exists any way how to run scripts (folders, details, ..) easily by click from some file ? (like like from package.json in case of node.js)
+
+Update readme file
+
+It is wrong.
+See example:
+Folder "TJ Tatry-Gorce 2026" has link https://mapy.com/s/jamofadave. If I visit link left/map part (<div id="map" class="smap" style="height: 919px;">) is map has to bu used as a picture/map for this folder. See folder-map.png, I created picture from this folder map. It is smaller than in left part of the page. There are some components not needed in picture. Important is to have all routes on the picture (routes are red bold lines).
+First map in folder/group is "Turbacz". Link for sharing is https://mapy.com/s/hegacogala. See map.png, I created picture from this map. It is smaller like in previous folder-map (route are blue bold  dashed line in this case).
+Elevation : you have to open Elevation at first. Click on <div class="route-height-profile-form-header">. Elevation is hidden as default. Visible elevation:<div class="module-content"><div class="line-chart">. See elevation.png, I created picture from this map.
+
+What is fine:
+1. on folder map :
+- header panel with name, number of routes and button - Open in mapy.com
+- list on routes - name,Distance/Time, Open. Type of route could be added (By car, On foot,..)
+2. on concrete map :
+- header panel with name, number of routes and button - Open in mapy.com
+
+What is wrong:
+1. on folder map :
+- missing map/picture with routes (like folder-map.png)
+2. on concrete map :
+- wrong map/picture with route (like map.png)
+- wrong elevation/picture with elevation (like elevation.png)
+
+
+Some maps are cut and no whole rote is visible.
+Do not cut maps and make picture without changing size.
+Some maps are enlarged and it doesn't look good. It is ok to have maps with buttons on edges.
+
+folders.json - set all include to "Y" to all folders and maps instead of folder "TJ Tatry-Gorce 2026". This first one was done before.
+
+What in case if some map or folder is removed in mapy.com ? Are you prepared for that and remove map or folder in this html ?
+
+What about those features ?
+1. filtering menu items by map/route type (checkboxes for types - one or more can be selected)
+2. delete functionality - be able to delete folder or map
+
+I was wrong before I asked you to make delete functionality. Could you change it ? It will be better to have hidden attribute on folders and maps. Add Some "Show hidden" checkbox under Filter checkboxes in menu panel. Do you have better solution/option ?
+
+Improvement: add number of maps in folder to folder menu item. It will be fine to see th number of maps in folder. Calculate it by set filters.
+
+I asked you to add "Show hidden" checkbox and functionality for that. It is fine, but in some cases I would like to see all combinations :
+- all folders/maps
+- not hidden only
+- hidden only
+
+I noticed new feature on folders and maps : there are comment component - <p class="user-note__text clamp-lines-3">Sobotní trasa</p>. Could you take it from origin source mapy.com and add it to html ?
+
+I found better icons for types - stored in folder icons:
+- By car - route-car-2-icon.png
+- Address - route-adr-2-icon.png
+- By bike - route-cyc-2-icon.png
+- On Foot - route-ped-2-icon.png
+Use those icons.
+
+Folder "TJ Tatry-Gorce 2026" should have comment "Zájezd TJ do Polsdkých Tater 5-7.6.2026"
+Map "Turbacz" should have comment "Sobotní trasa"
+
+There are important file folders.json. Is it possible to create html page to be able to see content of this json file and have option to set include attribute. It would be nice to have option set all Y/N  for all folders or maps in folder. If changed include attribute on folder set all included maps.
+Another important file is mapy_data.json. Could you create html page to see the content ?
+
+Improvements:
+- add colapse all feature to both admin tabs
+- add link to admin.html from index.html - open in new tab
+- tab for folders.json : it would be nice to see number of maps with include attribute Y/N in folder header
+- tab for mapy_data.json : span elements are not needed for img, elev. Those exist in all folders and maps. Note or hidden is fine
+Is it possible to see/edit json files as static, without run serve ?
+
+mapy_data.json : could you add link to maps folder header row like it is done in map row ? For folder TJ Tatry-Gorce 2026" it should be https://mapy.com/s/mosuganocu.
+
+Could you increase the width of menu panel to see all filter checkboxes in one row ? Add Show radio buttons to one row.
+
+File folders.json : folder "TJ Tatry-Gorce 2026" has "include": "N", folder "Loučeň" has "include": "Y".
+There are two option how to see admin page.
+1. file:///C:/Users/roman/Work/claude/projects/Mapy/admin.html -"TJ Tatry-Gorce 2026" has "include": "Y", folder "Loučeň" has "include": "N"
+2. http://localhost:8000/admin.html - "TJ Tatry-Gorce 2026" has "include": "N", folder "Loučeň" has "include": "Y"
+Which one should I use and why  ?
+
+mapy_data.json - folder "TJ Tatry-Gorce 2026" - map "Kolejowa 46" :  I notice that this map has comment "Zájezd TJ do Polsdkých Tater 5-7.6.2026".
+But it is wrong, there are no comment in origin mapy.com.
+It is comment for map folder. Other comments on folder maps are ok.
+
+are scripts for types and folders independent ? Can I run those runs concurrently ?
+
+scripts details, links, types by include attribute folders.json
+
+Some map folders and map has no link to map - attribute share_link in mapy_data.json is empty. It is because it was not shared. All maps should be shared now.
+If I set include attribute to Y on those ones in folders.json and "run details", script visit included folders/maps and add share_link. Am I right ?
+
+Improvement - Filtering by type :
+- show main menu item (folder) if some of the maps suit to filter conditions
+- show submenu item (map) if the map suit to filter conditions
+So, do not show items if no map suit to filter conditions. I would like to see suit ones.

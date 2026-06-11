@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "folders — scan folder/map names",
+      "type": "shell",
+      "command": "python scrape_folders.py",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "details — scrape include=Y items",
+      "type": "shell",
+      "command": "python scrape_details.py",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "build — generate index.html",
+      "type": "shell",
+      "command": "python generate_site.py",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "serve — localhost:8000",
+      "type": "shell",
+      "command": "python -m http.server 8000",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "isBackground": true
+    },
+    {
+      "label": "all — folders + details + build",
+      "type": "shell",
+      "command": "python scrape_folders.py && python scrape_details.py && python generate_site.py",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "open — open index.html",
+      "type": "shell",
+      "command": "start index.html",
+      "group": "test",
+      "presentation": { "reveal": "silent", "panel": "shared" }
+    }
+  ]
+}

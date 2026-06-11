@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mapy Admin</title>
+<!-- Static-mode data: loaded from pre-generated snapshots when opened as file:// -->
+<script src="folders_data.js"></script>
+<script src="data.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5; color: #222; }
+
+/* Tab bar */
+.tabs { display: flex; border-bottom: 2px solid #0066cc; background: #fff; padding: 0 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.tab-btn { padding: 11px 22px; border: none; background: none; cursor: pointer; font-size: 14px; font-weight: 500; color: #666; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .15s; }
+.tab-btn:hover { color: #0066cc; }
+.tab-btn.active { color: #0066cc; border-bottom-color: #0066cc; }
+
+/* Panels */
+.tab-panel { display: none; padding: 16px 20px; max-width: 1100px; }
+.tab-panel.active { display: block; }
+
+/* Toolbar */
+.toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.toolbar h2 { font-size: 16px; font-weight: 600; flex: 1; min-width: 0; }
+.btn { padding: 5px 13px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; font-size: 13px; background: #fff; transition: background .1s; white-space: nowrap; }
+.btn:hover { background: #f0f0f0; }
+.btn-primary { background: #0066cc; color: #fff; border-color: #0055aa; }
+.btn-primary:hover { background: #0055aa; }
+.btn-dl { background: #e8f0fe; border-color: #4a90d9; color: #1a5fa8; }
+.btn-dl:hover { background: #d2e3fc; }
+.btn-all-y { background: #e8f5e9; border-color: #81c784; color: #2e7d32; }
+.btn-all-y:hover { background: #c8e6c9; }
+.btn-all-n { background: #fafafa; border-color: #bbb; color: #666; }
+.btn-all-n:hover { background: #efefef; }
+.status-msg { font-size: 13px; color: #555; }
+.status-msg.ok { color: #2e7d32; font-weight: 600; }
+.status-msg.err { color: #c62828; font-weight: 600; }
+.static-badge { font-size: 11px; padding: 2px 7px; background: #fff8e1; border: 1px solid #f0c040; color: #795548; border-radius: 3px; }
+
+/* ── Folders tab ── */
+.folder-block { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
+
+.folder-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; cursor: pointer;
+  background: #f4f6fa; border-bottom: 1px solid #e8e8e8;
+  user-select: none;
+}
+.folder-row:hover { background: #e8f0fe; }
+.folder-row .arrow { font-size: 11px; width: 14px; flex-shrink: 0; transition: transform .15s; color: #666; }
+.folder-row.open .arrow { transform: rotate(90deg); }
+.folder-name { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.yn-count { font-size: 12px; white-space: nowrap; }
+.yn-y-count { color: #2e7d32; font-weight: 600; }
+.yn-n-count { color: #aaa; }
+.folder-actions { display: flex; gap: 4px; align-items: center; }
+
+.maps-list { display: none; }
+.maps-list.open { display: block; }
+.map-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px 6px 38px; border-bottom: 1px solid #f2f2f2;
+}
+.map-row:last-child { border-bottom: none; }
+.map-row:hover { background: #fafafa; }
+.map-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #333; }
+
+/* Y/N toggle */
+.yn { width: 34px; height: 24px; border-radius: 4px; border: 1px solid; cursor: pointer; font-size: 12px; font-weight: 700; text-align: center; line-height: 22px; flex-shrink: 0; transition: background .1s; }
+.yn.y { background: #e8f5e9; border-color: #66bb6a; color: #2e7d32; }
+.yn.n { background: #f7f7f7; border-color: #ccc; color: #aaa; }
+
+/* small inline buttons */
+.ibtn { font-size: 11px; padding: 2px 7px; border-radius: 3px; border: 1px solid #bbb; background: #fff; cursor: pointer; color: #555; white-space: nowrap; }
+.ibtn:hover { background: #e8f0fe; border-color: #0066cc; color: #0066cc; }
+.ibtn.iy { background: #f0faf0; border-color: #81c784; color: #2e7d32; }
+.ibtn.in_ { background: #f5f5f5; border-color: #ccc; color: #888; }
+
+/* ── Data tab ── */
+.data-folder { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
+.data-folder-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; cursor: pointer; background: #f4f6fa;
+  border-bottom: 1px solid #e8e8e8; user-select: none;
+}
+.data-folder-hdr:hover { background: #e8f0fe; }
+.data-folder-hdr .arrow { font-size: 11px; width: 14px; flex-shrink: 0; transition: transform .15s; color: #666; }
+.data-folder-hdr.open .arrow { transform: rotate(90deg); }
+.data-maps { display: none; }
+.data-maps.open { display: block; }
+
+.data-map-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto auto;
+  gap: 10px; align-items: start;
+  padding: 7px 14px 7px 34px; border-top: 1px solid #f2f2f2; font-size: 13px;
+}
+.data-map-row:hover { background: #fafafa; }
+.type-icon-img { width: 18px; height: 18px; object-fit: contain; margin-top: 1px; }
+.map-title { font-weight: 500; line-height: 1.4; }
+.map-desc { color: #888; font-size: 12px; }
+.map-note-line { color: #856404; font-size: 12px; font-style: italic; margin-top: 1px; }
+
+.tags { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; }
+.tag { font-size: 10px; padding: 1px 5px; border-radius: 3px; white-space: nowrap; line-height: 1.5; }
+.tag-hidden { background: #fce4ec; color: #b71c1c; }
+.tag-note { background: #fff8e1; color: #795548; }
+
+.share-link { font-size: 12px; color: #0066cc; text-decoration: none; display: block; text-align: right; }
+.share-link:hover { text-decoration: underline; }
+.no-link { color: #ccc; font-size: 12px; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('folders')">Folders — include flags</button>
+  <button class="tab-btn" onclick="showTab('data')">Data viewer</button>
+</div>
+
+<div id="tab-folders" class="tab-panel active">
+  <div class="toolbar">
+    <h2>folders.json</h2>
+    <button class="btn" id="expand-folders-btn" onclick="toggleExpandFolders()">Expand all</button>
+    <button class="btn btn-all-y" onclick="setAll('Y')">All folders Y</button>
+    <button class="btn btn-all-n" onclick="setAll('N')">All folders N</button>
+    <button class="btn btn-primary" id="save-btn" onclick="save()">Save</button>
+    <span id="status" class="status-msg"></span>
+  </div>
+  <div id="folder-list"></div>
+</div>
+
+<div id="tab-data" class="tab-panel">
+  <div class="toolbar">
+    <h2>mapy_data.json</h2>
+    <button class="btn" id="expand-data-btn" onclick="toggleExpandData()">Expand all</button>
+    <span id="data-summary" class="status-msg"></span>
+  </div>
+  <div id="data-list"></div>
+</div>
+
+<script>
+// ── Mode detection ─────────────────────────────────────────────────────
+// IS_STATIC: true when opened as file:// — use pre-generated JS globals,
+// save falls back to "Download JSON"
+const IS_STATIC = !window.location.protocol.startsWith('http');
+
+// ── Tab switching ──────────────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['folders','data'][i] === name);
+  });
+  ['tab-folders','tab-data'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', ['folders','data'][i] === name);
+  });
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function downloadJson(data, filename) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob), download: filename
+  });
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+}
+
+// ── Folders tab ────────────────────────────────────────────────────────
+let foldersData = null;
+let foldersExpanded = false;
+
+async function loadFolders() {
+  try {
+    // eslint-disable-next-line no-undef
+    if (typeof FOLDERS_DATA !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      foldersData = JSON.parse(JSON.stringify(FOLDERS_DATA)); // deep copy
+    } else if (!IS_STATIC) {
+      const r = await fetch('/folders.json');
+      foldersData = await r.json();
+    } else {
+      document.getElementById('folder-list').textContent =
+        'Run "run build" to generate folders_data.js, then reload.';
+      return;
+    }
+    renderFolders();
+    if (IS_STATIC) {
+      const btn = document.getElementById('save-btn');
+      btn.textContent = 'Download JSON';
+      btn.className = 'btn btn-dl';
+    }
+  } catch(e) {
+    document.getElementById('folder-list').textContent =
+      'Could not load folders.json — run build first (or start the server).';
+  }
+}
+
+function ynCountHtml(folder, fi) {
+  const y = folder.maps.filter(m => m.include === 'Y').length;
+  const n = folder.maps.length - y;
+  return `<span class="yn-count" id="ync-${fi}"><span class="yn-y-count">${y}Y</span>&thinsp;·&thinsp;<span class="yn-n-count">${n}N</span></span>`;
+}
+
+function updateFolderYN(fi) {
+  const folder = foldersData.folders[fi];
+  const el = document.getElementById(`ync-${fi}`);
+  if (!el) return;
+  const y = folder.maps.filter(m => m.include === 'Y').length;
+  const n = folder.maps.length - y;
+  el.innerHTML = `<span class="yn-y-count">${y}Y</span>&thinsp;·&thinsp;<span class="yn-n-count">${n}N</span>`;
+}
+
+function renderFolders() {
+  const container = document.getElementById('folder-list');
+  container.innerHTML = '';
+  foldersData.folders.forEach((folder, fi) => {
+    const block = document.createElement('div');
+    block.className = 'folder-block';
+
+    // Folder row
+    const row = document.createElement('div');
+    row.className = 'folder-row';
+    row.innerHTML = `
+      <span class="arrow">▶</span>
+      <span class="folder-name" title="${esc(folder.name)}">${esc(folder.name)}</span>
+      ${ynCountHtml(folder, fi)}
+      <div class="folder-actions" onclick="event.stopPropagation()">
+        <button class="ibtn iy" onclick="setFolderAll(${fi},'Y')">All Y</button>
+        <button class="ibtn in_" onclick="setFolderAll(${fi},'N')">All N</button>
+        <button class="yn ${folder.include==='Y'?'y':'n'}" id="fi-${fi}" onclick="toggleFolder(${fi})">${folder.include}</button>
+      </div>
+    `;
+    row.addEventListener('click', () => {
+      row.classList.toggle('open');
+      maps.classList.toggle('open');
+    });
+
+    // Maps
+    const maps = document.createElement('div');
+    maps.className = 'maps-list';
+    maps.id = `maps-${fi}`;
+    folder.maps.forEach((map, mi) => {
+      const mrow = document.createElement('div');
+      mrow.className = 'map-row';
+      mrow.innerHTML = `
+        <span class="map-name" title="${esc(map.name)}">${esc(map.name)}</span>
+        <button class="yn ${map.include==='Y'?'y':'n'}" id="mi-${fi}-${mi}" onclick="toggleMap(${fi},${mi})">${map.include}</button>
+      `;
+      maps.appendChild(mrow);
+    });
+
+    block.appendChild(row);
+    block.appendChild(maps);
+    container.appendChild(block);
+  });
+}
+
+function setYnBtn(id, val) {
+  const btn = document.getElementById(id);
+  if (!btn) return;
+  btn.textContent = val;
+  btn.className = `yn ${val==='Y'?'y':'n'}`;
+}
+
+function toggleFolder(fi) {
+  const f = foldersData.folders[fi];
+  f.include = f.include === 'Y' ? 'N' : 'Y';
+  setYnBtn(`fi-${fi}`, f.include);
+}
+
+function toggleMap(fi, mi) {
+  const m = foldersData.folders[fi].maps[mi];
+  m.include = m.include === 'Y' ? 'N' : 'Y';
+  setYnBtn(`mi-${fi}-${mi}`, m.include);
+  updateFolderYN(fi);
+}
+
+function setFolderAll(fi, val) {
+  const folder = foldersData.folders[fi];
+  folder.include = val;
+  setYnBtn(`fi-${fi}`, val);
+  folder.maps.forEach((m, mi) => {
+    m.include = val;
+    setYnBtn(`mi-${fi}-${mi}`, val);
+  });
+  updateFolderYN(fi);
+}
+
+function setAll(val) {
+  foldersData.folders.forEach((_, fi) => setFolderAll(fi, val));
+}
+
+let foldersExpanded2 = false;
+function toggleExpandFolders() {
+  foldersExpanded2 = !foldersExpanded2;
+  document.querySelectorAll('#folder-list .folder-row').forEach(r => r.classList.toggle('open', foldersExpanded2));
+  document.querySelectorAll('#folder-list .maps-list').forEach(m => m.classList.toggle('open', foldersExpanded2));
+  document.getElementById('expand-folders-btn').textContent = foldersExpanded2 ? 'Collapse all' : 'Expand all';
+}
+
+async function save() {
+  if (IS_STATIC) {
+    downloadJson(foldersData, 'folders.json');
+    const status = document.getElementById('status');
+    status.textContent = 'Downloaded — replace folders.json manually, then run build.';
+    status.className = 'status-msg ok';
+    setTimeout(() => { status.textContent = ''; }, 5000);
+    return;
+  }
+  const status = document.getElementById('status');
+  status.textContent = 'Saving…';
+  status.className = 'status-msg';
+  try {
+    const r = await fetch('/api/folders', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(foldersData)
+    });
+    const d = await r.json();
+    if (d.ok) {
+      status.textContent = 'Saved ✓';
+      status.className = 'status-msg ok';
+    } else {
+      status.textContent = 'Error: ' + (d.error || 'unknown');
+      status.className = 'status-msg err';
+    }
+  } catch(e) {
+    status.textContent = 'Error: ' + e.message;
+    status.className = 'status-msg err';
+  }
+  setTimeout(() => { status.textContent = ''; }, 3000);
+}
+
+// ── Data tab ───────────────────────────────────────────────────────────
+const TYPE_ICONS = {
+  bike:   'icons/route-cyc-2-icon.png',
+  hiking: 'icons/route-ped-2-icon.png',
+  car:    'icons/route-car-2-icon.png',
+  adr:    'icons/route-adr-2-icon.png',
+  '':     'icons/route-adr-2-icon.png',
+};
+
+let dataExpanded = false;
+function toggleExpandData() {
+  dataExpanded = !dataExpanded;
+  document.querySelectorAll('#data-list .data-folder-hdr').forEach(h => h.classList.toggle('open', dataExpanded));
+  document.querySelectorAll('#data-list .data-maps').forEach(m => m.classList.toggle('open', dataExpanded));
+  document.getElementById('expand-data-btn').textContent = dataExpanded ? 'Collapse all' : 'Expand all';
+}
+
+async function loadData() {
+  try {
+    let data;
+    // eslint-disable-next-line no-undef
+    if (typeof DATA !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      data = DATA;
+    } else if (!IS_STATIC) {
+      const r = await fetch('/mapy_data.json');
+      data = await r.json();
+    } else {
+      document.getElementById('data-list').textContent =
+        'Run "run build" to generate data.js, then reload.';
+      return;
+    }
+    renderData(data);
+  } catch(e) {
+    document.getElementById('data-list').textContent =
+      'Could not load mapy_data.json — run build first (or start the server).';
+  }
+}
+
+function renderData(data) {
+  const container = document.getElementById('data-list');
+  const totalMaps = data.folders.reduce((s, f) => s + f.maps.length, 0);
+  const withNotes = data.folders.reduce((s, f) => s + f.maps.filter(m => m.note).length, 0);
+  document.getElementById('data-summary').textContent =
+    `${data.folders.length} folders · ${totalMaps} maps · ${withNotes} notes`;
+
+  data.folders.forEach(folder => {
+    const div = document.createElement('div');
+    div.className = 'data-folder';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'data-folder-hdr';
+    const fTags = [
+      folder.note   ? `<span class="tag tag-note" title="${esc(folder.note)}">note</span>` : '',
+      folder.hidden ? `<span class="tag tag-hidden">hidden</span>` : '',
+    ].join('');
+    const folderLink = folder.share_link
+      ? `<a class="share-link" href="${esc(folder.share_link)}" target="_blank" onclick="event.stopPropagation()" style="margin-left:8px">${esc(folder.share_link.split('/').pop())}</a>`
+      : '';
+    hdr.innerHTML = `
+      <span class="arrow">▶</span>
+      <strong>${esc(folder.name)}</strong>
+      <span style="color:#aaa;font-size:12px;margin-left:4px">${folder.maps.length} maps</span>
+      <span style="flex:1"></span>
+      ${folderLink}
+      ${fTags}
+    `;
+    hdr.addEventListener('click', () => {
+      hdr.classList.toggle('open');
+      mapsDiv.classList.toggle('open');
+    });
+
+    const mapsDiv = document.createElement('div');
+    mapsDiv.className = 'data-maps';
+    folder.maps.forEach(map => {
+      const icon = TYPE_ICONS[map.type] || TYPE_ICONS[''];
+      const tags = [
+        map.hidden ? `<span class="tag tag-hidden">hidden</span>` : '',
+        map.note   ? `<span class="tag tag-note" title="${esc(map.note)}">note</span>` : '',
+      ].join('');
+      const linkHtml = map.share_link
+        ? `<a class="share-link" href="${esc(map.share_link)}" target="_blank">${esc(map.share_link.split('/').pop())}</a>`
+        : `<span class="no-link">—</span>`;
+      const row = document.createElement('div');
+      row.className = 'data-map-row';
+      row.innerHTML = `
+        <img src="${icon}" class="type-icon-img" alt="${map.type||''}">
+        <div>
+          <div class="map-title">${esc(map.name)}</div>
+          ${map.description ? `<div class="map-desc">${esc(map.description)}</div>` : ''}
+          ${map.note        ? `<div class="map-note-line">${esc(map.note)}</div>` : ''}
+        </div>
+        <div class="tags">${tags}</div>
+        <div>${linkHtml}</div>
+      `;
+      mapsDiv.appendChild(row);
+    });
+
+    div.appendChild(hdr);
+    div.appendChild(mapsDiv);
+    container.appendChild(div);
+  });
+}
+
+// ── Init ───────────────────────────────────────────────────────────────
+loadFolders();
+loadData();
+</script>
+</body>
+</html>

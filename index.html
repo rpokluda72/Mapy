@@ -1,0 +1,3764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Maps</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    background: #f0f2f5;
+    color: #222;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: #1a7340;
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    flex-shrink: 0;
+  }
+
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Left nav ── */
+  nav {
+    width: 340px;
+    min-width: 260px;
+    background: #fff;
+    border-right: 1px solid #dde1e7;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .folder-header {
+    display: flex;
+    align-items: center;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1a5c30;
+    border-bottom: 1px solid #eef0f3;
+    user-select: none;
+    gap: 7px;
+    transition: background .12s;
+  }
+  .folder-header:hover { background: #f4faf6; }
+  .folder-header.active { background: #e8f5ee; }
+
+  .folder-arrow {
+    display: inline-block;
+    width: 14px;
+    font-size: 10px;
+    transition: transform .18s;
+    color: #888;
+  }
+  .folder-header.open .folder-arrow { transform: rotate(90deg); }
+
+  .folder-count {
+    font-size: 11px;
+    background: #e8f0eb;
+    color: #4a7a5a;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .folder-maps { display: none; background: #fafbfc; }
+  .folder-maps.open { display: block; }
+
+  .map-item {
+    display: flex;
+    align-items: center;
+    padding: 7px 14px 7px 34px;
+    cursor: pointer;
+    border-bottom: 1px solid #eef0f3;
+    gap: 7px;
+    color: #333;
+    transition: background .12s;
+  }
+  .map-item:hover { background: #eef6f1; }
+  .map-item.active { background: #d4eddf; color: #145228; font-weight: 600; }
+
+  .type-icon { width: 20px; text-align: center; flex-shrink: 0; }
+  .type-icon-img { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 7px 14px 6px;
+    background: #f0f6f2;
+    border-bottom: 1px solid #dde1e7;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .filter-row { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+  .filter-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; flex-shrink: 0; }
+  .filter-item { display: flex; align-items: center; gap: 3px; font-size: 12px; cursor: pointer; user-select: none; white-space: nowrap; }
+  .filter-item input { cursor: pointer; accent-color: #1a7340; }
+  .filter-item img { width: 16px; height: 16px; object-fit: contain; }
+
+  /* ── Hide/restore button ── */
+  .del-btn {
+    display: none;
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #c0392b;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    border-radius: 3px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .del-btn:hover { background: #fde8e6; }
+  .del-btn.restore { color: #1a7340; }
+  .del-btn.restore:hover { background: #e8f5ee; }
+  .folder-header:hover .del-btn,
+  .map-item:hover .del-btn { display: block; }
+
+  /* ── Hidden items ── */
+  .map-item.is-hidden { opacity: 0.4; }
+  .map-item.is-hidden .map-item-name { text-decoration: line-through; }
+  .folder-entry.is-hidden > .folder-header { opacity: 0.4; }
+  .map-item-text { overflow: hidden; }
+  .map-item-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .map-item-desc { font-size: 11px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── Right panel ── */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+  }
+
+  .detail-panel { padding: 28px 32px; max-width: 860px; }
+
+  /* Map hero card */
+  .map-hero {
+    background: linear-gradient(135deg, #1a7340 0%, #2a9456 100%);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .map-hero-info { flex: 1; min-width: 0; }
+  .map-hero h2 {
+    font-size: 22px; font-weight: 700; margin-bottom: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .map-hero .subtitle { font-size: 14px; opacity: .85; }
+
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: #1a7340;
+    font-size: 15px; font-weight: 700;
+    padding: 12px 22px; border-radius: 8px;
+    text-decoration: none; white-space: nowrap;
+    border: none; cursor: pointer;
+    transition: background .15s, transform .1s;
+    flex-shrink: 0;
+  }
+  .open-btn:hover { background: #e8f5ee; transform: translateY(-1px); }
+  .open-btn svg { flex-shrink: 0; }
+
+  .no-link-note {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 13px;
+    opacity: .9;
+    flex-shrink: 0;
+  }
+
+  .empty-hero {
+    background: #f0f2f5; border-radius: 10px;
+    padding: 48px 32px; margin-bottom: 24px;
+    text-align: center; color: #aaa; font-size: 15px;
+  }
+
+  /* Folder subtitle */
+  .folder-subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+  /* Section titles */
+  .section-title {
+    font-size: 12px; font-weight: 700; color: #555;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: 8px; margin-top: 20px;
+  }
+
+  /* Map table */
+  table.map-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.map-table th {
+    text-align: left; padding: 7px 10px;
+    background: #f0f7f3; border-bottom: 2px solid #c8e0d0;
+    font-weight: 600; color: #2a6040;
+  }
+  table.map-table td { padding: 8px 10px; border-bottom: 1px solid #eef0f3; vertical-align: middle; }
+  table.map-table tr:hover td { background: #f6fbf8; }
+  table.map-table .col-name { font-weight: 500; cursor: pointer; color: #1a5c30; }
+  table.map-table .col-name:hover { text-decoration: underline; }
+
+  .tbl-link {
+    font-size: 12px; color: #1a7340; text-decoration: none;
+    background: #e8f5ee; padding: 3px 9px; border-radius: 4px;
+    border: 1px solid #b5d9c3; white-space: nowrap;
+  }
+  .tbl-link:hover { background: #d0eedd; }
+
+  /* Route detail */
+  .summary-text { font-size: 14px; font-weight: 600; color: #333; }
+  .elevation-text { font-size: 12px; color: #555; white-space: pre-wrap; background: #f8fafb; padding: 8px; border-radius: 4px; }
+  .user-note { font-size: 13px; color: #444; background: #fffbe6; border-left: 3px solid #f0c040; padding: 8px 12px; border-radius: 0 4px 4px 0; white-space: pre-wrap; margin-bottom: 18px; }
+
+  .map-screenshot {
+    width: 100%; border-radius: 8px; display: block;
+    margin-bottom: 0; border: 1px solid #dde1e7;
+    cursor: pointer;
+  }
+  .elev-screenshot {
+    max-width: 100%; height: auto; border-radius: 6px; display: block;
+    border: 1px solid #dde1e7;
+  }
+
+  .points-list { list-style: none; counter-reset: pt; }
+  .points-list li {
+    counter-increment: pt; padding: 5px 0 5px 28px; position: relative;
+    border-bottom: 1px solid #f0f2f5; font-size: 13px;
+  }
+  .points-list li::before {
+    content: counter(pt); position: absolute; left: 0; top: 5px;
+    background: #1a7340; color: #fff; width: 18px; height: 18px;
+    border-radius: 50%; text-align: center; font-size: 11px;
+    line-height: 18px; font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header style="display:flex;align-items:center"><span style="flex:1">My Maps — mapy.com</span><a href="/admin.html" target="_blank" style="font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:400" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.7)'">Admin ↗</a></header>
+
+<div class="layout">
+  <nav id="nav">
+    <div class="filter-bar">
+      <div class="filter-row">
+        <span class="filter-label">Filter:</span>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="car" checked><img src="icons/route-car-2-icon.png" alt=""> Car</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="bike" checked><img src="icons/route-cyc-2-icon.png" alt=""> Bike</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="hiking" checked><img src="icons/route-ped-2-icon.png" alt=""> Walk</label>
+        <label class="filter-item"><input type="checkbox" class="filter-cb" data-type="other" checked><img src="icons/route-adr-2-icon.png" alt=""> Other</label>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Show:</span>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="active" checked> Active</label>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="all"> All</label>
+        <label class="filter-item"><input type="radio" name="hidden-filter" value="hidden"> Hidden</label>
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="0" data-hidden="false">
+      <div class="folder-header" id="fh-0" onclick="toggleFolder(0)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">TJ Tatry-Gorce 2026</span>
+        <span class="folder-count" id="fc-0">5</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-0">
+        
+        <div class="map-item" id="mi-0-0" data-fi="0" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Turbacz</div>
+            
+            <div class="map-item-desc">Trasa 14,3 km • 5:00 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-0-1" data-fi="0" data-mi="1" data-type="adr" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolejowa 46</div>
+            
+            <div class="map-item-desc">Adresa</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-0-2" data-fi="0" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bike route</div>
+            
+            <div class="map-item-desc">Trasa 4,8 km • 20 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-0-3" data-fi="0" data-mi="3" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Car route</div>
+            
+            <div class="map-item-desc">Trasa 8,6 km • 22 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-0-4" data-fi="0" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Neděle</div>
+            
+            <div class="map-item-desc">Trasa 16,2 km • 5:53 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(0, 4)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="1" data-hidden="false">
+      <div class="folder-header" id="fh-1" onclick="toggleFolder(1)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Loučeň</span>
+        <span class="folder-count" id="fc-1">10</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-1">
+        
+        <div class="map-item" id="mi-1-0" data-fi="1" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Loučeň do Loučeň</div>
+            
+            <div class="map-item-desc">Trasa 37,4 km • 2:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-1" data-fi="1" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Loučeň do Loučeň</div>
+            
+            <div class="map-item-desc">Trasa 40,4 km • 2:34 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-2" data-fi="1" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Loučeň do Loučeň</div>
+            
+            <div class="map-item-desc">Trasa 88,6 km • 5:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-3" data-fi="1" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Loučeň do Loučeň</div>
+            
+            <div class="map-item-desc">Trasa 88,6 km • 5:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-4" data-fi="1" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Mnichovo Hradiště-Boleslav</div>
+            
+            <div class="map-item-desc">Trasa 91,4 km • 5:55 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-5" data-fi="1" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Nymburk-Brandýs-Lysá</div>
+            
+            <div class="map-item-desc">Trasa 94 km • 5:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-6" data-fi="1" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Dětenice-Kopidlno</div>
+            
+            <div class="map-item-desc">Trasa 55,1 km • 3:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-7" data-fi="1" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Nymburk-Poděbrady-Kolín</div>
+            
+            <div class="map-item-desc">Trasa 89,7 km • 5:20 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-8" data-fi="1" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Dětenice-Jičín</div>
+            
+            <div class="map-item-desc">Trasa 85,6 km • 5:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-1-9" data-fi="1" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Nymburk-Poděbrady-Chlumec</div>
+            
+            <div class="map-item-desc">Trasa 113,6 km • 6:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(1, 9)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="2" data-hidden="false">
+      <div class="folder-header" id="fh-2" onclick="toggleFolder(2)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Velichovky</span>
+        <span class="folder-count" id="fc-2">8</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-2">
+        
+        <div class="map-item" id="mi-2-0" data-fi="2" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hradec</div>
+            
+            <div class="map-item-desc">Trasa 63,8 km • 3:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-1" data-fi="2" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Hustířanská 209 do Velichovky</div>
+            
+            <div class="map-item-desc">Trasa 67,8 km • 4:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-2" data-fi="2" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Smiřice-Jaroměř-Nové město-Náchod</div>
+            
+            <div class="map-item-desc">Trasa 91,3 km • 6:11 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-3" data-fi="2" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Dvůr-Kostelec-Skalice</div>
+            
+            <div class="map-item-desc">Trasa 75,7 km • 5:17 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-4" data-fi="2" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hradec Králové</div>
+            
+            <div class="map-item-desc">Trasa 74,6 km • 4:43 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-5" data-fi="2" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hradec-Třebechovice</div>
+            
+            <div class="map-item-desc">Trasa 74,2 km • 4:44 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-6" data-fi="2" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kuks</div>
+            
+            <div class="map-item-desc">Trasa 25,2 km • 1:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-2-7" data-fi="2" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hořice-Bělohrad-Miletín</div>
+            
+            <div class="map-item-desc">Trasa 85,6 km • 5:55 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(2, 7)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="3" data-hidden="false">
+      <div class="folder-header" id="fh-3" onclick="toggleFolder(3)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Olomučany</span>
+        <span class="folder-count" id="fc-3">18</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-3">
+        
+        <div class="map-item" id="mi-3-0" data-fi="3" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rájec Lysice</div>
+            
+            <div class="map-item-desc">Trasa 51 km • 3:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item is-hidden" id="mi-3-1" data-fi="3" data-mi="1" data-type="bike" data-hidden="true">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Boskovice 5</div>
+            
+            <div class="map-item-desc">Trasa 50,2 km • 4:19 h</div>
+            
+          </div>
+          <button class="del-btn restore" onclick="event.stopPropagation(); toggleHide(3, 1)" title="Restore map">↩</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-2" data-fi="3" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Boskovice 4</div>
+            
+            <div class="map-item-desc">Trasa 45,5 km • 3:43 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-3" data-fi="3" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Boskovice 3</div>
+            
+            <div class="map-item-desc">Trasa 54,6 km • 4:04 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-4" data-fi="3" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Boskovice 2</div>
+            
+            <div class="map-item-desc">Trasa 58,3 km • 4:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-5" data-fi="3" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Boskovice</div>
+            
+            <div class="map-item-desc">Trasa 53,9 km • 3:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-6" data-fi="3" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Brno</div>
+            
+            <div class="map-item-desc">Trasa 53,2 km • 3:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-7" data-fi="3" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Moravský kras 2</div>
+            
+            <div class="map-item-desc">Trasa 72,7 km • 5:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-8" data-fi="3" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Moravský kras</div>
+            
+            <div class="map-item-desc">Trasa 63,3 km • 4:34 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-9" data-fi="3" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olšovec-Bukovinka 3</div>
+            
+            <div class="map-item-desc">Trasa 44,2 km • 3:20 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-10" data-fi="3" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olšovec-Bukovinka 2</div>
+            
+            <div class="map-item-desc">Trasa 49,2 km • 3:40 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-11" data-fi="3" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olšovec-Bukovinka</div>
+            
+            <div class="map-item-desc">Trasa 37,5 km • 2:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-12" data-fi="3" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olšovec-Křtiny</div>
+            
+            <div class="map-item-desc">Trasa 44,3 km • 3:22 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-13" data-fi="3" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Černá hora</div>
+            
+            <div class="map-item-desc">Trasa 62,7 km • 4:53 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-14" data-fi="3" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Adamov</div>
+            
+            <div class="map-item-desc">Trasa 24,6 km • 1:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-15" data-fi="3" data-mi="15" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Olomučan</div>
+            
+            <div class="map-item-desc">Trasa 27,8 km • 2:10 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 15)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-16" data-fi="3" data-mi="16" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olomučany pěší</div>
+            
+            <div class="map-item-desc">Trasa 5,4 km • 1:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 16)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-3-17" data-fi="3" data-mi="17" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Olomučany pěší 2</div>
+            
+            <div class="map-item-desc">Trasa 8 km • 2:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(3, 17)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="4" data-hidden="false">
+      <div class="folder-header" id="fh-4" onclick="toggleFolder(4)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Valašské Meziříčí</span>
+        <span class="folder-count" id="fc-4">23</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-4">
+        
+        <div class="map-item" id="mi-4-0" data-fi="4" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov Bečva</div>
+            
+            <div class="map-item-desc">Trasa 62,3 km • 3:54 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-1" data-fi="4" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov 5</div>
+            
+            <div class="map-item-desc">Trasa 45 km • 3:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-2" data-fi="4" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov 4</div>
+            
+            <div class="map-item-desc">Trasa 45 km • 3:20 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-3" data-fi="4" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov 3</div>
+            
+            <div class="map-item-desc">Trasa 45,8 km • 3:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-4" data-fi="4" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lipník 2</div>
+            
+            <div class="map-item-desc">Trasa 83,6 km • 5:27 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-5" data-fi="4" data-mi="5" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Sokolská do Komenského</div>
+            
+            <div class="map-item-desc">Trasa 17,8 km • 5:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-6" data-fi="4" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bystřička-Vsetín4</div>
+            
+            <div class="map-item-desc">Trasa 70,6 km • 4:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-7" data-fi="4" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bystřička-Vsetín 3</div>
+            
+            <div class="map-item-desc">Trasa 70,3 km • 5:10 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-8" data-fi="4" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Dolní Bečva - Radhošť</div>
+            
+            <div class="map-item-desc">Trasa 16,7 km • 6:22 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-9" data-fi="4" data-mi="9" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">ValMez-Medůvka</div>
+            
+            <div class="map-item-desc">Trasa 18 km • 5:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-10" data-fi="4" data-mi="10" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kelčský Javorník-Kyčera</div>
+            
+            <div class="map-item-desc">Trasa 15,3 km • 5:40 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-11" data-fi="4" data-mi="11" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ptáčnice</div>
+            
+            <div class="map-item-desc">Trasa 9,6 km • 3:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-12" data-fi="4" data-mi="12" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Tanečnice</div>
+            
+            <div class="map-item-desc">Trasa 18,3 km • 5:56 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-13" data-fi="4" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lešná-Rožnov</div>
+            
+            <div class="map-item-desc">Trasa 53 km • 3:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-14" data-fi="4" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov</div>
+            
+            <div class="map-item-desc">Trasa 45 km • 3:11 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-15" data-fi="4" data-mi="15" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov 2</div>
+            
+            <div class="map-item-desc">Trasa 38,9 km • 2:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 15)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-16" data-fi="4" data-mi="16" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožnov-Bystřička-Vsetín</div>
+            
+            <div class="map-item-desc">Trasa 69,8 km • 4:51 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 16)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-17" data-fi="4" data-mi="17" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bystřička</div>
+            
+            <div class="map-item-desc">Trasa 46,9 km • 3:29 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 17)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-18" data-fi="4" data-mi="18" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bystřička-Vsetín</div>
+            
+            <div class="map-item-desc">Trasa 52,9 km • 3:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 18)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-19" data-fi="4" data-mi="19" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bystřička-Vsetín 2</div>
+            
+            <div class="map-item-desc">Trasa 54 km • 3:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 19)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-20" data-fi="4" data-mi="20" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kelč-Teplice-Lešná</div>
+            
+            <div class="map-item-desc">Trasa 68,2 km • 4:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 20)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-21" data-fi="4" data-mi="21" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kelč-Teplice-Lipník-Lešná</div>
+            
+            <div class="map-item-desc">Trasa 86,3 km • 5:35 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 21)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-4-22" data-fi="4" data-mi="22" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kateřinice</div>
+            
+            <div class="map-item-desc">Trasa 44,4 km • 3:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(4, 22)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="5" data-hidden="false">
+      <div class="folder-header" id="fh-5" onclick="toggleFolder(5)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ludvíkov</span>
+        <span class="folder-count" id="fc-5">15</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-5">
+        
+        <div class="map-item" id="mi-5-0" data-fi="5" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Karlova Studanka-praded</div>
+            
+            <div class="map-item-desc">Trasa 8,4 km • 3:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-1" data-fi="5" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Karlova Studánka</div>
+            
+            <div class="map-item-desc">Trasa 17,2 km • 5:24 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-2" data-fi="5" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Sokolí skály</div>
+            
+            <div class="map-item-desc">Trasa 13,6 km • 4:27 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-3" data-fi="5" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-rozhledna Na Skalce</div>
+            
+            <div class="map-item-desc">Trasa 19,8 km • 6:14 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-4" data-fi="5" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-okolo Žárového vrchu</div>
+            
+            <div class="map-item-desc">Trasa 13,2 km • 4:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-5" data-fi="5" data-mi="5" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lysůvky-Krnov-Ludvíkov</div>
+            
+            <div class="map-item-desc">Trasa 114,9 km • 1:38 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-6" data-fi="5" data-mi="6" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lysůvky-Bruntál-Ludvíkov</div>
+            
+            <div class="map-item-desc">Trasa 118,5 km • 1:37 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-7" data-fi="5" data-mi="7" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lysůvky-Bruntál-Malá MorávkaLudvíkov</div>
+            
+            <div class="map-item-desc">Trasa 121,3 km • 1:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-8" data-fi="5" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Anenský vrch-neděle</div>
+            
+            <div class="map-item-desc">Trasa 16,1 km • 4:54 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-9" data-fi="5" data-mi="9" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Solná cesta-Bílý potok-sobota</div>
+            
+            <div class="map-item-desc">Trasa 32,3 km • 9:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-10" data-fi="5" data-mi="10" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Anenský vrch-Freudenštejn</div>
+            
+            <div class="map-item-desc">Trasa 22,5 km • 6:51 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-11" data-fi="5" data-mi="11" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Solná cesta-Bílý potok</div>
+            
+            <div class="map-item-desc">Trasa 24,2 km • 7:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-12" data-fi="5" data-mi="12" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Karlova Studánka-Anenský vrch</div>
+            
+            <div class="map-item-desc">Trasa 24,2 km • 7:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-13" data-fi="5" data-mi="13" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Vidly-Švýcárna</div>
+            
+            <div class="map-item-desc">Trasa 5,1 km • 2:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-5-14" data-fi="5" data-mi="14" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Karlova Studánka - Praděd</div>
+            
+            <div class="map-item-desc">Trasa 17 km • 5:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(5, 14)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="6" data-hidden="false">
+      <div class="folder-header" id="fh-6" onclick="toggleFolder(6)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Stezka Českem</span>
+        <span class="folder-count" id="fc-6">23</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-6">
+        
+        <div class="map-item" id="mi-6-0" data-fi="6" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">01_Krásná -Klínovec</div>
+            
+            <div class="map-item-desc">Trasa 109 km • 33:17 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-1" data-fi="6" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">02_Krušné_Hory-Boží Dar-Děčínský Sněžník</div>
+            
+            <div class="map-item-desc">Trasa 164,1 km • 47:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-2" data-fi="6" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">03_Č- Švýcarsko- Lužické_hory</div>
+            
+            <div class="map-item-desc">Trasa 110,4 km • 36:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-3" data-fi="6" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">04_Jizerky_Krkonoše-Chrastava - Žacléř</div>
+            
+            <div class="map-item-desc">Trasa 110,8 km • 36:57 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-4" data-fi="6" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">05_Adršpach_Broumov-Žacléř - Velké Poříčí</div>
+            
+            <div class="map-item-desc">Trasa 102,2 km • 34:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-5" data-fi="6" data-mi="5" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">06_Orlické_hory-Velké Poříčí-Králíky</div>
+            
+            <div class="map-item-desc">Trasa 92,3 km • 28:42 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-6" data-fi="6" data-mi="6" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">07_Králíky-Jeseník_Budiš nad Budišovkou</div>
+            
+            <div class="map-item-desc">Trasa 142,1 km • 45:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-7" data-fi="6" data-mi="7" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">08_Budišov nad Budišovkou_Hodslavice</div>
+            
+            <div class="map-item-desc">Trasa 61,9 km • 17:54 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-8" data-fi="6" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">09_Beskydy_Hodslavice-Nejvychodnejsi bod ČR</div>
+            
+            <div class="map-item-desc">Trasa 103,8 km • 36:32 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-9" data-fi="6" data-mi="9" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">10_Rychlebske hory-alternativní</div>
+            
+            <div class="map-item-desc">Trasa 34,6 km • 11:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-10" data-fi="6" data-mi="10" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">11_Beskydy, Javorníky</div>
+            
+            <div class="map-item-desc">Trasa 115,1 km • 38:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-11" data-fi="6" data-mi="11" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">12_Bílé Karpaty</div>
+            
+            <div class="map-item-desc">Trasa 97 km • 31:30 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-12" data-fi="6" data-mi="12" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">13_Dolnomoravský úval</div>
+            
+            <div class="map-item-desc">Trasa 134,9 km • 37:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-13" data-fi="6" data-mi="13" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">14_Podyjí</div>
+            
+            <div class="map-item-desc">Trasa 111,5 km • 31:04 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-14" data-fi="6" data-mi="14" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">15_Česká Kanada</div>
+            
+            <div class="map-item-desc">Trasa 90 km • 27:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-15" data-fi="6" data-mi="15" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">16_Novohradské hory</div>
+            
+            <div class="map-item-desc">Trasa 134,8 km • 38:40 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 15)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-16" data-fi="6" data-mi="16" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">17_Jižní Šumava</div>
+            
+            <div class="map-item-desc">Trasa 82,2 km • 24:56 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 16)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-17" data-fi="6" data-mi="17" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">18_Šumava</div>
+            
+            <div class="map-item-desc">Trasa 104,3 km • 32:01 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 17)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-18" data-fi="6" data-mi="18" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">19_Západní Šumava</div>
+            
+            <div class="map-item-desc">Trasa 117,7 km • 36:09 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 18)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-19" data-fi="6" data-mi="19" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">20_Český les</div>
+            
+            <div class="map-item-desc">Trasa 134,6 km • 39:41 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 19)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-20" data-fi="6" data-mi="20" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">30: Alternativa Vejprty</div>
+            
+            <div class="map-item-desc">Trasa 27,6 km • 8:53 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 20)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-21" data-fi="6" data-mi="21" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">31: Alternativa Nejsevernější bod ČR</div>
+            
+            <div class="map-item-desc">Trasa 83,4 km • 26:24 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 21)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-6-22" data-fi="6" data-mi="22" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">32: Alternativa_Východní_bod</div>
+            
+            <div class="map-item-desc">Trasa 58,7 km • 21:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(6, 22)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="7" data-hidden="false">
+      <div class="folder-header" id="fh-7" onclick="toggleFolder(7)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lipno</span>
+        <span class="folder-count" id="fc-7">8</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-7">
+        
+        <div class="map-item" id="mi-7-0" data-fi="7" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">kolem Lipna 3</div>
+            
+            <div class="map-item-desc">Trasa 87,5 km • 6:01 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-1" data-fi="7" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Lipna 2</div>
+            
+            <div class="map-item-desc">Trasa 94,8 km • 6:29 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-2" data-fi="7" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Svatý Tomáš</div>
+            
+            <div class="map-item-desc">Trasa 18,3 km • 5:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-3" data-fi="7" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Plešné jezero 3</div>
+            
+            <div class="map-item-desc">Trasa 82,9 km • 5:27 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-4" data-fi="7" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Okolo Lipna</div>
+            
+            <div class="map-item-desc">Trasa 90,3 km • 6:17 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-5" data-fi="7" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Plešné jezero</div>
+            
+            <div class="map-item-desc">Trasa 94 km • 6:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-6" data-fi="7" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rožmberk - Horní Dvořiště</div>
+            
+            <div class="map-item-desc">Trasa 68,7 km • 5:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-7-7" data-fi="7" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Zátoň-Rožmberk-2</div>
+            
+            <div class="map-item-desc">Trasa 77,9 km • 6:00 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(7, 7)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="8" data-hidden="false">
+      <div class="folder-header" id="fh-8" onclick="toggleFolder(8)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Znojmo</span>
+        <span class="folder-count" id="fc-8">18</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-8">
+        
+        <div class="map-item" id="mi-8-0" data-fi="8" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hardegska vyhlidka</div>
+            
+            <div class="map-item-desc">Trasa 42,5 km • 2:50 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-1" data-fi="8" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jaroslavice 2</div>
+            
+            <div class="map-item-desc">Trasa 47,4 km • 2:57 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-2" data-fi="8" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">R P 2</div>
+            
+            <div class="map-item-desc">Trasa 63,7 km • 3:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-3" data-fi="8" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Petr Romana</div>
+            
+            <div class="map-item-desc">Trasa 85,8 km • 5:24 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-4" data-fi="8" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Vranov 2</div>
+            
+            <div class="map-item-desc">Trasa 58,2 km • 4:02 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-5" data-fi="8" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jaroslavice</div>
+            
+            <div class="map-item-desc">Trasa 55,6 km • 3:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-6" data-fi="8" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hnanice-Nový Hrádek</div>
+            
+            <div class="map-item-desc">Trasa 49,8 km • 3:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-7" data-fi="8" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hnanice-Nový Hrádek-Hardegg</div>
+            
+            <div class="map-item-desc">Trasa 65 km • 4:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-8" data-fi="8" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jevišovice</div>
+            
+            <div class="map-item-desc">Trasa 53,6 km • 3:41 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-9" data-fi="8" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hostěradice</div>
+            
+            <div class="map-item-desc">Trasa 69,2 km • 4:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-10" data-fi="8" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Šatov-Hnanice-Nový Hrádek-Hardegg</div>
+            
+            <div class="map-item-desc">Trasa 56,8 km • 4:02 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-11" data-fi="8" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Vranov</div>
+            
+            <div class="map-item-desc">Trasa 65,7 km • 4:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-12" data-fi="8" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bítov-Vranov</div>
+            
+            <div class="map-item-desc">Trasa 94,6 km • 6:37 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-13" data-fi="8" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bítov-Vranov-2</div>
+            
+            <div class="map-item-desc">Trasa 92,7 km • 6:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-14" data-fi="8" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Moravský Krumlov</div>
+            
+            <div class="map-item-desc">Trasa 96,6 km • 6:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-15" data-fi="8" data-mi="15" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Moravský Krumlov-2</div>
+            
+            <div class="map-item-desc">Trasa 88,1 km • 5:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 15)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-16" data-fi="8" data-mi="16" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jaroměřice-Jevišovice</div>
+            
+            <div class="map-item-desc">Trasa 86,8 km • 5:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 16)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-8-17" data-fi="8" data-mi="17" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Niederfladnitz-Retz</div>
+            
+            <div class="map-item-desc">Trasa 72,2 km • 5:08 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(8, 17)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="9" data-hidden="false">
+      <div class="folder-header" id="fh-9" onclick="toggleFolder(9)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Cyklotrasy</span>
+        <span class="folder-count" id="fc-9">8</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-9">
+        
+        <div class="map-item" id="mi-9-0" data-fi="9" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bílý Kříž 2</div>
+            
+            <div class="map-item-desc">Trasa 43,1 km • 3:43 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-1" data-fi="9" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bílý Kříž 1</div>
+            
+            <div class="map-item-desc">Trasa 41,1 km • 3:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-2" data-fi="9" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Čeladná-Pustevny</div>
+            
+            <div class="map-item-desc">Trasa 36,7 km • 2:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-3" data-fi="9" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Frýdlant-Ostravice-Staškov-Malenovice</div>
+            
+            <div class="map-item-desc">Trasa 20,9 km • 1:42 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-4" data-fi="9" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hůrky-Ondřejník</div>
+            
+            <div class="map-item-desc">Trasa 24,1 km • 2:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-5" data-fi="9" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Brušperk-Příbor-Sklenov</div>
+            
+            <div class="map-item-desc">Trasa 46 km • 3:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-6" data-fi="9" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Visalaje-Krásná</div>
+            
+            <div class="map-item-desc">Trasa 26,3 km • 2:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-9-7" data-fi="9" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice - kolem Šance</div>
+            
+            <div class="map-item-desc">Trasa 40,7 km • 3:10 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(9, 7)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="10" data-hidden="false">
+      <div class="folder-header" id="fh-10" onclick="toggleFolder(10)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pěší trasy</span>
+        <span class="folder-count" id="fc-10">5</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-10">
+        
+        <div class="map-item" id="mi-10-0" data-fi="10" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Štramberk-Bílá hora</div>
+            
+            <div class="map-item-desc">Trasa 6,8 km • 2:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-1" data-fi="10" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kopřivnice-Červený kámen</div>
+            
+            <div class="map-item-desc">Trasa 8,1 km • 2:54 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-2" data-fi="10" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Čeladná-Čertův mlýn-Pustevny</div>
+            
+            <div class="map-item-desc">Trasa 9,7 km • 4:04 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-3" data-fi="10" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Velký Javorník 2</div>
+            
+            <div class="map-item-desc">Trasa 3,9 km • 1:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-10-4" data-fi="10" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Velký Javorník 1</div>
+            
+            <div class="map-item-desc">Trasa 4,1 km • 1:56 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(10, 4)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="11" data-hidden="false">
+      <div class="folder-header" id="fh-11" onclick="toggleFolder(11)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lysá hora</span>
+        <span class="folder-count" id="fc-11">16</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-11">
+        
+        <div class="map-item" id="mi-11-0" data-fi="11" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH1</div>
+            
+            <div class="map-item-desc">Trasa 14,2 km • 5:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-1" data-fi="11" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH10</div>
+            
+            <div class="map-item-desc">Trasa 18,5 km • 6:40 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-2" data-fi="11" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH11</div>
+            
+            <div class="map-item-desc">Trasa 10,7 km • 4:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-3" data-fi="11" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH12</div>
+            
+            <div class="map-item-desc">Trasa 13,5 km • 5:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-4" data-fi="11" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH13</div>
+            
+            <div class="map-item-desc">Trasa 15,6 km • 5:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-5" data-fi="11" data-mi="5" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH14</div>
+            
+            <div class="map-item-desc">Trasa 15,7 km • 5:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-6" data-fi="11" data-mi="6" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH15</div>
+            
+            <div class="map-item-desc">Trasa 12,2 km • 4:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-7" data-fi="11" data-mi="7" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH2</div>
+            
+            <div class="map-item-desc">Trasa 13,5 km • 5:08 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-8" data-fi="11" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH3</div>
+            
+            <div class="map-item-desc">Trasa 15,6 km • 5:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-9" data-fi="11" data-mi="9" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH4</div>
+            
+            <div class="map-item-desc">Trasa 14,2 km • 5:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-10" data-fi="11" data-mi="10" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH5</div>
+            
+            <div class="map-item-desc">Trasa 14,9 km • 5:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-11" data-fi="11" data-mi="11" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH6</div>
+            
+            <div class="map-item-desc">Trasa 15 km • 5:38 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-12" data-fi="11" data-mi="12" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH7</div>
+            
+            <div class="map-item-desc">Trasa 14,9 km • 5:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-13" data-fi="11" data-mi="13" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH8</div>
+            
+            <div class="map-item-desc">Trasa 12,1 km • 4:37 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-14" data-fi="11" data-mi="14" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">LH9</div>
+            
+            <div class="map-item-desc">Trasa 16,5 km • 6:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-11-15" data-fi="11" data-mi="15" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Mazák-LH-Zbuj-LH-Mazák</div>
+            
+            <div class="map-item-desc">Trasa 27 km • 10:08 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(11, 15)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="12" data-hidden="false">
+      <div class="folder-header" id="fh-12" onclick="toggleFolder(12)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">TJ Sokol</span>
+        <span class="folder-count" id="fc-12">3</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-12">
+        
+        <div class="map-item" id="mi-12-0" data-fi="12" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Lietavská Závadka do Sůlov</div>
+            
+            <div class="map-item-desc">Trasa 8,3 km • 3:15 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-12-1" data-fi="12" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Velký Javorník 2</div>
+            
+            <div class="map-item-desc">Trasa 4,1 km • 2:04 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-12-2" data-fi="12" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Cyklovýlet-Brušperk-Trnávka</div>
+            
+            <div class="map-item-desc">Trasa 41,3 km • 2:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(12, 2)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="13" data-hidden="false">
+      <div class="folder-header" id="fh-13" onclick="toggleFolder(13)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Stezka Českem na kole</span>
+        <span class="folder-count" id="fc-13">20</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-13">
+        
+        <div class="map-item" id="mi-13-0" data-fi="13" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">01-Krásná-Klínovec na kole</div>
+            
+            <div class="map-item-desc">Trasa 107,9 km • 8:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-1" data-fi="13" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">02- Krušné hory na kole</div>
+            
+            <div class="map-item-desc">Trasa 159,3 km • 11:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-2" data-fi="13" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">03-České Švýcarsko-Lužické hory na kole</div>
+            
+            <div class="map-item-desc">Trasa 152,4 km • 11:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-3" data-fi="13" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">04-Jizerky a Krkonoše na kole</div>
+            
+            <div class="map-item-desc">Trasa 129,3 km • 11:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-4" data-fi="13" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">05-Adršpach- Broumovsko na kole</div>
+            
+            <div class="map-item-desc">Trasa 96,6 km • 7:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-5" data-fi="13" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">06-Orlické na kole</div>
+            
+            <div class="map-item-desc">Trasa 106,4 km • 8:32 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-6" data-fi="13" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">07-Jeseníky na kole</div>
+            
+            <div class="map-item-desc">Trasa 178,9 km • 14:24 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-7" data-fi="13" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">08-Podbeskydí na kole</div>
+            
+            <div class="map-item-desc">Trasa 53,5 km • 3:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-8" data-fi="13" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">09-Beskydy na kole</div>
+            
+            <div class="map-item-desc">Trasa 120 km • 9:54 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-9" data-fi="13" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">10-Rychlebky na kole alternativa</div>
+            
+            <div class="map-item-desc">Trasa 61,9 km • 5:12 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-10" data-fi="13" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">11-Beskydy, Javorníky na kole</div>
+            
+            <div class="map-item-desc">Trasa 130,6 km • 10:30 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-11" data-fi="13" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">12- Bílé Karpaty na kole</div>
+            
+            <div class="map-item-desc">Trasa 101,8 km • 8:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-12" data-fi="13" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">13-Dolnomoravský úval na kole</div>
+            
+            <div class="map-item-desc">Trasa 141 km • 8:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-13" data-fi="13" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">14-Podyjí na kole</div>
+            
+            <div class="map-item-desc">Trasa 107,9 km • 7:20 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-14" data-fi="13" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">15-Česká Kanada na kole</div>
+            
+            <div class="map-item-desc">Trasa 89,6 km • 6:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 14)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-15" data-fi="13" data-mi="15" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">16- Novohradské hory na kole</div>
+            
+            <div class="map-item-desc">Trasa 126,8 km • 9:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 15)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-16" data-fi="13" data-mi="16" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">17- Jižní Šumava na kole</div>
+            
+            <div class="map-item-desc">Trasa 73 km • 5:36 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 16)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-17" data-fi="13" data-mi="17" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">18-Šumava na kole</div>
+            
+            <div class="map-item-desc">Trasa 103,3 km • 8:01 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 17)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-18" data-fi="13" data-mi="18" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">19-Západní Šumava na kole</div>
+            
+            <div class="map-item-desc">Trasa 115,8 km • 9:10 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 18)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-13-19" data-fi="13" data-mi="19" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">20-Český les na kole</div>
+            
+            <div class="map-item-desc">Trasa 130,4 km • 9:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(13, 19)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="14" data-hidden="false">
+      <div class="folder-header" id="fh-14" onclick="toggleFolder(14)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Smrk - cyklo</span>
+        <span class="folder-count" id="fc-14">5</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-14">
+        
+        <div class="map-item" id="mi-14-0" data-fi="14" data-mi="0" data-type="" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku 4</div>
+            
+            <div class="map-item-desc">Trasa 74,7 km • 5:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-14-1" data-fi="14" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku 2</div>
+            
+            <div class="map-item-desc">Trasa 29,2 km • 2:35 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-14-2" data-fi="14" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku 3</div>
+            
+            <div class="map-item-desc">Trasa 29,2 km • 2:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-14-3" data-fi="14" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku 4</div>
+            
+            <div class="map-item-desc">Trasa 11,4 km • 1:05 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-14-4" data-fi="14" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku</div>
+            
+            <div class="map-item-desc">Trasa 23,9 km • 1:58 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(14, 4)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="15" data-hidden="false">
+      <div class="folder-header" id="fh-15" onclick="toggleFolder(15)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Lednice</span>
+        <span class="folder-count" id="fc-15">5</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-15">
+        
+        <div class="map-item" id="mi-15-0" data-fi="15" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Pavlov-Stolová hora</div>
+            
+            <div class="map-item-desc">Trasa 13,7 km • 4:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-15-1" data-fi="15" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lednice a okolí</div>
+            
+            <div class="map-item-desc">Trasa 58,8 km • 3:32 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-15-2" data-fi="15" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Břeclav-Lanžhot</div>
+            
+            <div class="map-item-desc">Trasa 86,5 km • 5:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-15-3" data-fi="15" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Mikulov-Valtice</div>
+            
+            <div class="map-item-desc">Trasa 69,2 km • 4:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-15-4" data-fi="15" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Nové mlýny</div>
+            
+            <div class="map-item-desc">Trasa 72,5 km • 4:40 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(15, 4)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="16" data-hidden="false">
+      <div class="folder-header" id="fh-16" onclick="toggleFolder(16)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bike-Ostravice</span>
+        <span class="folder-count" id="fc-16">15</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-16">
+        
+        <div class="map-item" id="mi-16-0" data-fi="16" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Smrku</div>
+            
+            <div class="map-item-desc">Trasa 23,9 km • 2:05 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-1" data-fi="16" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Čeladná-Pustevny</div>
+            
+            <div class="map-item-desc">Trasa 36,7 km • 2:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-2" data-fi="16" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bílý kříž 2</div>
+            
+            <div class="map-item-desc">Trasa 43,1 km • 3:43 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-3" data-fi="16" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bílý kříž 1</div>
+            
+            <div class="map-item-desc">Trasa 41,1 km • 3:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-4" data-fi="16" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Zbuj</div>
+            
+            <div class="map-item-desc">Trasa 51,3 km • 3:39 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-5" data-fi="16" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-LH3</div>
+            
+            <div class="map-item-desc">Trasa 18,2 km • 2:04 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-6" data-fi="16" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Lysa hora</div>
+            
+            <div class="map-item-desc">Trasa 17,7 km • 2:00 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-7" data-fi="16" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-LH2</div>
+            
+            <div class="map-item-desc">Trasa 15,2 km • 1:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-8" data-fi="16" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Butořanka-Zbuj</div>
+            
+            <div class="map-item-desc">Trasa 59,8 km • 4:29 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-9" data-fi="16" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolem Šance-Podolánky</div>
+            
+            <div class="map-item-desc">Trasa 79 km • 5:26 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-10" data-fi="16" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Butořanka</div>
+            
+            <div class="map-item-desc">Trasa 59,1 km • 4:20 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-11" data-fi="16" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">BT-Frýdlant-Grůň</div>
+            
+            <div class="map-item-desc">Trasa 42,2 km • 3:17 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-12" data-fi="16" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ondráš-Mazák</div>
+            
+            <div class="map-item-desc">Trasa 9,3 km • 54 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-13" data-fi="16" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Zbuj-Mazák</div>
+            
+            <div class="map-item-desc">Trasa 15 km • 1:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-16-14" data-fi="16" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Zbuj-Mazák-2</div>
+            
+            <div class="map-item-desc">Trasa 22,3 km • 1:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(16, 14)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="17" data-hidden="false">
+      <div class="folder-header" id="fh-17" onclick="toggleFolder(17)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Vysočina</span>
+        <span class="folder-count" id="fc-17">12</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-17">
+        
+        <div class="map-item" id="mi-17-0" data-fi="17" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Herálec-Hlinsko</div>
+            
+            <div class="map-item-desc">Trasa 54,1 km • 3:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-1" data-fi="17" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Herálec-Milovy-Kamenice</div>
+            
+            <div class="map-item-desc">Trasa 52,8 km • 3:53 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-2" data-fi="17" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Herálec-ŽnS-NMaM</div>
+            
+            <div class="map-item-desc">Trasa 73,3 km • 5:08 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-3" data-fi="17" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Devět skal-Perníčky</div>
+            
+            <div class="map-item-desc">Trasa 21,4 km • 6:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-4" data-fi="17" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa x</div>
+            
+            <div class="map-item-desc">Trasa 24,3 km • 1:46 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-5" data-fi="17" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kučerů mlýn</div>
+            
+            <div class="map-item-desc">Trasa 13 km • 1:01 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-6" data-fi="17" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Karlštejn</div>
+            
+            <div class="map-item-desc">Trasa 16,1 km • 1:12 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-7" data-fi="17" data-mi="7" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Devět skal</div>
+            
+            <div class="map-item-desc">Trasa 12,3 km • 3:45 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-8" data-fi="17" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Perníčky</div>
+            
+            <div class="map-item-desc">Trasa 9,3 km • 2:42 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-9" data-fi="17" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Žďár nad Sázavou</div>
+            
+            <div class="map-item-desc">Trasa 79,9 km • 5:35 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-10" data-fi="17" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Nové Město na Moravě</div>
+            
+            <div class="map-item-desc">Trasa 48,2 km • 3:41 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-17-11" data-fi="17" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jimramov</div>
+            
+            <div class="map-item-desc">Trasa 47,8 km • 3:38 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(17, 11)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="18" data-hidden="false">
+      <div class="folder-header" id="fh-18" onclick="toggleFolder(18)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ostatní</span>
+        <span class="folder-count" id="fc-18">14</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-18">
+        
+        <div class="map-item" id="mi-18-0" data-fi="18" data-mi="0" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Turzovka-Vyšný Koniec 465</div>
+            
+            <div class="map-item-desc">Trasa 50,9 km • 50 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-1" data-fi="18" data-mi="1" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lysůvky-Maximus-Znojmo</div>
+            
+            <div class="map-item-desc">Trasa 257 km • 2:51 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-2" data-fi="18" data-mi="2" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Lysůvky-Znojmo</div>
+            
+            <div class="map-item-desc">Trasa 226,7 km • 2:15 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-3" data-fi="18" data-mi="3" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Vlčina Frenštát pod Radhoštěm</div>
+            
+            <div class="map-item-desc">Trasa 22,3 km • 28 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-4" data-fi="18" data-mi="4" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Brno Míša</div>
+            
+            <div class="map-item-desc">Trasa 163,2 km • 1:35 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-5" data-fi="18" data-mi="5" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Velký Javorník 1</div>
+            
+            <div class="map-item-desc">Trasa 3,9 km • 1:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-6" data-fi="18" data-mi="6" data-type="adr" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-adr-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Černá cesta 119/47</div>
+            
+            <div class="map-item-desc">Adresa</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-7" data-fi="18" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Brušperk-Příbor-Sklenov</div>
+            
+            <div class="map-item-desc">Trasa 46 km • 3:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-8" data-fi="18" data-mi="8" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Metylovice-Ondřejník-Skalka</div>
+            
+            <div class="map-item-desc">Trasa 15,6 km • 5:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-9" data-fi="18" data-mi="9" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Chlebovice - Mločí studánka</div>
+            
+            <div class="map-item-desc">Trasa 8,7 km • 2:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-10" data-fi="18" data-mi="10" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">běh Brušperk 2</div>
+            
+            <div class="map-item-desc">Trasa 20,8 km • 5:43 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-11" data-fi="18" data-mi="11" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Radhošť 2</div>
+            
+            <div class="map-item-desc">Trasa 12,4 km • 4:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-12" data-fi="18" data-mi="12" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Radhošť 1</div>
+            
+            <div class="map-item-desc">Trasa 20,5 km • 6:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-18-13" data-fi="18" data-mi="13" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">běh Brušperk</div>
+            
+            <div class="map-item-desc">Trasa 19,7 km • 5:33 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(18, 13)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="19" data-hidden="false">
+      <div class="folder-header" id="fh-19" onclick="toggleFolder(19)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Beskydy</span>
+        <span class="folder-count" id="fc-19">12</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-19">
+        
+        <div class="map-item" id="mi-19-0" data-fi="19" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Velká Čantoryje</div>
+            
+            <div class="map-item-desc">Trasa 13,7 km • 5:11 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-1" data-fi="19" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Javorový</div>
+            
+            <div class="map-item-desc">Trasa 13 km • 4:30 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-2" data-fi="19" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-IC-Zbuj-LH</div>
+            
+            <div class="map-item-desc">Trasa 7,8 km • 3:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-3" data-fi="19" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Opicarna-LH</div>
+            
+            <div class="map-item-desc">Trasa 5,7 km • 3:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-4" data-fi="19" data-mi="4" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Malenovice-LH</div>
+            
+            <div class="map-item-desc">Trasa 6,2 km • 3:16 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-5" data-fi="19" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Grůň-Ostravice</div>
+            
+            <div class="map-item-desc">Trasa 22,6 km • 1:59 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-6" data-fi="19" data-mi="6" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Prašivá-Kotař-Ropička</div>
+            
+            <div class="map-item-desc">Trasa 17,6 km • 6:05 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-7" data-fi="19" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">kolem Šance</div>
+            
+            <div class="map-item-desc">Trasa 38,1 km • 2:52 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-8" data-fi="19" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa z Palkovice 288 do Hraniční 28</div>
+            
+            <div class="map-item-desc">Trasa 90,2 km • 6:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-9" data-fi="19" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Malenovice-Lysá hora</div>
+            
+            <div class="map-item-desc">Trasa 16,3 km • 2:19 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-10" data-fi="19" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ostravice-Martina-Pustevny-Raztoka-Ostravice</div>
+            
+            <div class="map-item-desc">Trasa 51,7 km • 4:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-19-11" data-fi="19" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Kolo Ostravice-Grun-BK-Podolanky-Ostravice</div>
+            
+            <div class="map-item-desc">Trasa 59,2 km • 4:55 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(19, 11)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="20" data-hidden="false">
+      <div class="folder-header" id="fh-20" onclick="toggleFolder(20)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Hůrky</span>
+        <span class="folder-count" id="fc-20">15</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-20">
+        
+        <div class="map-item" id="mi-20-0" data-fi="20" data-mi="0" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Přes Hůrky 2</div>
+            
+            <div class="map-item-desc">Trasa 13,5 km • 1:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-1" data-fi="20" data-mi="1" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Přes Hůrky 1</div>
+            
+            <div class="map-item-desc">Trasa 8,5 km • 43 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-2" data-fi="20" data-mi="2" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Fryčovice-Kubánkov</div>
+            
+            <div class="map-item-desc">Trasa 12,3 km • 1:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-3" data-fi="20" data-mi="3" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Fryčovice-Kubánkov</div>
+            
+            <div class="map-item-desc">Trasa 7,4 km • 47 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-4" data-fi="20" data-mi="4" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Fryčovice-Ml.stud.-Hukvaldy-Fryčovice</div>
+            
+            <div class="map-item-desc">Trasa 16,5 km • 1:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-5" data-fi="20" data-mi="5" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Fryčovice-Ml.stud.-Hukvaldy-Fryčovice 2</div>
+            
+            <div class="map-item-desc">Trasa 20,1 km • 1:44 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-6" data-fi="20" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Fryčovice-Ml.stud.</div>
+            
+            <div class="map-item-desc">Trasa 20,9 km • 1:49 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-7" data-fi="20" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Minipivovar</div>
+            
+            <div class="map-item-desc">Trasa 16,6 km • 1:13 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-8" data-fi="20" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Rybí</div>
+            
+            <div class="map-item-desc">Trasa 13,3 km • 1:02 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-9" data-fi="20" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Košice-Rybí</div>
+            
+            <div class="map-item-desc">Trasa 16,5 km • 1:28 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-10" data-fi="20" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Košice-Rybí-Ml.stud.-33</div>
+            
+            <div class="map-item-desc">Trasa 33 km • 2:56 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-11" data-fi="20" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Hukvaldy-Ml.stud.-Hůrky</div>
+            
+            <div class="map-item-desc">Trasa 5,6 km • 47 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-12" data-fi="20" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Fryčovice-Rybí</div>
+            
+            <div class="map-item-desc">Trasa 8,5 km • 52 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-13" data-fi="20" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Rybí-Ondřejník</div>
+            
+            <div class="map-item-desc">Trasa 11 km • 1:09 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 13)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-20-14" data-fi="20" data-mi="14" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">33-Rybí-Ondřejník</div>
+            
+            <div class="map-item-desc">Trasa 24,1 km • 2:06 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(20, 14)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div class="folder-entry" data-fi="21" data-hidden="false">
+      <div class="folder-header" id="fh-21" onclick="toggleFolder(21)">
+        <span class="folder-arrow">▶</span>
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Jeseníky</span>
+        <span class="folder-count" id="fc-21">14</span>
+        <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21)" title="Hide folder">×</button>
+      </div>
+      <div class="folder-maps" id="folder-maps-21">
+        
+        <div class="map-item" id="mi-21-0" data-fi="21" data-mi="0" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Karlov-Alfrédka-Vysoká hole</div>
+            
+            <div class="map-item-desc">Trasa 19,8 km • 6:44 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 0)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-1" data-fi="21" data-mi="1" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Bělá-ŠvýcárnaVidly</div>
+            
+            <div class="map-item-desc">Trasa 10,9 km • 4:31 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 1)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-2" data-fi="21" data-mi="2" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Červená hora-Keprník-2</div>
+            
+            <div class="map-item-desc">Trasa 15,7 km • 6:03 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 2)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-3" data-fi="21" data-mi="3" data-type="hiking" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-ped-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Červená hora-Keprník</div>
+            
+            <div class="map-item-desc">Trasa 16,2 km • 6:05 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 3)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-4" data-fi="21" data-mi="4" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Ludvíkov-Filipovice</div>
+            
+            <div class="map-item-desc">Trasa 22,2 km • 26 min</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 4)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-5" data-fi="21" data-mi="5" data-type="car" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-car-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Zelinkovice-Ludvíkov</div>
+            
+            <div class="map-item-desc">Trasa 114,5 km • 1:47 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 5)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-6" data-fi="21" data-mi="6" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Mnichov-Praděd</div>
+            
+            <div class="map-item-desc">Trasa 20,9 km • 2:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 6)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-7" data-fi="21" data-mi="7" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Mnichov-Rejvíz</div>
+            
+            <div class="map-item-desc">Trasa 13,6 km • 1:01 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 7)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-8" data-fi="21" data-mi="8" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa Mnichov-Praděd 27.6.2020</div>
+            
+            <div class="map-item-desc">Trasa 62,8 km • 5:21 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 8)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-9" data-fi="21" data-mi="9" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa Mnichov-Praděd 2</div>
+            
+            <div class="map-item-desc">Trasa 68,9 km • 5:56 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 9)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-10" data-fi="21" data-mi="10" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Trasa Mnichov-Praděd</div>
+            
+            <div class="map-item-desc">Trasa 64,2 km • 5:23 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 10)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-11" data-fi="21" data-mi="11" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jeseníky 2</div>
+            
+            <div class="map-item-desc">Trasa 47,5 km • 4:09 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 11)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-12" data-fi="21" data-mi="12" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jeseníky 3</div>
+            
+            <div class="map-item-desc">Trasa 52 km • 4:29 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 12)" title="Hide map">×</button>
+        </div>
+        
+        <div class="map-item" id="mi-21-13" data-fi="21" data-mi="13" data-type="bike" data-hidden="false">
+          <span class="type-icon"><img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt=""></span>
+          <div class="map-item-text">
+            <div class="map-item-name">Jeseníky 4</div>
+            
+            <div class="map-item-desc">Trasa 54 km • 4:25 h</div>
+            
+          </div>
+          <button class="del-btn" onclick="event.stopPropagation(); toggleHide(21, 13)" title="Hide map">×</button>
+        </div>
+        
+      </div>
+    </div>
+    
+  </nav>
+
+  <main>
+    <div class="detail-panel" id="detail-panel">
+      <div class="empty-hero">← Select a folder or map from the menu</div>
+    </div>
+  </main>
+</div>
+
+<script src="data.js"></script>
+<script>
+const TYPE_LABELS = { bike: "Cycling", hiking: "Hiking", car: "Driving", adr: "Address" };
+const TYPE_ICONS  = {
+  bike:   '<img src="icons/route-cyc-2-icon.png" class="type-icon-img" alt="">',
+  hiking: '<img src="icons/route-ped-2-icon.png" class="type-icon-img" alt="">',
+  car:    '<img src="icons/route-car-2-icon.png" class="type-icon-img" alt="">',
+  adr:    '<img src="icons/route-adr-2-icon.png" class="type-icon-img" alt="">',
+  "":     '<img src="icons/route-adr-2-icon.png" class="type-icon-img" alt="">',
+};
+
+const OPEN_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+function esc(s) {
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function heroBtn(url, label) {
+  if (url) {
+    return `<a class="open-btn" href="${esc(url)}" target="_blank">${OPEN_ICON} ${label}</a>`;
+  }
+  return `<span class="no-link-note">No share link available</span>`;
+}
+
+function clearActive() {
+  document.querySelectorAll(".folder-header.active").forEach(e => e.classList.remove("active"));
+  document.querySelectorAll(".map-item.active").forEach(e => e.classList.remove("active"));
+}
+
+function toggleFolder(fi) {
+  const header = document.getElementById("fh-" + fi);
+  const maps   = document.getElementById("folder-maps-" + fi);
+  const isOpen = maps.classList.contains("open");
+  if (isOpen) {
+    maps.classList.remove("open");
+    header.classList.remove("open", "active");
+  } else {
+    maps.classList.add("open");
+    header.classList.add("open");
+    showFolder(fi);
+  }
+}
+
+function showFolder(fi) {
+  clearActive();
+  document.getElementById("fh-" + fi).classList.add("active");
+  const folder = DATA.folders[fi];
+  const folderUrl = folder.share_link || (folder.maps[0] && folder.maps[0].share_link) || "";
+
+  let html = "";
+
+  // Folder map screenshot (shows all routes)
+  if (folder.screenshot) {
+    html += `<a href="${esc(folderUrl)}" target="_blank">
+      <img class="map-screenshot" src="${esc(folder.screenshot)}" alt="${esc(folder.name)}" loading="lazy">
+    </a>`;
+  }
+
+  html += `<div class="map-hero">
+    <div class="map-hero-info">
+      <h2>📁 ${esc(folder.name)}</h2>
+      <div class="subtitle">${folder.maps.length} route(s)</div>
+    </div>
+    ${heroBtn(folderUrl, "Open in mapy.com")}
+  </div>`;
+
+  if (folder.note) {
+    html += `<div class="user-note">${esc(folder.note)}</div>`;
+  }
+
+  if (!folder.maps.length) {
+    html += `<p style="color:#aaa;font-style:italic">No maps in this folder.</p>`;
+  } else {
+    html += `<table class="map-table"><thead><tr>
+      <th></th><th>Name</th><th>Distance / Time</th><th>Open</th>
+    </tr></thead><tbody>`;
+    folder.maps.forEach((map, mi) => {
+      const icon = TYPE_ICONS[map.type] || TYPE_ICONS[""];
+      const desc = map.description || map.summary || "";
+      const link = map.share_link
+        ? `<a class="tbl-link" href="${esc(map.share_link)}" target="_blank">Open ↗</a>` : "";
+      html += `<tr>
+        <td class="type-icon">${icon}</td>
+        <td class="col-name" onclick="openMapFromTable(${fi},${mi})">${esc(map.name)}</td>
+        <td>${esc(desc)}</td>
+        <td>${link}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+
+  document.getElementById("detail-panel").innerHTML = html;
+}
+
+function openMapFromTable(fi, mi) {
+  const mapsEl = document.getElementById("folder-maps-" + fi);
+  const header = document.getElementById("fh-" + fi);
+  if (!mapsEl.classList.contains("open")) {
+    mapsEl.classList.add("open");
+    header.classList.add("open");
+  }
+  showMap(fi, mi);
+}
+
+function showMap(fi, mi) {
+  clearActive();
+  const itemEl = document.getElementById("mi-" + fi + "-" + mi);
+  if (itemEl) itemEl.classList.add("active");
+
+  const map = DATA.folders[fi].maps[mi];
+  const url = map.share_link || map.embed_src || "";
+  const typeLabel = TYPE_LABELS[map.type] || "";
+  const subtitle  = [typeLabel, map.description].filter(Boolean).join(" · ");
+
+  let html = "";
+
+  // Map screenshot
+  if (map.screenshot) {
+    html += `<a href="${esc(url)}" target="_blank">
+      <img class="map-screenshot" src="${esc(map.screenshot)}" alt="${esc(map.name)}" loading="lazy">
+    </a>`;
+  }
+
+  html += `<div class="map-hero">
+    <div class="map-hero-info">
+      <h2>${esc(map.name)}</h2>
+      ${subtitle ? `<div class="subtitle">${esc(subtitle)}</div>` : ""}
+    </div>
+    ${heroBtn(url, "Open in mapy.com")}
+  </div>`;
+
+  if (map.note) {
+    html += `<div class="user-note">${esc(map.note)}</div>`;
+  }
+
+  if (map.summary && map.summary !== map.description) {
+    html += `<div class="section-title">Distance &amp; Time</div>
+      <div class="summary-text">${esc(map.summary)}</div>`;
+  }
+
+  if (map.points && map.points.length) {
+    html += `<div class="section-title">Route Points (${map.points.length})</div>
+      <ol class="points-list">`;
+    map.points.forEach(pt => { html += `<li>${esc(pt)}</li>`; });
+    html += `</ol>`;
+  }
+
+  // Elevation screenshot
+  if (map.elevation_img) {
+    html += `<div class="section-title">Elevation Profile</div>
+      <img class="elev-screenshot" src="${esc(map.elevation_img)}" alt="Elevation profile" loading="lazy">`;
+  } else if (map.elevation_text) {
+    html += `<div class="section-title">Elevation</div>
+      <div class="elevation-text">${esc(map.elevation_text)}</div>`;
+  }
+
+  document.getElementById("detail-panel").innerHTML = html;
+}
+
+document.querySelectorAll(".map-item").forEach(el => {
+  el.addEventListener("click", () => {
+    showMap(parseInt(el.dataset.fi), parseInt(el.dataset.mi));
+  });
+});
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function typeToFilterKey(t) {
+  return (t === "car" || t === "bike" || t === "hiking") ? t : "other";
+}
+
+function applyFilter() {
+  const checked = new Set(
+    [...document.querySelectorAll(".filter-cb:checked")].map(cb => cb.dataset.type)
+  );
+  const mode = document.querySelector('input[name="hidden-filter"]:checked').value;
+  // mode: "active" = non-hidden only, "all" = everything, "hidden" = hidden only
+
+  document.querySelectorAll(".folder-entry").forEach(entry => {
+    const folderHidden = entry.dataset.hidden === "true";
+
+    let visibleCount = 0;
+    entry.querySelectorAll(".map-item").forEach(el => {
+      const itemHidden = el.dataset.hidden === "true";
+      const typeOk = checked.has(typeToFilterKey(el.dataset.type || ""));
+      const hiddenOk = mode === "all" || (mode === "active" ? !itemHidden : itemHidden);
+      const show = typeOk && hiddenOk;
+      el.style.display = show ? "" : "none";
+      if (show) visibleCount++;
+    });
+    const countEl = document.getElementById("fc-" + entry.dataset.fi);
+    if (countEl) countEl.textContent = visibleCount;
+
+    entry.style.display = visibleCount > 0 ? "" : "none";
+  });
+}
+
+document.querySelectorAll(".filter-cb").forEach(cb => cb.addEventListener("change", applyFilter));
+document.querySelectorAll('input[name="hidden-filter"]').forEach(r => r.addEventListener("change", applyFilter));
+applyFilter();
+
+// ── Hide / Restore ────────────────────────────────────────────────────────
+async function toggleHide(fi, mi = null) {
+  const el = mi === null
+    ? document.querySelector(`.folder-entry[data-fi="${fi}"]`)
+    : document.getElementById(`mi-${fi}-${mi}`);
+  const hidden = !(el.dataset.hidden === "true");
+  const body = mi === null
+    ? {type: "folder", folder_index: fi, hidden}
+    : {type: "map", folder_index: fi, map_index: mi, hidden};
+  const r = await fetch("/api/hide", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body),
+  });
+  if (r.ok) location.reload();
+  else alert("Failed — is the server running? (run serve)");
+}
+</script>
+</body>
+</html>
