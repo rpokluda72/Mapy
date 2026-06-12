@@ -15,52 +15,6 @@ const FOLDERS_DATA = {
       ]
     },
     {
-      "name": "Loučeň",
-      "include": "N",
-      "maps": [
-        {
-          "name": "Trasa z Loučeň do Loučeň 1",
-          "include": "N"
-        },
-        {
-          "name": "Trasa z Loučeň do Loučeň 2",
-          "include": "N"
-        },
-        {
-          "name": "Trasa z Loučeň do Loučeň 3",
-          "include": "N"
-        },
-        {
-          "name": "Trasa z Loučeň do Loučeň 4",
-          "include": "N"
-        },
-        {
-          "name": "Mnichovo Hradiště-Boleslav",
-          "include": "N"
-        },
-        {
-          "name": "Nymburk-Brandýs-Lysá",
-          "include": "N"
-        },
-        {
-          "name": "Dětenice-Kopidlno",
-          "include": "N"
-        },
-        {
-          "name": "Nymburk-Poděbrady-Kolín",
-          "include": "N"
-        },
-        {
-          "name": "Dětenice-Jičín",
-          "include": "N"
-        },
-        {
-          "name": "Nymburk-Poděbrady-Chlumec",
-          "include": "N"
-        }
-      ]
-    },
-    {
       "name": "Velichovky",
       "include": "N",
       "maps": [
@@ -172,6 +126,52 @@ const FOLDERS_DATA = {
         },
         {
           "name": "Olomučany pěší 2",
+          "include": "N"
+        }
+      ]
+    },
+    {
+      "name": "Loučeň",
+      "include": "N",
+      "maps": [
+        {
+          "name": "Trasa z Loučeň do Loučeň 1",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň 2",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň 3",
+          "include": "N"
+        },
+        {
+          "name": "Trasa z Loučeň do Loučeň 4",
+          "include": "N"
+        },
+        {
+          "name": "Mnichovo Hradiště-Boleslav",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Brandýs-Lysá",
+          "include": "N"
+        },
+        {
+          "name": "Dětenice-Kopidlno",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Poděbrady-Kolín",
+          "include": "N"
+        },
+        {
+          "name": "Dětenice-Jičín",
+          "include": "N"
+        },
+        {
+          "name": "Nymburk-Poděbrady-Chlumec",
           "include": "N"
         }
       ]
@@ -680,15 +680,15 @@ const FOLDERS_DATA = {
       "maps": [
         {
           "name": "Radhošť 2",
-          "include": "Y"
+          "include": "N"
         },
         {
           "name": "Radhošť 1",
-          "include": "Y"
+          "include": "N"
         },
         {
           "name": "Metylovice-Ondřejník-Skalka",
-          "include": "Y"
+          "include": "N"
         },
         {
           "name": "Štramberk-Bílá hora",

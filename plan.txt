@@ -223,3 +223,44 @@ In case of side-by-side & full size, set width of maps table as less as possible
 1. stacked orientation : image size is perfect for all size types.
 2. side-by-side orientation : image size is perfect for small and medium size option (same as for stacked). But image size for full is smaller than medium. Why ? I can see a lot of space on page. See picture size-1.png.
 Do not change stacked orientation and side-by-side-small/medium. Fix side-by-side-full only.
+
+I set F option on folders Loučeň, Velichovky and Olomučany. Then I started script details, but filder pictures not updated.
+For those folders it should be folder_2.png, folder_3.png and folder_4.png. Why it were ignored and new folder images were not be loaded/saved ?
+
+I know valid names/indexes of folder map images and I wrote it correctly in my last message.
+Some folder images are wrong and I would like to replace them.
+So if I set Y or F option on folder, image should be replaced and not needed to compare byte content in my opinion.
+If you remember we were solving folder image issue yesterday and we increased delay. In some cases it did not help.
+If you compare folder map image for folder Loučeň:
+- link from mapy.com - https://mapy.com/s/juromelujo
+- local image - images/folder_1.png
+Map images are different and I would like to fix it.
+
+I was watching actions for details in Chrome, and it looks that each folder map was fetched three times. Am I right ? Is it needed ?
+
+I set F on folders Loučeň, Velichovky and Olomučany. Map images for Loučeň are Velichovky ok, but for Olomučany is image wrong.
+
+file folders.json : There are set include F on folder Olomučany. Other folders and map have valu N. But I can see different values in admin.html:
+- all folders has N
+- folder "Pěší trasy" have 8 maps, maps Radhošť 2, Radhošť 1, Metylovice-Ondřejník-Skalka have Y, rest 5 maps have N.
+I can see the same result in http://localhost:8000/admin.html and file:///C:/Users/roman/Work/claude/projects/Mapy/admin.html
+What is wrong ?
+
+I set F on folder Olomučany, run details and then build :
+- I can see valid/new folder map - file:///C:/Users/roman/Work/claude/projects/Mapy/index.html (Edge)
+- I can see wrong/old folder map - http://localhost:8000  (Edge)
+- I can see valid/new folder map - http://localhost:8000  (Firefox)
+Why I can see different images for folder in Edge and Firefox ? Both on http://localhost:8000.
+
+It is problem to stop server by Crl+C, it looks as blocked. I need to refresh page in Edge and then it is possible to stop server.
+Is it possible to open http://localhost:8000 in Edge instead of Firefox ?
+I still can see wrong/old folder map - http://localhost:8000  (Edge)
+
+I set F on folder Znojmo only, run details and then build :
+- I can see valid/new folder map - file:///C:/Users/roman/Work/claude/projects/Mapy/index.html (Edge)
+- folder map of the next folder - Cyklotrasy is wrong. It contains image from folder Znojmo
+- I did Ctrl+Shift+R in all browsers, but did not help
+- image images/folder_10.png is different than I can see
+
+Why are you using different naming for folder map images and concrete map images ? Folder maps has similar name like map images ?
+Are you able manage sorting of folders or and map in folders ?

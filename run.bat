@@ -62,7 +62,6 @@ python scrape_details.py --types
 goto end
 
 :serve
-start http://localhost:8000
 python server.py
 goto end
 

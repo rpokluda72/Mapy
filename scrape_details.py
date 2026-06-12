@@ -371,14 +371,6 @@ async def run(types_mode: bool = False) -> None:
                 if folder_note_baseline:
                     mapy_folder["note"] = folder_note_baseline
 
-            # Folder-level screenshot (all routes visible)
-            if screenshots:
-                await page.wait_for_timeout(FOLDER_SCREENSHOT_EXTRA_WAIT)  # extra wait for all routes to render
-                folder_map_img = await take_map_screenshot(page, f"folder_{fi}")
-                if folder_map_img:
-                    mapy_folder["screenshot"] = folder_map_img
-                    print(f"  [folder screenshot]")
-
             # Return to folder URL if context menu navigated away
             if page.url != folder_url:
                 await page.goto(folder_url, wait_until="networkidle", timeout=20000)
@@ -490,6 +482,25 @@ async def run(types_mode: bool = False) -> None:
                     }
                     mapy_folder["maps"].append(new_map)
                     data_lookup[folder_name].setdefault(map_name, deque()).append(new_map)
+
+            # Folder screenshot — taken after maps so we can end at the share URL with no wasted return trip
+            if screenshots:
+                if folder_share:
+                    await page.goto(folder_share, wait_until="networkidle", timeout=20000)
+                    await page.wait_for_timeout(FOLDER_SCREENSHOT_EXTRA_WAIT)
+                else:
+                    if page.url != folder_url:
+                        await page.goto(folder_url, wait_until="networkidle", timeout=20000)
+                        try:
+                            await page.wait_for_selector("ul.items.sortable", timeout=8000)
+                        except Exception:
+                            pass
+                    await page.wait_for_timeout(FOLDER_SCREENSHOT_EXTRA_WAIT)
+                folder_code = folder_share.rstrip("/").split("/")[-1] if folder_share else re.sub(r'[^a-z0-9]+', '_', folder_name.lower()).strip('_')
+                folder_map_img = await take_map_screenshot(page, folder_code)
+                if folder_map_img:
+                    mapy_folder["screenshot"] = folder_map_img
+                    print(f"  [folder screenshot]")
 
             # Save mapy_data.json after each folder
             with open(DATA_FILE, "w", encoding="utf-8") as f:

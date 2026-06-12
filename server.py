@@ -20,8 +20,16 @@ FOLDERS_FILE = BASE / "folders.json"
 
 
 class Handler(SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.0"  # disables keep-alive so Ctrl+C exits immediately
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(BASE), **kwargs)
+
+    def end_headers(self):
+        ext = self.path.split('?')[0].rsplit('.', 1)[-1]
+        if ext in ('json', 'html', 'js', 'png'):
+            self.send_header('Cache-Control', 'no-store')
+        super().end_headers()
 
     def log_message(self, fmt, *args):
         # Suppress noisy GET logs; keep errors
@@ -84,6 +92,32 @@ class Handler(SimpleHTTPRequestHandler):
             json.dump(body, f, ensure_ascii=False, indent=2)
         n = len(body.get("folders", []))
         print(f"Saved folders.json ({n} folders)")
+
+        # Sync folder and map order into mapy_data.json
+        if DATA_FILE.exists():
+            with open(DATA_FILE, encoding="utf-8") as f:
+                data = json.load(f)
+            new_folders = body.get("folders", [])
+            data_by_name = {fo["name"]: fo for fo in data.get("folders", [])}
+            reordered = []
+            for nfo in new_folders:
+                dfo = data_by_name.get(nfo["name"])
+                if dfo is None:
+                    continue
+                # sync map order within folder
+                new_maps = nfo.get("maps", [])
+                maps_by_name = {m["name"]: m for m in dfo.get("maps", [])}
+                synced = [maps_by_name[nm["name"]] for nm in new_maps if nm["name"] in maps_by_name]
+                extras = [m for m in dfo["maps"] if m["name"] not in {nm["name"] for nm in new_maps}]
+                dfo["maps"] = synced + extras
+                reordered.append(dfo)
+            # keep any data folders absent from folders.json
+            known = {nfo["name"] for nfo in new_folders}
+            reordered += [fo for fo in data["folders"] if fo["name"] not in known]
+            data["folders"] = reordered
+            with open(DATA_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            print(f"Synced mapy_data.json order")
 
     def _json_response(self, code: int, payload: dict) -> None:
         body = json.dumps(payload).encode()

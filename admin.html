@@ -86,6 +86,12 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 .ibtn.iy { background: #f0faf0; border-color: #81c784; color: #2e7d32; }
 .ibtn.in_ { background: #f5f5f5; border-color: #ccc; color: #888; }
 
+/* move up/down buttons */
+.move-btns { display:flex; flex-direction:row; gap:2px; flex-shrink:0; }
+.move-btn { font-size:11px; width:24px; height:22px; padding:0; line-height:1; border-radius:3px; border:1px solid #ccc; background:#f9f9f9; cursor:pointer; color:#666; }
+.move-btn:hover:not(:disabled) { background:#e8f0fe; border-color:#0066cc; color:#0066cc; }
+.move-btn:disabled { opacity:.25; cursor:default; }
+
 /* ── Data tab ── */
 .data-folder { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
 .data-folder-hdr {
@@ -237,7 +243,12 @@ function renderFolders() {
     // Folder row
     const row = document.createElement('div');
     row.className = 'folder-row';
+    const nFolders = foldersData.folders.length;
     row.innerHTML = `
+      <div class="move-btns" onclick="event.stopPropagation()">
+        <button class="move-btn" onclick="moveFolderUp(${fi})" ${fi===0?'disabled':''}>▲</button>
+        <button class="move-btn" onclick="moveFolderDown(${fi})" ${fi===nFolders-1?'disabled':''}>▼</button>
+      </div>
       <span class="arrow">▶</span>
       <span class="folder-name" title="${esc(folder.name)}">${esc(folder.name)}</span>
       ${ynCountHtml(folder, fi)}
@@ -259,7 +270,12 @@ function renderFolders() {
     folder.maps.forEach((map, mi) => {
       const mrow = document.createElement('div');
       mrow.className = 'map-row';
+      const nMaps = folder.maps.length;
       mrow.innerHTML = `
+        <div class="move-btns" onclick="event.stopPropagation()">
+          <button class="move-btn" onclick="moveMapUp(${fi},${mi})" ${mi===0?'disabled':''}>▲</button>
+          <button class="move-btn" onclick="moveMapDown(${fi},${mi})" ${mi===nMaps-1?'disabled':''}>▼</button>
+        </div>
         <span class="map-name" title="${esc(map.name)}">${esc(map.name)}</span>
         <button class="yn ${map.include==='Y'?'y':'n'}" id="mi-${fi}-${mi}" onclick="toggleMap(${fi},${mi})">${map.include}</button>
       `;
@@ -313,6 +329,29 @@ function setAllFolders(val) {
     folder.include = val;
     setYnBtn(`fi-${fi}`, val);
   });
+}
+
+function moveFolderUp(fi) {
+  if (fi === 0) return;
+  [foldersData.folders[fi], foldersData.folders[fi-1]] = [foldersData.folders[fi-1], foldersData.folders[fi]];
+  renderFolders();
+}
+function moveFolderDown(fi) {
+  if (fi >= foldersData.folders.length - 1) return;
+  [foldersData.folders[fi], foldersData.folders[fi+1]] = [foldersData.folders[fi+1], foldersData.folders[fi]];
+  renderFolders();
+}
+function moveMapUp(fi, mi) {
+  const maps = foldersData.folders[fi].maps;
+  if (mi === 0) return;
+  [maps[mi], maps[mi-1]] = [maps[mi-1], maps[mi]];
+  renderFolders();
+}
+function moveMapDown(fi, mi) {
+  const maps = foldersData.folders[fi].maps;
+  if (mi >= maps.length - 1) return;
+  [maps[mi], maps[mi+1]] = [maps[mi+1], maps[mi]];
+  renderFolders();
 }
 
 let foldersExpanded2 = false;

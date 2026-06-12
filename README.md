@@ -80,8 +80,15 @@ run build
 
 ### The folder map image looks wrong (missing routes)
 1. Set `"include": "F"` on the folder in the admin panel (click the folder's Y/N button until it shows **F**)
-2. `run details` — retakes only the folder map screenshot, skips individual maps (fast)
+2. `run details` — navigates to the folder's share URL, retakes only the folder map screenshot, skips individual maps (fast)
 3. `run build`
+
+### You want to reorder folders or maps
+1. `run serve`
+2. Open `http://localhost:8000/admin.html`
+3. In the **Folders** tab, use the **▲▼** buttons on each folder (or map within a folder) to reorder
+4. Click **Save** — writes the new order to `folders.json` and automatically syncs it into `mapy_data.json`
+5. `run build`
 
 ### You modified the HTML template (`templates/index.html.j2`)
 ```
@@ -90,13 +97,13 @@ run build
 
 ## Admin panel (`admin.html`)
 
-The admin panel has two tabs: **Folders** (edit `include` flags) and **Data viewer** (browse scraped data).
+The admin panel has two tabs: **Folders** (edit `include` flags and ordering) and **Data viewer** (browse scraped data, hide/restore).
 
 ### Two ways to open it
 
 | Mode | URL | Use for |
 |---|---|---|
-| **Server** | `http://localhost:8000/admin.html` | Editing include flags — reads live `folders.json`, Save writes back to disk |
+| **Server** | `http://localhost:8000/admin.html` | Editing include flags and ordering — reads live `folders.json`, Save writes back to disk |
 | **Static** | open `admin.html` directly as a file | Read-only browsing — loads data from `folders_data.js` / `data.js` snapshots baked by `run build` |
 
 **Always use the server URL when editing.** The static version loads pre-built snapshots that may be out of date if `folders.json` was changed by the scraper or manually after the last `run build`.
@@ -108,6 +115,10 @@ The admin panel has two tabs: **Folders** (edit `include` flags) and **Data view
 3. Toggle Y/N/F flags, use **All Y** / **All N** per folder or globally
 4. Click **Save** — writes `folders.json` immediately
 5. `run details` / `run build` as needed
+
+### Reordering folders and maps
+
+In the **Folders** tab, each folder row and each map row has **▲▼** buttons (side-by-side) to move items up or down. Clicking **Save** writes the new order to `folders.json` and automatically syncs it into `mapy_data.json`. Then `run build` to regenerate the site with the new display order.
 
 ## Script dependencies — do not run concurrently
 
@@ -182,7 +193,10 @@ python scrape_details.py
 ```
 
 **Source:** `folders.json` (which items to process) + mapy.com (live browser session)  
-**Background:** Processes items marked `include=Y` or `include=F`. For `include=Y`: clicks into each map, takes a map screenshot and elevation-chart screenshot, reads the route note, opens the Share dialog to extract the share link and embed URL. For `include=F`: takes only the folder map screenshot (skips individual maps — useful when the folder image is missing routes). Resets `include` to `N` after each folder so the run is safe to interrupt and resume.  
+**Background:** Processes items marked `include=Y` or `include=F`. For `include=Y`: clicks into each map, takes a map screenshot and elevation-chart screenshot, reads the route note, opens the Share dialog to extract the share link and embed URL. For `include=F`: takes only the folder map screenshot by navigating to the folder's share URL (skips individual maps — useful when the folder image is missing routes or is outdated). Resets `include` to `N` after each folder so the run is safe to interrupt and resume.
+
+Folder screenshot filenames use the folder's share URL code (e.g. `images/juromelujo.png`), the same scheme as individual map screenshots. This keeps filenames stable if folders are reordered.
+
 **Result:** Merges data into `mapy_data.json`; saves screenshots to `images/`.
 
 ---
@@ -218,8 +232,11 @@ python server.py
 ```
 
 **Source:** local files (`index.html`, `data.js`, `admin.html`, `folders.json`, `mapy_data.json`)  
-**Background:** Serves the static site at `http://localhost:8000`. Also exposes a small API (`/api/hide`, `/api/restore`, `/api/save-folders`) so that the hide/restore buttons and the admin panel Save button work. Without the server, those features are read-only.  
-**Result:** No file changes — runs until interrupted with Ctrl+C.
+**Background:** Serves the static site at `http://localhost:8000`. Uses HTTP/1.0 (no keep-alive) so Ctrl+C exits immediately. Sends `Cache-Control: no-store` for HTML, JSON, JS, and PNG files so browsers always fetch the latest version. Does not auto-open a browser on start. Exposes a small API:
+- `POST /api/hide` — toggle hidden flag in `mapy_data.json`, then regenerates site
+- `POST /api/folders` — save `folders.json` with new flags or ordering; automatically syncs folder and map order into `mapy_data.json`
+
+**Result:** No file changes on its own — runs until interrupted with Ctrl+C.
 
 ---
 
