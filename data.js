@@ -2379,7 +2379,7 @@ const DATA = {
           "elevation_img": "images/hajorezugu_elev.png"
         }
       ],
-      "screenshot": "images/lednice.png"
+      "screenshot": "images/dutadudubo.png"
     },
     {
       "name": "Bike-Ostravice",
