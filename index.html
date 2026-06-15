@@ -142,7 +142,8 @@
   }
 
   .detail-panel { padding: 28px 32px; max-width: 1100px; }
-  body.horiz-full .detail-panel { max-width: none; }
+  body.horiz-full   .detail-panel { max-width: none; }
+  body.horiz-medium .detail-panel { max-width: none; }
 
   /* Map hero card */
   .map-hero {
@@ -232,7 +233,7 @@
   .panel-ab { display:flex; flex-direction:column; gap:20px; }
   .panel-ab.horiz { flex-direction:row; align-items:flex-start; gap:24px; }
   .panel-ab.horiz .panel-a { flex:1; min-width:0; max-width:none; }
-  .panel-ab.horiz .panel-b { flex:1; min-width:0; }
+  .panel-ab.horiz .panel-b { flex:1; min-width:0; box-sizing:content-box; }
   .panel-ab.sz-small  { max-width:  480px; }
   .panel-ab.sz-medium { max-width:  760px; }
   .panel-ab.sz-full   { max-width: 1040px; }
@@ -3498,7 +3499,8 @@ function applySettings() {
   });
   const ab = document.getElementById('panel-ab');
   if (ab) ab.classList.toggle('horiz', layout === 'horiz');
-  document.body.classList.toggle('horiz-full', layout === 'horiz' && size === 'full');
+  document.body.classList.toggle('horiz-full',   layout === 'horiz' && size === 'full');
+  document.body.classList.toggle('horiz-medium', layout === 'horiz' && size === 'medium');
   document.querySelectorAll('.vc-btn[data-size]').forEach(b =>
     b.classList.toggle('active', b.dataset.size === size));
   document.querySelectorAll('.vc-btn[data-layout]').forEach(b =>

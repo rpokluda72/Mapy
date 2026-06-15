@@ -264,3 +264,18 @@ I set F on folder Znojmo only, run details and then build :
 
 Why are you using different naming for folder map images and concrete map images ? Folder maps has similar name like map images ?
 Are you able manage sorting of folders or and map in folders ?
+
+I noticed that in case of folder map & medium map size & side-by-side orientation : maps/routes table is cut. In case of small or full map size, it is ok.
+Width image+table is the same for small and medium map size. In case of medium map size it should be wider, like for full map size.
+If I cancel "box-sizing: border-box" on class="panel-b", it is ok.
+Similar issue is on concrete map & medium map size & side-by-side orientation : elevation profile components is smaller than for small or full map size.
+Again If I cancel "box-sizing: border-box" on class="panel-b", it is ok.
+Stacked orientation is ok.
+Could you check it ?
+
+Still not valid.
+I saved html page for all three map sizes:
+1. small size : "C:\Users\roman\Downloads\map-issue-1-small.html"
+2. medium size : "C:\Users\roman\Downloads\map-issue-1-medium.html"
+3. full size : "C:\Users\roman\Downloads\map-issue-1-full.html"
+You can check what is different and wrong in case of medium.
