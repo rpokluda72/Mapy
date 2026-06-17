@@ -42,9 +42,9 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 
 /* ── Type count pills (shared by both tabs) ── */
 .folder-type-counts { display:flex; gap:4px; align-items:center; flex-shrink:0; }
-.ftc { display:flex; align-items:center; gap:2px; background:#e8f0eb; border-radius:10px; padding:1px 6px; white-space:nowrap; }
-.ftc .type-icon-img { width:13px; height:13px; }
-.ftc-num { font-size:11px; color:#4a7a5a; font-weight:600; }
+.ftc { display:flex; align-items:center; gap:3px; background:#eef0f3; border-radius:10px; padding:2px 8px; white-space:nowrap; }
+.ftc .type-icon-img { width:16px; height:16px; }
+.ftc-num { font-size:13px; color:#444; font-weight:600; }
 
 /* ── Folders tab ── */
 .folder-block { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
@@ -92,6 +92,18 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 .move-btn:hover:not(:disabled) { background:#e8f0fe; border-color:#0066cc; color:#0066cc; }
 .move-btn:disabled { opacity:.25; cursor:default; }
 
+/* ── Data filter bar ── */
+.data-filter-bar {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 9px 14px 8px; background: #f4f6fa;
+  border: 1px solid #dde; border-radius: 6px; margin-bottom: 12px;
+}
+.filter-row { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+.filter-label { font-size: 12px; color: #888; font-weight: 600; text-transform: uppercase; flex-shrink: 0; }
+.filter-item { display: flex; align-items: center; gap: 4px; font-size: 14px; cursor: pointer; user-select: none; white-space: nowrap; }
+.filter-item input { cursor: pointer; width: 14px; height: 14px; }
+.filter-item img { width: 18px; height: 18px; object-fit: contain; }
+
 /* ── Data tab ── */
 .data-folder { background: #fff; border-radius: 7px; border: 1px solid #dde; margin-bottom: 8px; overflow: hidden; }
 .data-folder-hdr {
@@ -107,11 +119,35 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 
 .data-map-row {
   display: grid;
-  grid-template-columns: 22px 1fr auto auto;
+  grid-template-columns: 22px 1fr auto auto auto;
   gap: 10px; align-items: start;
   padding: 7px 14px 7px 34px; border-top: 1px solid #f2f2f2; font-size: 13px;
 }
 .data-map-row:hover { background: #fafafa; }
+.data-map-row.is-hidden { opacity: 0.45; }
+.data-map-row.is-hidden .map-title { text-decoration: line-through; }
+
+.data-hide-btn {
+  background: none; border: none; cursor: pointer; font-size: 15px;
+  color: #ccc; padding: 0 3px; line-height: 1; border-radius: 3px; flex-shrink: 0;
+  align-self: center;
+}
+.data-map-row:hover .data-hide-btn { color: #c0392b; }
+.data-hide-btn:hover { background: #fde8e6; color: #c0392b; }
+.data-hide-btn.restore { color: #ccc; }
+.data-map-row:hover .data-hide-btn.restore { color: #1a7340; }
+.data-hide-btn.restore:hover { background: #e8f5ee; color: #1a7340; }
+
+.data-folder-hide-btn {
+  display: none; background: none; border: none; cursor: pointer; font-size: 15px;
+  color: #c0392b; padding: 0 4px; line-height: 1; border-radius: 3px; flex-shrink: 0;
+}
+.data-folder-hdr:hover .data-folder-hide-btn { display: inline; }
+.data-folder-hide-btn:hover { background: #fde8e6; }
+.data-folder-hide-btn.restore { color: #1a7340; }
+.data-folder-hide-btn.restore:hover { background: #e8f5ee; }
+.data-folder.is-hidden .data-folder-hdr { opacity: 0.5; }
+.data-folder.is-hidden .data-folder-hdr strong { text-decoration: line-through; }
 .type-icon-img { width: 18px; height: 18px; object-fit: contain; margin-top: 1px; }
 .map-title { font-weight: 500; line-height: 1.4; }
 .map-desc { color: #888; font-size: 12px; }
@@ -130,11 +166,11 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
 <body>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('folders')">Folders — include flags</button>
-  <button class="tab-btn" onclick="showTab('data')">Data viewer</button>
+  <button class="tab-btn active" onclick="showTab('data')">Data viewer</button>
+  <button class="tab-btn" onclick="showTab('folders')">Folders — include flags</button>
 </div>
 
-<div id="tab-folders" class="tab-panel active">
+<div id="tab-folders" class="tab-panel">
   <div class="toolbar">
     <h2>folders.json</h2>
     <button class="btn" id="expand-folders-btn" onclick="toggleExpandFolders()">Expand all</button>
@@ -147,11 +183,31 @@ body { font-family: system-ui, sans-serif; font-size: 14px; background: #f0f2f5;
   <div id="folder-list"></div>
 </div>
 
-<div id="tab-data" class="tab-panel">
+<div id="tab-data" class="tab-panel active">
   <div class="toolbar">
     <h2>mapy_data.json</h2>
     <button class="btn" id="expand-data-btn" onclick="toggleExpandData()">Expand all</button>
     <span id="data-summary" class="status-msg"></span>
+  </div>
+  <div class="data-filter-bar">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="display:flex;flex-direction:column;gap:5px;flex:1;">
+        <div class="filter-row">
+          <span class="filter-label">Filter:</span>
+          <label class="filter-item"><input type="checkbox" class="data-filter-cb" data-type="car" checked><img src="icons/route-car-2-icon.png" alt=""> Car</label>
+          <label class="filter-item"><input type="checkbox" class="data-filter-cb" data-type="bike" checked><img src="icons/route-cyc-2-icon.png" alt=""> Bike</label>
+          <label class="filter-item"><input type="checkbox" class="data-filter-cb" data-type="hiking" checked><img src="icons/route-ped-2-icon.png" alt=""> Walk</label>
+          <label class="filter-item"><input type="checkbox" class="data-filter-cb" data-type="other" checked><img src="icons/route-adr-2-icon.png" alt=""> Other</label>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Show:</span>
+          <label class="filter-item"><input type="radio" name="data-hidden-filter" value="active" checked> Active</label>
+          <label class="filter-item"><input type="radio" name="data-hidden-filter" value="all"> All</label>
+          <label class="filter-item"><input type="radio" name="data-hidden-filter" value="hidden"> Hidden</label>
+        </div>
+      </div>
+      <span class="folder-type-counts" id="data-totals-pills"></span>
+    </div>
   </div>
   <div id="data-list"></div>
 </div>
@@ -165,10 +221,10 @@ const IS_STATIC = !window.location.protocol.startsWith('http');
 // ── Tab switching ──────────────────────────────────────────────────────
 function showTab(name) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    b.classList.toggle('active', ['folders','data'][i] === name);
+    b.classList.toggle('active', ['data','folders'][i] === name);
   });
-  ['tab-folders','tab-data'].forEach((id, i) => {
-    document.getElementById(id).classList.toggle('active', ['folders','data'][i] === name);
+  ['tab-data','tab-folders'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', ['data','folders'][i] === name);
   });
 }
 
@@ -412,6 +468,8 @@ function toggleExpandData() {
   document.getElementById('expand-data-btn').textContent = dataExpanded ? 'Collapse all' : 'Expand all';
 }
 
+let currentData = null;
+
 async function loadData() {
   try {
     let data;
@@ -427,6 +485,7 @@ async function loadData() {
         'Run "run build" to generate data.js, then reload.';
       return;
     }
+    currentData = data;
     renderData(data);
   } catch(e) {
     document.getElementById('data-list').textContent =
@@ -436,20 +495,23 @@ async function loadData() {
 
 function renderData(data) {
   const container = document.getElementById('data-list');
+  container.innerHTML = '';
   const totalMaps = data.folders.reduce((s, f) => s + f.maps.length, 0);
   const withNotes = data.folders.reduce((s, f) => s + f.maps.filter(m => m.note).length, 0);
   document.getElementById('data-summary').textContent =
     `${data.folders.length} folders · ${totalMaps} maps · ${withNotes} notes`;
 
-  data.folders.forEach(folder => {
+  data.folders.forEach((folder, fi) => {
     const div = document.createElement('div');
-    div.className = 'data-folder';
+    div.className = 'data-folder' + (folder.hidden ? ' is-hidden' : '');
+    div.id = `dfolder-${fi}`;
+    div.dataset.hidden = String(!!folder.hidden);
 
     const hdr = document.createElement('div');
     hdr.className = 'data-folder-hdr';
     const fTags = [
       folder.note   ? `<span class="tag tag-note" title="${esc(folder.note)}">note</span>` : '',
-      folder.hidden ? `<span class="tag tag-hidden">hidden</span>` : '',
+      folder.hidden ? `<span class="tag tag-hidden" id="dfolder-htag-${fi}">hidden</span>` : `<span class="tag tag-hidden" id="dfolder-htag-${fi}" style="display:none">hidden</span>`,
     ].join('');
     const folderLink = folder.share_link
       ? `<a class="share-link" href="${esc(folder.share_link)}" target="_blank" onclick="event.stopPropagation()" style="margin-left:8px">${esc(folder.share_link.split('/').pop())}</a>`
@@ -460,6 +522,7 @@ function renderData(data) {
         ? `<span class="ftc" data-type="${tk}"><img src="${TYPE_ICONS[tk]}" class="type-icon-img" alt="${tk}"><span class="ftc-num">${cnt}</span></span>`
         : '';
     }).join('');
+    const folderHideBtn = `<button class="data-folder-hide-btn${folder.hidden?' restore':''}" id="dfolder-hbtn-${fi}" onclick="event.stopPropagation(); toggleDataFolderHide(${fi})" title="${folder.hidden?'Restore folder':'Hide folder'}">${folder.hidden?'↩':'×'}</button>`;
     hdr.innerHTML = `
       <span class="arrow">▶</span>
       <strong>${esc(folder.name)}</strong>
@@ -467,6 +530,7 @@ function renderData(data) {
       ${fTags}
       <span class="folder-type-counts">${typePills}</span>
       ${folderLink}
+      ${folderHideBtn}
     `;
     hdr.addEventListener('click', () => {
       hdr.classList.toggle('open');
@@ -475,8 +539,9 @@ function renderData(data) {
 
     const mapsDiv = document.createElement('div');
     mapsDiv.className = 'data-maps';
-    folder.maps.forEach(map => {
+    folder.maps.forEach((map, mi) => {
       const icon = TYPE_ICONS[map.type] || TYPE_ICONS[''];
+      const typeKey = (map.type === 'adr' || !map.type) ? 'other' : map.type;
       const tags = [
         map.hidden ? `<span class="tag tag-hidden">hidden</span>` : '',
         map.note   ? `<span class="tag tag-note" title="${esc(map.note)}">note</span>` : '',
@@ -484,17 +549,22 @@ function renderData(data) {
       const linkHtml = map.share_link
         ? `<a class="share-link" href="${esc(map.share_link)}" target="_blank">${esc(map.share_link.split('/').pop())}</a>`
         : `<span class="no-link">—</span>`;
+      const hideBtn = `<button class="data-hide-btn${map.hidden?' restore':''}" onclick="toggleDataHide(${fi},${mi})" title="${map.hidden?'Restore map':'Hide map'}">${map.hidden?'↩':'×'}</button>`;
       const row = document.createElement('div');
-      row.className = 'data-map-row';
+      row.className = 'data-map-row' + (map.hidden ? ' is-hidden' : '');
+      row.id = `drow-${fi}-${mi}`;
+      row.dataset.type = typeKey;
+      row.dataset.hidden = String(!!map.hidden);
       row.innerHTML = `
         <img src="${icon}" class="type-icon-img" alt="${map.type||''}">
         <div>
           <div class="map-title">${esc(map.name)}</div>
-          ${map.description ? `<div class="map-desc">${esc(map.description)}</div>` : ''}
+          ${(map.description || map.elevation_ascent || map.elevation_descent) ? `<div class="map-desc">${esc([map.description, map.elevation_ascent ? '↑ ' + map.elevation_ascent + ' m' : '', map.elevation_descent ? '↓ ' + map.elevation_descent + ' m' : ''].filter(Boolean).join(' · '))}</div>` : ''}
           ${map.note        ? `<div class="map-note-line">${esc(map.note)}</div>` : ''}
         </div>
         <div class="tags">${tags}</div>
         <div>${linkHtml}</div>
+        ${hideBtn}
       `;
       mapsDiv.appendChild(row);
     });
@@ -503,11 +573,129 @@ function renderData(data) {
     div.appendChild(mapsDiv);
     container.appendChild(div);
   });
+
+  applyDataFilter();
+}
+
+function applyDataFilter() {
+  const types = new Set();
+  document.querySelectorAll('.data-filter-cb:checked').forEach(cb => types.add(cb.dataset.type));
+  const showMode = document.querySelector('input[name="data-hidden-filter"]:checked')?.value || 'active';
+
+  const totals = { car: 0, bike: 0, hiking: 0, other: 0 };
+
+  document.querySelectorAll('#data-list .data-folder').forEach(folderEl => {
+    const folderHidden = folderEl.dataset.hidden === 'true';
+
+    let anyVisible = false;
+    folderEl.querySelectorAll('.data-map-row').forEach(row => {
+      const typeMatch = types.has(row.dataset.type);
+      const mapHidden = row.dataset.hidden === 'true';
+      const hiddenMatch = showMode === 'all'
+        || (showMode === 'active' && !mapHidden)
+        || (showMode === 'hidden' && mapHidden);
+      const visible = typeMatch && hiddenMatch;
+      row.style.display = visible ? '' : 'none';
+      if (visible) anyVisible = true;
+    });
+
+    const folderVisible = showMode === 'active'
+      ? (!folderHidden && anyVisible)
+      : (anyVisible || (showMode === 'hidden' && folderHidden));
+    folderEl.style.display = folderVisible ? '' : 'none';
+
+    if (folderVisible) {
+      folderEl.querySelectorAll('.data-map-row').forEach(row => {
+        if (row.style.display !== 'none') totals[row.dataset.type] = (totals[row.dataset.type] || 0) + 1;
+      });
+    }
+  });
+
+  const iconMap = { car: 'icons/route-car-2-icon.png', bike: 'icons/route-cyc-2-icon.png', hiking: 'icons/route-ped-2-icon.png', other: 'icons/route-adr-2-icon.png' };
+  const pillsEl = document.getElementById('data-totals-pills');
+  if (pillsEl) {
+    pillsEl.innerHTML = ['car','bike','hiking','other'].filter(t => totals[t] > 0).map(t =>
+      `<span class="ftc"><img src="${iconMap[t]}" class="type-icon-img" alt="${t}"><span class="ftc-num">${totals[t]}</span></span>`
+    ).join('');
+  }
+}
+
+async function toggleDataFolderHide(fi) {
+  const folder = currentData.folders[fi];
+  const hidden = !folder.hidden;
+
+  if (!IS_STATIC) {
+    const r = await fetch('/api/hide', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type: 'folder', folder_index: fi, hidden})
+    });
+    if (r.ok) location.reload();
+    else alert('Failed — is the server running? (run serve)');
+    return;
+  }
+
+  // Static mode: toggle in memory and update DOM
+  folder.hidden = hidden;
+  const folderEl = document.getElementById(`dfolder-${fi}`);
+  if (!folderEl) return;
+  folderEl.dataset.hidden = String(hidden);
+  folderEl.classList.toggle('is-hidden', hidden);
+  const btn = document.getElementById(`dfolder-hbtn-${fi}`);
+  if (btn) {
+    btn.textContent = hidden ? '↩' : '×';
+    btn.title = hidden ? 'Restore folder' : 'Hide folder';
+    btn.classList.toggle('restore', hidden);
+  }
+  const tag = document.getElementById(`dfolder-htag-${fi}`);
+  if (tag) tag.style.display = hidden ? '' : 'none';
+  applyDataFilter();
+}
+
+async function toggleDataHide(fi, mi) {
+  const map = currentData.folders[fi].maps[mi];
+  const hidden = !map.hidden;
+
+  if (!IS_STATIC) {
+    const r = await fetch('/api/hide', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type: 'map', folder_index: fi, map_index: mi, hidden})
+    });
+    if (r.ok) location.reload();
+    else alert('Failed — is the server running? (run serve)');
+    return;
+  }
+
+  // Static mode: toggle in memory and update DOM
+  map.hidden = hidden;
+  const row = document.getElementById(`drow-${fi}-${mi}`);
+  if (!row) return;
+  row.dataset.hidden = String(hidden);
+  row.classList.toggle('is-hidden', hidden);
+  const btn = row.querySelector('.data-hide-btn');
+  if (btn) {
+    btn.textContent = hidden ? '↩' : '×';
+    btn.title = hidden ? 'Restore map' : 'Hide map';
+    btn.classList.toggle('restore', hidden);
+  }
+  const tagsEl = row.querySelector('.tags');
+  if (tagsEl) {
+    const existingTag = tagsEl.querySelector('.tag-hidden');
+    if (hidden && !existingTag) {
+      tagsEl.insertAdjacentHTML('afterbegin', '<span class="tag tag-hidden">hidden</span>');
+    } else if (!hidden && existingTag) {
+      existingTag.remove();
+    }
+  }
+  applyDataFilter();
 }
 
 // ── Init ───────────────────────────────────────────────────────────────
 loadFolders();
 loadData();
+document.querySelectorAll('.data-filter-cb, input[name="data-hidden-filter"]').forEach(el =>
+  el.addEventListener('change', applyDataFilter));
 </script>
 </body>
 </html>

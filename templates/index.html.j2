@@ -313,8 +313,12 @@
           <span class="type-icon">{{ icons.get(map.type, icons['']) }}</span>
           <div class="map-item-text">
             <div class="map-item-name">{{ map.name }}</div>
-            {% if map.description %}
-            <div class="map-item-desc">{{ map.description }}</div>
+            {% set elev_parts = [] %}
+            {% if map.elevation_ascent %}{% set _ = elev_parts.append('↑ ' ~ map.elevation_ascent ~ ' m') %}{% endif %}
+            {% if map.elevation_descent %}{% set _ = elev_parts.append('↓ ' ~ map.elevation_descent ~ ' m') %}{% endif %}
+            {% set full_desc = (map.description or '') ~ (' · ' ~ elev_parts|join(' ') if elev_parts else '') %}
+            {% if full_desc %}
+            <div class="map-item-desc">{{ full_desc }}</div>
             {% endif %}
           </div>
           <button class="del-btn{% if map.hidden %} restore{% endif %}" onclick="event.stopPropagation(); toggleHide({{ fi }}, {{ mi }})" title="{% if map.hidden %}Restore map{% else %}Hide map{% endif %}">{% if map.hidden %}↩{% else %}×{% endif %}</button>
@@ -348,6 +352,13 @@ const OPEN_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" s
 function esc(s) {
   if (s == null) return "";
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function mapElevDesc(map) {
+  const parts = [];
+  if (map.elevation_ascent)  parts.push(`↑ ${map.elevation_ascent} m`);
+  if (map.elevation_descent) parts.push(`↓ ${map.elevation_descent} m`);
+  return parts.join(' ');
 }
 
 function heroBtn(url, label) {
@@ -441,7 +452,8 @@ function showFolder(fi) {
     </tr></thead><tbody>`;
     folder.maps.forEach((map, mi) => {
       const icon = TYPE_ICONS[map.type] || TYPE_ICONS[""];
-      const desc = map.description || map.summary || "";
+      const elev = mapElevDesc(map);
+      const desc = [map.description || "", elev].filter(Boolean).join(" · ");
       const link = map.share_link
         ? `<a class="tbl-link" href="${esc(map.share_link)}" target="_blank">↗</a>` : "";
       panelB += `<tr>
@@ -477,7 +489,9 @@ function showMap(fi, mi) {
   const map = DATA.folders[fi].maps[mi];
   const url = map.share_link || map.embed_src || "";
   const typeLabel = TYPE_LABELS[map.type] || "";
-  const subtitle  = [typeLabel, map.description].filter(Boolean).join(" · ");
+  const elev = mapElevDesc(map);
+  const descLine = [typeLabel, map.description].filter(Boolean).join(" · ");
+  const subtitle = descLine && elev ? `${descLine}<br>${elev}` : (descLine || elev);
 
   let panelA = "";
   let panelB = "";
@@ -491,7 +505,7 @@ function showMap(fi, mi) {
   panelA += `<div class="map-hero">
     <div class="map-hero-info">
       <h2>${esc(map.name)}</h2>
-      ${subtitle ? `<div class="subtitle">${esc(subtitle)}</div>` : ""}
+      ${subtitle ? `<div class="subtitle">${subtitle}</div>` : ""}
     </div>
     ${heroBtn(url, "Open in mapy.com")}
   </div>`;

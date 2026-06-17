@@ -28,7 +28,7 @@ FIREFOX_PROFILE = Path(
     r"C:\Users\roman\AppData\Roaming\Mozilla\Firefox\Profiles"
     r"\3yclgs3h.dev-edition-default"
 )
-MAPY_URL = "https://mapy.com/en/turisticka?moje-mapy&cat=mista-trasy"
+MAPY_URL = "https://mapy.com/cs/turisticka?moje-mapy&cat=mista-trasy"
 FOLDERS_FILE = Path(__file__).parent / "folders.json"
 DATA_FILE = Path(__file__).parent / "mapy_data.json"
 IMAGES_DIR = Path(__file__).parent / "images"
@@ -188,6 +188,24 @@ async def take_elevation_screenshot(page: Page, code: str) -> str:
     return ""
 
 
+async def get_elevation_values(page: Page) -> tuple:
+    """Extract ascent/descent metres from the already-open elevation panel.
+    Must be called after take_elevation_screenshot() has opened the panel."""
+    try:
+        def parse_m(text: str):
+            digits = re.sub(r"[^\d]", "", text)
+            return int(digits) if digits else None
+        values = page.locator("div.module-content.route-height-profile .desc .value")
+        if await values.count() >= 2:
+            return (
+                parse_m(await values.nth(0).inner_text()),
+                parse_m(await values.nth(1).inner_text()),
+            )
+    except Exception:
+        pass
+    return None, None
+
+
 async def get_folder_share_url(page: Page, fi: int) -> str:
     """Click span.opts on folder, look for share option, extract URL."""
     try:
@@ -221,7 +239,10 @@ async def get_folder_share_url(page: Page, fi: int) -> str:
         }""")
         close_btn = page.locator("button.close").first
         if await close_btn.count():
-            await close_btn.click(timeout=1000)
+            try:
+                await close_btn.click(timeout=2000)
+            except Exception:
+                await close_btn.click(timeout=2000, force=True)
         else:
             await page.keyboard.press("Escape")
         await page.wait_for_timeout(300)
@@ -289,9 +310,16 @@ async def run(types_mode: bool = False) -> None:
         page = await ctx.new_page()
 
         print(f"Navigating to {MAPY_URL} ...")
-        await page.goto(MAPY_URL, wait_until="networkidle", timeout=30000)
+        await page.goto(MAPY_URL, wait_until="load", timeout=30000)
         await page.wait_for_selector("ul.folders.sortable", timeout=20000)
         await page.wait_for_timeout(1000)
+
+        # Build name → live DOM index map so folder clicks match by name, not position
+        async def build_live_index() -> dict[str, int]:
+            names = await page.locator("ul.folders.sortable li.folder div.bar h2.title").all_inner_texts()
+            return {n.strip(): i for i, n in enumerate(names)}
+
+        live_folder_index = await build_live_index()
 
         for fi, folder_ctrl in enumerate(folders_ctrl):
             folder_name = folder_ctrl["name"]
@@ -309,14 +337,21 @@ async def run(types_mode: bool = False) -> None:
                 print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  (skip)")
                 continue
 
+            live_idx = live_folder_index.get(folder_name)
+            if live_idx is None:
+                print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  (not found on live page — skip)")
+                continue
+
             label = "folder only" if folder_include == "F" else f"{len(maps_to_scrape)} maps"
             print(f"\n[{fi+1}/{len(folders_ctrl)}] {folder_name}  ({label})")
 
             # Return to main page before opening folder
             if page.url != MAPY_URL:
-                await page.goto(MAPY_URL, wait_until="networkidle", timeout=20000)
+                await page.goto(MAPY_URL, wait_until="load", timeout=20000)
                 await page.wait_for_selector("ul.folders.sortable", timeout=10000)
                 await page.wait_for_timeout(600)
+                live_folder_index = await build_live_index()
+                live_idx = live_folder_index.get(folder_name, live_idx)
 
             # Ensure folder entry exists in mapy_data
             if folder_name not in data_lookup:
@@ -327,18 +362,20 @@ async def run(types_mode: bool = False) -> None:
             mapy_folder = next(fo for fo in mapy_data["folders"] if fo["name"] == folder_name)
 
             # Folder share link — get BEFORE opening folder (opts works best on collapsed list)
-            folder_share = await get_folder_share_url(page, fi)
+            folder_share = await get_folder_share_url(page, live_idx)
             if folder_share:
                 mapy_folder["share_link"] = folder_share
                 print(f"  [folder share] {folder_share}")
             # Restore main page if opts dialog navigated away
             if page.url != MAPY_URL:
-                await page.goto(MAPY_URL, wait_until="networkidle", timeout=20000)
+                await page.goto(MAPY_URL, wait_until="load", timeout=20000)
                 await page.wait_for_selector("ul.folders.sortable", timeout=10000)
                 await page.wait_for_timeout(600)
+                live_folder_index = await build_live_index()
+                live_idx = live_folder_index.get(folder_name, live_idx)
 
             # Open folder
-            await page.locator("li.folder").nth(fi).locator("div.bar h2.title").first.click()
+            await page.locator("li.folder").nth(live_idx).locator("div.bar h2.title").first.click()
             await page.wait_for_timeout(1000)
             try:
                 await page.wait_for_selector("ul.items.sortable", timeout=8000)
@@ -373,9 +410,13 @@ async def run(types_mode: bool = False) -> None:
 
             # Return to folder URL if context menu navigated away
             if page.url != folder_url:
-                await page.goto(folder_url, wait_until="networkidle", timeout=20000)
+                await page.goto(folder_url, wait_until="load", timeout=20000)
                 await page.wait_for_selector("ul.items.sortable", timeout=8000)
                 await page.wait_for_timeout(600)
+
+            # Snapshot which map IDs were in the JSON *before* this run's processing.
+            # Only these are candidates for stale removal — newly created maps must not be evicted.
+            pre_existing_ids = {id(m) for deq in data_lookup[folder_name].values() for m in deq}
 
             # Process each map
             for mi in sorted(maps_to_scrape):
@@ -390,7 +431,7 @@ async def run(types_mode: bool = False) -> None:
 
                 # Return to folder URL before each map click
                 if page.url != folder_url:
-                    await page.goto(folder_url, wait_until="networkidle", timeout=20000)
+                    await page.goto(folder_url, wait_until="load", timeout=20000)
                     try:
                         await page.wait_for_selector("ul.items.sortable", timeout=8000)
                     except Exception:
@@ -417,14 +458,17 @@ async def run(types_mode: bool = False) -> None:
                 shot_url = sl or existing_entry.get("share_link", "")
 
                 map_img, elev_img = "", ""
+                elev_asc, elev_desc = None, None
                 if TAKE_SCREENSHOTS and shot_url:
                     share_code = shot_url.rstrip("/").split("/")[-1]
-                    await page.goto(shot_url, wait_until="networkidle", timeout=20000)
+                    await page.goto(shot_url, wait_until="load", timeout=30000)
                     await page.wait_for_timeout(2000)
                     map_img  = await take_map_screenshot(page, share_code)
                     elev_img = await take_elevation_screenshot(page, share_code)
+                    if elev_img:
+                        elev_asc, elev_desc = await get_elevation_values(page)
                     # Return to folder for next map
-                    await page.goto(folder_url, wait_until="networkidle", timeout=20000)
+                    await page.goto(folder_url, wait_until="load", timeout=20000)
                     try:
                         await page.wait_for_selector("ul.items.sortable", timeout=8000)
                     except Exception:
@@ -432,7 +476,8 @@ async def run(types_mode: bool = False) -> None:
                     await page.wait_for_timeout(600)
 
                 print(f"  [{mi+1}] {map_name}  {sl or '(no link)'}  "
-                      f"{'[map]' if map_img else ''}{'[elev]' if elev_img else ''}  [{done}/{total_work}]")
+                      f"{'[map]' if map_img else ''}{'[elev]' if elev_img else ''}  "
+                      f"{'↑' + str(elev_asc) if elev_asc else ''}{'↓' + str(elev_desc) if elev_desc else ''}  [{done}/{total_work}]")
 
                 # Upsert into mapy_data
                 # For duplicate map names: match by share_link first, then consume first available.
@@ -451,9 +496,9 @@ async def run(types_mode: bool = False) -> None:
                     m = None
 
                 if m is not None:
+                    m.pop("summary", None)
                     if meta["description"]:
                         m["description"] = meta["description"]
-                        m["summary"] = meta["description"]
                     if meta["type"]:
                         m["type"] = meta["type"]
                     if map_note:
@@ -466,6 +511,8 @@ async def run(types_mode: bool = False) -> None:
                         m["screenshot"] = map_img
                     if elev_img:
                         m["elevation_img"] = elev_img
+                    m["elevation_ascent"]  = elev_asc
+                    m["elevation_descent"] = elev_desc
                 else:
                     new_map = {
                         "name": map_name,
@@ -475,22 +522,33 @@ async def run(types_mode: bool = False) -> None:
                         "share_link": sl,
                         "embed_src": es,
                         "points": [],
-                        "summary": meta["description"],
                         "elevation_text": "",
                         "screenshot": map_img,
                         "elevation_img": elev_img,
+                        "elevation_ascent": elev_asc,
+                        "elevation_descent": elev_desc,
                     }
                     mapy_folder["maps"].append(new_map)
                     data_lookup[folder_name].setdefault(map_name, deque()).append(new_map)
 
+            # After a full-folder scrape, remove pre-existing map entries that were not matched.
+            # Newly created maps (not in pre_existing_ids) are never treated as stale.
+            if not types_mode and folder_include == "Y":
+                stale = [m for deq in data_lookup[folder_name].values() for m in deq
+                         if id(m) in pre_existing_ids]
+                if stale:
+                    stale_ids = {id(m) for m in stale}
+                    mapy_folder["maps"] = [m for m in mapy_folder["maps"] if id(m) not in stale_ids]
+                    print(f"  [cleanup] removed {len(stale)} stale map(s)")
+
             # Folder screenshot — taken after maps so we can end at the share URL with no wasted return trip
             if screenshots:
                 if folder_share:
-                    await page.goto(folder_share, wait_until="networkidle", timeout=20000)
+                    await page.goto(folder_share, wait_until="load", timeout=20000)
                     await page.wait_for_timeout(FOLDER_SCREENSHOT_EXTRA_WAIT)
                 else:
                     if page.url != folder_url:
-                        await page.goto(folder_url, wait_until="networkidle", timeout=20000)
+                        await page.goto(folder_url, wait_until="load", timeout=20000)
                         try:
                             await page.wait_for_selector("ul.items.sortable", timeout=8000)
                         except Exception:

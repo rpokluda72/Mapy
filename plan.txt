@@ -279,3 +279,43 @@ I saved html page for all three map sizes:
 2. medium size : "C:\Users\roman\Downloads\map-issue-1-medium.html"
 3. full size : "C:\Users\roman\Downloads\map-issue-1-full.html"
 You can check what is different and wrong in case of medium.
+
+Map images have resolution 1040 x 900. Is it possible to show image with this resolution in case of Full map size and enough space. So resolution 1040 x 900 will be max size of the image map.
+
+As you set max resolution to map images, you should fix size of panel under each panel with image. Component class="map-hero" should have the same width like image above (class="map-screenshot").
+
+If full map size (max resolution) then there are space between components class="panel-a", class="panel-b". Remove space to have it like for others image sizes, without space.
+
+Could you add filtering functionality to Admin/Data viewer page. Use the same filters as in menu items panel. Hide func. you can add too.
+
+Improvements:
+- add hide/restore func. to folder map level
+- change green background on Admin/Data viewer/filter panel and increase size of icons and text.
+
+Improvements:
+- Admin/Data viewer/filter panel / data-list / data-folder row : change green background and increase size of icons and numbers (class="folder-type-counts").
+- add class="folder-type-counts" to filter panel to see total numbers of visible/filtered type counts
+
+Move folder-type-counts on filter panel to the right side as on data-folder row.
+Improve filtering on Admin/Data viewer : If I select hidden radio button, I can not see any map, but there are one hidden map (folder map is not hidden). Hidden map in unhidden folder should be calculated too. In menu item it is ok.
+
+Each map has description part with two values : route distance/km and time/h. For me are important elevation values : up and down in meters.
+It is included on map detail page : class="module-content route-height-profile content open" / class="line-chart" / class="desc". / class="value"
+There are two components class="value". The first one for ascending/up and second one for descending/down.
+Can you see the way how to add it to the map details and see it together with km & h ? Use can use icons ascending/descending. But if it is problem, you can use words only (up/down).
+Description is used in many places/components : menu item, map-hero, admin, etc.
+
+Add "Expand all" / "Collapse all" func. to Admin/Data viewer
+
+When you add elevation part to route description:
+1. in Stacked orientation it is visible correctly
+2. in Side by side orientation it is visible incorrectly in some cases:
+- small map size : description is visible correctly, but width could be decreased
+- medium map size : description is visible correctly, but width could be decreased
+- full map size : description is cut, because there are no space for that probably. Any idea how to solve it ? I saw that you divided to more rows in some case before.
+
+Detail panel on map/route page - map-hero has div component class="subtitle" - remove  line break <br>. It is not needed, there are enough space to see all params in one row. It is visible in one row in all other cases.
+
+Detail panel on map/route page Stacked orientation :
+- panel-a / map-hero - remove margin-bottom: 24px
+- panel-b / section-title - remove margin-top: 20px

@@ -12,11 +12,12 @@ const DATA = {
           "share_link": "https://mapy.com/s/mosuganocu",
           "embed_src": "https://mapy.com/s/mosuganocu",
           "points": [],
-          "summary": "Trasa 14,3 km • 5:00 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mosuganocu.png",
           "elevation_img": "images/mosuganocu_elev.png",
-          "note": "Sobotní trasa"
+          "note": "Sobotní trasa",
+          "elevation_ascent": 602,
+          "elevation_descent": 501
         },
         {
           "name": "Neděle",
@@ -25,11 +26,12 @@ const DATA = {
           "share_link": "https://mapy.com/s/dudezomeso",
           "embed_src": "https://mapy.com/s/dudezomeso",
           "points": [],
-          "summary": "Trasa 16,2 km • 5:53 h",
           "elevation_text": "",
           "screenshot": "images/dudezomeso.png",
           "elevation_img": "images/dudezomeso_elev.png",
-          "note": "Nedělní trasa"
+          "note": "Nedělní trasa",
+          "elevation_ascent": 712,
+          "elevation_descent": 796
         }
       ],
       "screenshot": "images/jamofadave.png",
@@ -37,107 +39,151 @@ const DATA = {
     },
     {
       "name": "Velichovky",
-      "share_link": "https://mapy.com/s/favemusake",
+      "share_link": "https://mapy.com/s/juromelujo",
       "embed_src": "",
       "maps": [
         {
-          "name": "Hradec",
-          "description": "Trasa 63,8 km • 3:52 h",
+          "name": "Trasa z Loučeň do Loučeň 1",
+          "description": "Trasa 37,4 km • 2:21 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/fevelamola",
-          "embed_src": "https://mapy.com/s/fevelamola",
+          "note": "",
+          "share_link": "https://mapy.com/s/jevapelelo",
+          "embed_src": "https://mapy.com/s/jevapelelo",
           "points": [],
-          "summary": "Trasa 63,8 km • 3:52 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/fevelamola.png",
-          "elevation_img": "images/fevelamola_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/jevapelelo.png",
+          "elevation_img": "images/jevapelelo_elev.png",
+          "elevation_ascent": 117,
+          "elevation_descent": 113
         },
         {
-          "name": "Trasa z Hustířanská 209 do Velichovky",
-          "description": "Trasa 67,8 km • 4:39 h",
+          "name": "Trasa z Loučeň do Loučeň 2",
+          "description": "Trasa 40,4 km • 2:34 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/jovufucelu",
-          "embed_src": "https://mapy.com/s/jovufucelu",
+          "note": "",
+          "share_link": "https://mapy.com/s/kuvahuhave",
+          "embed_src": "https://mapy.com/s/kuvahuhave",
           "points": [],
-          "summary": "Trasa 67,8 km • 4:39 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/jovufucelu.png",
-          "elevation_img": "images/jovufucelu_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/kuvahuhave.png",
+          "elevation_img": "images/kuvahuhave_elev.png",
+          "elevation_ascent": 132,
+          "elevation_descent": 128
         },
         {
-          "name": "Smiřice-Jaroměř-Nové město-Náchod",
-          "description": "Trasa 91,3 km • 6:11 h",
+          "name": "Trasa z Loučeň do Loučeň 3",
+          "description": "Trasa 88,6 km • 5:23 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/dodacefate",
-          "embed_src": "https://mapy.com/s/dodacefate",
+          "note": "",
+          "share_link": "https://mapy.com/s/rakadocale",
+          "embed_src": "https://mapy.com/s/rakadocale",
           "points": [],
-          "summary": "Trasa 91,3 km • 6:11 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/dodacefate.png",
-          "elevation_img": "images/dodacefate_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/rakadocale.png",
+          "elevation_img": "images/rakadocale_elev.png",
+          "elevation_ascent": 199,
+          "elevation_descent": 199
         },
         {
-          "name": "Dvůr-Kostelec-Skalice",
-          "description": "Trasa 75,7 km • 5:17 h",
+          "name": "Trasa z Loučeň do Loučeň 4",
+          "description": "Trasa 86 km • 5:12 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/fanakalaho",
-          "embed_src": "https://mapy.com/s/fanakalaho",
+          "note": "",
+          "share_link": "https://mapy.com/s/lunehohono",
+          "embed_src": "https://mapy.com/s/lunehohono",
           "points": [],
-          "summary": "Trasa 75,7 km • 5:17 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/fanakalaho.png",
-          "elevation_img": "images/fanakalaho_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/lunehohono.png",
+          "elevation_img": "images/lunehohono_elev.png",
+          "elevation_ascent": 203,
+          "elevation_descent": 203
         },
         {
-          "name": "Hradec Králové",
-          "description": "Trasa 74,6 km • 4:43 h",
+          "name": "Mnichovo Hradiště-Boleslav",
+          "description": "Trasa 91,4 km • 5:55 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/dedafokema",
-          "embed_src": "https://mapy.com/s/dedafokema",
+          "note": "",
+          "share_link": "https://mapy.com/s/daganucacu",
+          "embed_src": "https://mapy.com/s/daganucacu",
           "points": [],
-          "summary": "Trasa 74,6 km • 4:43 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/dedafokema.png",
-          "elevation_img": "images/dedafokema_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/daganucacu.png",
+          "elevation_img": "images/daganucacu_elev.png",
+          "elevation_ascent": 467,
+          "elevation_descent": 468
         },
         {
-          "name": "Hradec-Třebechovice",
-          "description": "Trasa 74,2 km • 4:44 h",
+          "name": "Nymburk-Brandýs-Lysá",
+          "description": "Trasa 94 km • 5:45 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/duvuhanave",
-          "embed_src": "https://mapy.com/s/duvuhanave",
+          "note": "",
+          "share_link": "https://mapy.com/s/dufocanoke",
+          "embed_src": "https://mapy.com/s/dufocanoke",
           "points": [],
-          "summary": "Trasa 74,2 km • 4:44 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/duvuhanave.png",
-          "elevation_img": "images/duvuhanave_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/dufocanoke.png",
+          "elevation_img": "images/dufocanoke_elev.png",
+          "elevation_ascent": 225,
+          "elevation_descent": 225
         },
         {
-          "name": "Kuks",
-          "description": "Trasa 25,2 km • 1:47 h",
+          "name": "Dětenice-Kopidlno",
+          "description": "Trasa 55,1 km • 3:33 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/munepunago",
-          "embed_src": "https://mapy.com/s/munepunago",
+          "note": "",
+          "share_link": "https://mapy.com/s/nanejuroce",
+          "embed_src": "https://mapy.com/s/nanejuroce",
           "points": [],
-          "summary": "Trasa 25,2 km • 1:47 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/munepunago.png",
-          "elevation_img": "images/munepunago_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/nanejuroce.png",
+          "elevation_img": "images/nanejuroce_elev.png",
+          "elevation_ascent": 257,
+          "elevation_descent": 253
         },
         {
-          "name": "Hořice-Bělohrad-Miletín",
-          "description": "Trasa 85,6 km • 5:55 h",
+          "name": "Nymburk-Poděbrady-Kolín",
+          "description": "Trasa 89,7 km • 5:20 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/fulocadozo",
-          "embed_src": "https://mapy.com/s/fulocadozo",
+          "note": "",
+          "share_link": "https://mapy.com/s/cenavoreta",
+          "embed_src": "https://mapy.com/s/cenavoreta",
           "points": [],
-          "summary": "Trasa 85,6 km • 5:55 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/fulocadozo.png",
-          "elevation_img": "images/fulocadozo_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/cenavoreta.png",
+          "elevation_img": "images/cenavoreta_elev.png",
+          "elevation_ascent": 89,
+          "elevation_descent": 89
+        },
+        {
+          "name": "Dětenice-Jičín",
+          "description": "Trasa 85,6 km • 5:39 h",
+          "type": "bike",
+          "note": "",
+          "share_link": "https://mapy.com/s/jobarutena",
+          "embed_src": "https://mapy.com/s/jobarutena",
+          "points": [],
+          "elevation_text": "",
+          "screenshot": "images/jobarutena.png",
+          "elevation_img": "images/jobarutena_elev.png",
+          "elevation_ascent": 534,
+          "elevation_descent": 535
+        },
+        {
+          "name": "Nymburk-Poděbrady-Chlumec",
+          "description": "Trasa 113,6 km • 6:50 h",
+          "type": "bike",
+          "note": "",
+          "share_link": "https://mapy.com/s/pabarafega",
+          "embed_src": "https://mapy.com/s/pabarafega",
+          "points": [],
+          "elevation_text": "",
+          "screenshot": "images/pabarafega.png",
+          "elevation_img": "images/pabarafega_elev.png",
+          "elevation_ascent": 170,
+          "elevation_descent": 170
         }
       ],
-      "screenshot": "images/favemusake.png"
+      "screenshot": "images/juromelujo.png"
     },
     {
       "name": "Olomučany",
@@ -151,10 +197,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/puvefapehu",
           "embed_src": "https://mapy.com/s/puvefapehu",
           "points": [],
-          "summary": "Trasa 51 km • 3:31 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/puvefapehu.png",
-          "elevation_img": "images/puvefapehu_elev.png"
+          "elevation_img": "images/puvefapehu_elev.png",
+          "elevation_ascent": 474,
+          "elevation_descent": 474
         },
         {
           "name": "Boskovice 5",
@@ -163,11 +210,12 @@ const DATA = {
           "share_link": "https://mapy.com/s/levocaneho",
           "embed_src": "https://mapy.com/s/levocaneho",
           "points": [],
-          "summary": "Trasa 50,2 km • 4:19 h",
           "elevation_text": "Výškový profil",
           "hidden": true,
           "screenshot": "images/levocaneho.png",
-          "elevation_img": "images/levocaneho_elev.png"
+          "elevation_img": "images/levocaneho_elev.png",
+          "elevation_ascent": 1131,
+          "elevation_descent": 1131
         },
         {
           "name": "Boskovice 4",
@@ -176,10 +224,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gajojoponu",
           "embed_src": "https://mapy.com/s/gajojoponu",
           "points": [],
-          "summary": "Trasa 45,5 km • 3:43 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gajojoponu.png",
-          "elevation_img": "images/gajojoponu_elev.png"
+          "elevation_img": "images/gajojoponu_elev.png",
+          "elevation_ascent": 862,
+          "elevation_descent": 862
         },
         {
           "name": "Boskovice 3",
@@ -188,10 +237,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/losunobovu",
           "embed_src": "https://mapy.com/s/losunobovu",
           "points": [],
-          "summary": "Trasa 54,6 km • 4:04 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/losunobovu.png",
-          "elevation_img": "images/losunobovu_elev.png"
+          "elevation_img": "images/losunobovu_elev.png",
+          "elevation_ascent": 777,
+          "elevation_descent": 777
         },
         {
           "name": "Boskovice 2",
@@ -200,10 +250,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mapezalopu",
           "embed_src": "https://mapy.com/s/mapezalopu",
           "points": [],
-          "summary": "Trasa 58,3 km • 4:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mapezalopu.png",
-          "elevation_img": "images/mapezalopu_elev.png"
+          "elevation_img": "images/mapezalopu_elev.png",
+          "elevation_ascent": 1075,
+          "elevation_descent": 1075
         },
         {
           "name": "Boskovice",
@@ -212,10 +263,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bebazekuca",
           "embed_src": "https://mapy.com/s/bebazekuca",
           "points": [],
-          "summary": "Trasa 53,9 km • 3:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bebazekuca.png",
-          "elevation_img": "images/bebazekuca_elev.png"
+          "elevation_img": "images/bebazekuca_elev.png",
+          "elevation_ascent": 741,
+          "elevation_descent": 741
         },
         {
           "name": "Brno",
@@ -224,10 +276,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/ducenovuno",
           "embed_src": "https://mapy.com/s/ducenovuno",
           "points": [],
-          "summary": "Trasa 53,2 km • 3:50 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/ducenovuno.png",
-          "elevation_img": "images/ducenovuno_elev.png"
+          "elevation_img": "images/ducenovuno_elev.png",
+          "elevation_ascent": 554,
+          "elevation_descent": 547
         },
         {
           "name": "Moravský kras 2",
@@ -236,10 +289,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/murucupuzu",
           "embed_src": "https://mapy.com/s/murucupuzu",
           "points": [],
-          "summary": "Trasa 72,7 km • 5:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/murucupuzu.png",
-          "elevation_img": "images/murucupuzu_elev.png"
+          "elevation_img": "images/murucupuzu_elev.png",
+          "elevation_ascent": 943,
+          "elevation_descent": 943
         },
         {
           "name": "Moravský kras",
@@ -248,10 +302,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hesapemulo",
           "embed_src": "https://mapy.com/s/hesapemulo",
           "points": [],
-          "summary": "Trasa 63,3 km • 4:34 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hesapemulo.png",
-          "elevation_img": "images/hesapemulo_elev.png"
+          "elevation_img": "images/hesapemulo_elev.png",
+          "elevation_ascent": 754,
+          "elevation_descent": 754
         },
         {
           "name": "Olšovec-Bukovinka 3",
@@ -260,10 +315,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/begutepesu",
           "embed_src": "https://mapy.com/s/begutepesu",
           "points": [],
-          "summary": "Trasa 44,2 km • 3:20 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/begutepesu.png",
-          "elevation_img": "images/begutepesu_elev.png"
+          "elevation_img": "images/begutepesu_elev.png",
+          "elevation_ascent": 738,
+          "elevation_descent": 738
         },
         {
           "name": "Olšovec-Bukovinka 2",
@@ -272,10 +328,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jomukelava",
           "embed_src": "https://mapy.com/s/jomukelava",
           "points": [],
-          "summary": "Trasa 49,2 km • 3:40 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jomukelava.png",
-          "elevation_img": "images/jomukelava_elev.png"
+          "elevation_img": "images/jomukelava_elev.png",
+          "elevation_ascent": 728,
+          "elevation_descent": 728
         },
         {
           "name": "Olšovec-Bukovinka",
@@ -284,10 +341,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/naburezedu",
           "embed_src": "https://mapy.com/s/naburezedu",
           "points": [],
-          "summary": "Trasa 37,5 km • 2:50 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/naburezedu.png",
-          "elevation_img": "images/naburezedu_elev.png"
+          "elevation_img": "images/naburezedu_elev.png",
+          "elevation_ascent": 623,
+          "elevation_descent": 623
         },
         {
           "name": "Olšovec-Křtiny",
@@ -296,10 +354,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hekufeluze",
           "embed_src": "https://mapy.com/s/hekufeluze",
           "points": [],
-          "summary": "Trasa 44,3 km • 3:22 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hekufeluze.png",
-          "elevation_img": "images/hekufeluze_elev.png"
+          "elevation_img": "images/hekufeluze_elev.png",
+          "elevation_ascent": 728,
+          "elevation_descent": 728
         },
         {
           "name": "Černá hora",
@@ -308,10 +367,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/depocopeho",
           "embed_src": "https://mapy.com/s/depocopeho",
           "points": [],
-          "summary": "Trasa 62,7 km • 4:53 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/depocopeho.png",
-          "elevation_img": "images/depocopeho_elev.png"
+          "elevation_img": "images/depocopeho_elev.png",
+          "elevation_ascent": 1099,
+          "elevation_descent": 1097
         },
         {
           "name": "Adamov",
@@ -320,10 +380,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gehokadolu",
           "embed_src": "https://mapy.com/s/gehokadolu",
           "points": [],
-          "summary": "Trasa 24,6 km • 1:52 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gehokadolu.png",
-          "elevation_img": "images/gehokadolu_elev.png"
+          "elevation_img": "images/gehokadolu_elev.png",
+          "elevation_ascent": 344,
+          "elevation_descent": 344
         },
         {
           "name": "Kolem Olomučan",
@@ -332,10 +393,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hapacusoto",
           "embed_src": "https://mapy.com/s/hapacusoto",
           "points": [],
-          "summary": "Trasa 27,8 km • 2:10 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hapacusoto.png",
-          "elevation_img": "images/hapacusoto_elev.png"
+          "elevation_img": "images/hapacusoto_elev.png",
+          "elevation_ascent": 507,
+          "elevation_descent": 507
         },
         {
           "name": "Olomučany pěší",
@@ -344,10 +406,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/ralumonovu",
           "embed_src": "https://mapy.com/s/ralumonovu",
           "points": [],
-          "summary": "Trasa 5,4 km • 1:45 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/ralumonovu.png",
-          "elevation_img": "images/ralumonovu_elev.png"
+          "elevation_img": "images/ralumonovu_elev.png",
+          "elevation_ascent": 112,
+          "elevation_descent": 112
         },
         {
           "name": "Olomučany pěší 2",
@@ -356,10 +419,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dosacurafe",
           "embed_src": "https://mapy.com/s/dosacurafe",
           "points": [],
-          "summary": "Trasa 8 km • 2:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dosacurafe.png",
-          "elevation_img": "images/dosacurafe_elev.png"
+          "elevation_img": "images/dosacurafe_elev.png",
+          "elevation_ascent": 161,
+          "elevation_descent": 161
         }
       ],
       "screenshot": "images/jokazugado.png"
@@ -373,121 +437,141 @@ const DATA = {
           "name": "Trasa z Loučeň do Loučeň 1",
           "description": "Trasa 37,4 km • 2:21 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/jevapelelo",
           "embed_src": "https://mapy.com/s/jevapelelo",
           "points": [],
-          "summary": "2:15 h\n37,4 km\nTrasa z Loučeň do Loučeň\n\n8. 7. 2025\n\nUloženo ve složce Loučeň\nOznačit jako navštívené\nPřidat poznámku\nUložit\nSdílet\nExportovat\nPočasí na trase\nVypnuto\nVýškový profil\nItinerář | 2:15 h\n37,4 km",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/jevapelelo.png",
-          "elevation_img": "images/jevapelelo_elev.png"
+          "elevation_img": "images/jevapelelo_elev.png",
+          "elevation_ascent": 117,
+          "elevation_descent": 113
         },
         {
           "name": "Trasa z Loučeň do Loučeň 2",
           "description": "Trasa 40,4 km • 2:34 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/kuvahuhave",
           "embed_src": "https://mapy.com/s/kuvahuhave",
           "points": [],
-          "summary": "2:28 h\n40,5 km\nTrasa z Loučeň do Loučeň\n\n8. 7. 2025\n\nUloženo ve složce Loučeň\nOznačit jako navštívené\nPřidat poznámku\nUložit\nSdílet\nExportovat\nPočasí na trase\nVypnuto\nVýškový profil\nItinerář | 2:28 h\n40,5 km",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/kuvahuhave.png",
-          "elevation_img": "images/kuvahuhave_elev.png"
+          "elevation_img": "images/kuvahuhave_elev.png",
+          "elevation_ascent": 132,
+          "elevation_descent": 128
         },
         {
           "name": "Trasa z Loučeň do Loučeň 3",
           "description": "Trasa 88,6 km • 5:23 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/rakadocale",
           "embed_src": "https://mapy.com/s/rakadocale",
           "points": [],
-          "summary": "5:18 h\n90,2 km\nTrasa z Loučeň do Loučeň\n\n8. 7. 2025\n\nUloženo ve složce Loučeň\nOznačit jako navštívené\nPřidat poznámku\nUložit\nSdílet\nExportovat\nPočasí na trase\nVypnuto\nVýškový profil\nItinerář | 5:18 h\n90,2 km",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/rakadocale.png",
-          "elevation_img": "images/rakadocale_elev.png"
+          "elevation_img": "images/rakadocale_elev.png",
+          "elevation_ascent": 199,
+          "elevation_descent": 199
         },
         {
           "name": "Trasa z Loučeň do Loučeň 4",
-          "description": "Trasa 88,6 km • 5:23 h",
+          "description": "Trasa 86 km • 5:12 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/rakadocale",
-          "embed_src": "https://mapy.com/s/rakadocale",
+          "note": "",
+          "share_link": "https://mapy.com/s/lunehohono",
+          "embed_src": "https://mapy.com/s/lunehohono",
           "points": [],
-          "summary": "Trasa 88,6 km • 5:23 h",
-          "elevation_text": "Výškový profil",
-          "screenshot": "images/rakadocale.png",
-          "elevation_img": "images/rakadocale_elev.png"
+          "elevation_text": "",
+          "screenshot": "images/lunehohono.png",
+          "elevation_img": "images/lunehohono_elev.png",
+          "elevation_ascent": 203,
+          "elevation_descent": 203
         },
         {
           "name": "Mnichovo Hradiště-Boleslav",
           "description": "Trasa 91,4 km • 5:55 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/daganucacu",
           "embed_src": "https://mapy.com/s/daganucacu",
           "points": [],
-          "summary": "Trasa 91,4 km • 5:55 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/daganucacu.png",
-          "elevation_img": "images/daganucacu_elev.png"
+          "elevation_img": "images/daganucacu_elev.png",
+          "elevation_ascent": 467,
+          "elevation_descent": 468
         },
         {
           "name": "Nymburk-Brandýs-Lysá",
           "description": "Trasa 94 km • 5:45 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/dufocanoke",
           "embed_src": "https://mapy.com/s/dufocanoke",
           "points": [],
-          "summary": "Trasa 94 km • 5:45 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/dufocanoke.png",
-          "elevation_img": "images/dufocanoke_elev.png"
+          "elevation_img": "images/dufocanoke_elev.png",
+          "elevation_ascent": 225,
+          "elevation_descent": 225
         },
         {
           "name": "Dětenice-Kopidlno",
           "description": "Trasa 55,1 km • 3:33 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/nanejuroce",
           "embed_src": "https://mapy.com/s/nanejuroce",
           "points": [],
-          "summary": "Trasa 55,1 km • 3:33 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/nanejuroce.png",
-          "elevation_img": "images/nanejuroce_elev.png"
+          "elevation_img": "images/nanejuroce_elev.png",
+          "elevation_ascent": 257,
+          "elevation_descent": 253
         },
         {
           "name": "Nymburk-Poděbrady-Kolín",
           "description": "Trasa 89,7 km • 5:20 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/cenavoreta",
           "embed_src": "https://mapy.com/s/cenavoreta",
           "points": [],
-          "summary": "Trasa 89,7 km • 5:20 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/cenavoreta.png",
-          "elevation_img": "images/cenavoreta_elev.png"
+          "elevation_img": "images/cenavoreta_elev.png",
+          "elevation_ascent": 89,
+          "elevation_descent": 89
         },
         {
           "name": "Dětenice-Jičín",
           "description": "Trasa 85,6 km • 5:39 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/jobarutena",
           "embed_src": "https://mapy.com/s/jobarutena",
           "points": [],
-          "summary": "Trasa 85,6 km • 5:39 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/jobarutena.png",
-          "elevation_img": "images/jobarutena_elev.png"
+          "elevation_img": "images/jobarutena_elev.png",
+          "elevation_ascent": 534,
+          "elevation_descent": 535
         },
         {
           "name": "Nymburk-Poděbrady-Chlumec",
           "description": "Trasa 113,6 km • 6:50 h",
           "type": "bike",
+          "note": "",
           "share_link": "https://mapy.com/s/pabarafega",
           "embed_src": "https://mapy.com/s/pabarafega",
           "points": [],
-          "summary": "Trasa 113,6 km • 6:50 h",
-          "elevation_text": "Výškový profil",
+          "elevation_text": "",
           "screenshot": "images/pabarafega.png",
-          "elevation_img": "images/pabarafega_elev.png"
+          "elevation_img": "images/pabarafega_elev.png",
+          "elevation_ascent": 170,
+          "elevation_descent": 170
         }
       ],
       "screenshot": "images/juromelujo.png"
@@ -504,10 +588,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kocekefuto",
           "embed_src": "https://mapy.com/s/kocekefuto",
           "points": [],
-          "summary": "Trasa 62,3 km • 3:54 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kocekefuto.png",
-          "elevation_img": "images/kocekefuto_elev.png"
+          "elevation_img": "images/kocekefuto_elev.png",
+          "elevation_ascent": 268,
+          "elevation_descent": 263
         },
         {
           "name": "Rožnov 5",
@@ -516,10 +601,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/foduzavuto",
           "embed_src": "https://mapy.com/s/foduzavuto",
           "points": [],
-          "summary": "Trasa 45 km • 3:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/foduzavuto.png",
-          "elevation_img": "images/foduzavuto_elev.png"
+          "elevation_img": "images/foduzavuto_elev.png",
+          "elevation_ascent": 545,
+          "elevation_descent": 540
         },
         {
           "name": "Rožnov 4",
@@ -528,10 +614,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/befehahuzu",
           "embed_src": "https://mapy.com/s/befehahuzu",
           "points": [],
-          "summary": "Trasa 45 km • 3:20 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/befehahuzu.png",
-          "elevation_img": "images/befehahuzu_elev.png"
+          "elevation_img": "images/befehahuzu_elev.png",
+          "elevation_ascent": 643,
+          "elevation_descent": 638
         },
         {
           "name": "Rožnov 3",
@@ -540,10 +627,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jacecohudu",
           "embed_src": "https://mapy.com/s/jacecohudu",
           "points": [],
-          "summary": "Trasa 45,8 km • 3:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jacecohudu.png",
-          "elevation_img": "images/jacecohudu_elev.png"
+          "elevation_img": "images/jacecohudu_elev.png",
+          "elevation_ascent": 678,
+          "elevation_descent": 673
         },
         {
           "name": "Lipník 2",
@@ -552,10 +640,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fesarajomu",
           "embed_src": "https://mapy.com/s/fesarajomu",
           "points": [],
-          "summary": "Trasa 83,6 km • 5:27 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fesarajomu.png",
-          "elevation_img": "images/fesarajomu_elev.png"
+          "elevation_img": "images/fesarajomu_elev.png",
+          "elevation_ascent": 546,
+          "elevation_descent": 546
         },
         {
           "name": "Trasa z Sokolská do Komenského",
@@ -564,10 +653,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lesecacogo",
           "embed_src": "https://mapy.com/s/lesecacogo",
           "points": [],
-          "summary": "Trasa 17,8 km • 5:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lesecacogo.png",
-          "elevation_img": "images/lesecacogo_elev.png"
+          "elevation_img": "images/lesecacogo_elev.png",
+          "elevation_ascent": 552,
+          "elevation_descent": 558
         },
         {
           "name": "Bystřička-Vsetín4",
@@ -576,10 +666,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dazegemamu",
           "embed_src": "https://mapy.com/s/dazegemamu",
           "points": [],
-          "summary": "Trasa 70,6 km • 4:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dazegemamu.png",
-          "elevation_img": "images/dazegemamu_elev.png"
+          "elevation_img": "images/dazegemamu_elev.png",
+          "elevation_ascent": 963,
+          "elevation_descent": 968
         },
         {
           "name": "Bystřička-Vsetín 3",
@@ -588,10 +679,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hekutehoju",
           "embed_src": "https://mapy.com/s/hekutehoju",
           "points": [],
-          "summary": "Trasa 70,3 km • 5:10 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hekutehoju.png",
-          "elevation_img": "images/hekutehoju_elev.png"
+          "elevation_img": "images/hekutehoju_elev.png",
+          "elevation_ascent": 1000,
+          "elevation_descent": 1005
         },
         {
           "name": "Dolní Bečva - Radhošť",
@@ -600,10 +692,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nuvegajedu",
           "embed_src": "https://mapy.com/s/nuvegajedu",
           "points": [],
-          "summary": "Trasa 16,7 km • 6:22 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nuvegajedu.png",
-          "elevation_img": "images/nuvegajedu_elev.png"
+          "elevation_img": "images/nuvegajedu_elev.png",
+          "elevation_ascent": 739,
+          "elevation_descent": 739
         },
         {
           "name": "ValMez-Medůvka",
@@ -612,10 +705,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hejafusabo",
           "embed_src": "https://mapy.com/s/hejafusabo",
           "points": [],
-          "summary": "Trasa 18 km • 5:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hejafusabo.png",
-          "elevation_img": "images/hejafusabo_elev.png"
+          "elevation_img": "images/hejafusabo_elev.png",
+          "elevation_ascent": 349,
+          "elevation_descent": 341
         },
         {
           "name": "Kelčský Javorník-Kyčera",
@@ -624,10 +718,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bukutojedu",
           "embed_src": "https://mapy.com/s/bukutojedu",
           "points": [],
-          "summary": "Trasa 15,3 km • 5:40 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bukutojedu.png",
-          "elevation_img": "images/bukutojedu_elev.png"
+          "elevation_img": "images/bukutojedu_elev.png",
+          "elevation_ascent": 614,
+          "elevation_descent": 614
         },
         {
           "name": "Ptáčnice",
@@ -636,10 +731,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lejacefada",
           "embed_src": "https://mapy.com/s/lejacefada",
           "points": [],
-          "summary": "Trasa 9,6 km • 3:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lejacefada.png",
-          "elevation_img": "images/lejacefada_elev.png"
+          "elevation_img": "images/lejacefada_elev.png",
+          "elevation_ascent": 362,
+          "elevation_descent": 362
         },
         {
           "name": "Tanečnice",
@@ -648,10 +744,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/guturemace",
           "embed_src": "https://mapy.com/s/guturemace",
           "points": [],
-          "summary": "Trasa 18,3 km • 5:56 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/guturemace.png",
-          "elevation_img": "images/guturemace_elev.png"
+          "elevation_img": "images/guturemace_elev.png",
+          "elevation_ascent": 514,
+          "elevation_descent": 514
         },
         {
           "name": "Lešná-Rožnov",
@@ -660,10 +757,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jenomupogu",
           "embed_src": "https://mapy.com/s/jenomupogu",
           "points": [],
-          "summary": "Trasa 53 km • 3:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jenomupogu.png",
-          "elevation_img": "images/jenomupogu_elev.png"
+          "elevation_img": "images/jenomupogu_elev.png",
+          "elevation_ascent": 623,
+          "elevation_descent": 612
         },
         {
           "name": "Rožnov",
@@ -672,10 +770,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fodusanano",
           "embed_src": "https://mapy.com/s/fodusanano",
           "points": [],
-          "summary": "Trasa 45 km • 3:11 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fodusanano.png",
-          "elevation_img": "images/fodusanano_elev.png"
+          "elevation_img": "images/fodusanano_elev.png",
+          "elevation_ascent": 532,
+          "elevation_descent": 521
         },
         {
           "name": "Rožnov 2",
@@ -684,10 +783,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pojokenaho",
           "embed_src": "https://mapy.com/s/pojokenaho",
           "points": [],
-          "summary": "Trasa 38,9 km • 2:50 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pojokenaho.png",
-          "elevation_img": "images/pojokenaho_elev.png"
+          "elevation_img": "images/pojokenaho_elev.png",
+          "elevation_ascent": 513,
+          "elevation_descent": 518
         },
         {
           "name": "Rožnov-Bystřička-Vsetín",
@@ -696,10 +796,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pesepujake",
           "embed_src": "https://mapy.com/s/pesepujake",
           "points": [],
-          "summary": "Trasa 69,8 km • 4:51 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pesepujake.png",
-          "elevation_img": "images/pesepujake_elev.png"
+          "elevation_img": "images/pesepujake_elev.png",
+          "elevation_ascent": 682,
+          "elevation_descent": 677
         },
         {
           "name": "Bystřička",
@@ -708,10 +809,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/menokusare",
           "embed_src": "https://mapy.com/s/menokusare",
           "points": [],
-          "summary": "Trasa 46,9 km • 3:29 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/menokusare.png",
-          "elevation_img": "images/menokusare_elev.png"
+          "elevation_img": "images/menokusare_elev.png",
+          "elevation_ascent": 598,
+          "elevation_descent": 603
         },
         {
           "name": "Bystřička-Vsetín",
@@ -720,10 +822,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/luvalugodo",
           "embed_src": "https://mapy.com/s/luvalugodo",
           "points": [],
-          "summary": "Trasa 52,9 km • 3:50 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/luvalugodo.png",
-          "elevation_img": "images/luvalugodo_elev.png"
+          "elevation_img": "images/luvalugodo_elev.png",
+          "elevation_ascent": 694,
+          "elevation_descent": 689
         },
         {
           "name": "Bystřička-Vsetín 2",
@@ -732,10 +835,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hehahacoba",
           "embed_src": "https://mapy.com/s/hehahacoba",
           "points": [],
-          "summary": "Trasa 54 km • 3:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hehahacoba.png",
-          "elevation_img": "images/hehahacoba_elev.png"
+          "elevation_img": "images/hehahacoba_elev.png",
+          "elevation_ascent": 630,
+          "elevation_descent": 625
         },
         {
           "name": "Kelč-Teplice-Lešná",
@@ -744,10 +848,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hadunupuzo",
           "embed_src": "https://mapy.com/s/hadunupuzo",
           "points": [],
-          "summary": "Trasa 68,2 km • 4:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hadunupuzo.png",
-          "elevation_img": "images/hadunupuzo_elev.png"
+          "elevation_img": "images/hadunupuzo_elev.png",
+          "elevation_ascent": 464,
+          "elevation_descent": 462
         },
         {
           "name": "Kelč-Teplice-Lipník-Lešná",
@@ -756,10 +861,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fobocokaho",
           "embed_src": "https://mapy.com/s/fobocokaho",
           "points": [],
-          "summary": "Trasa 86,3 km • 5:35 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fobocokaho.png",
-          "elevation_img": "images/fobocokaho_elev.png"
+          "elevation_img": "images/fobocokaho_elev.png",
+          "elevation_ascent": 474,
+          "elevation_descent": 474
         },
         {
           "name": "Kateřinice",
@@ -768,10 +874,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pacabakoso",
           "embed_src": "https://mapy.com/s/pacabakoso",
           "points": [],
-          "summary": "Trasa 44,4 km • 3:28 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pacabakoso.png",
-          "elevation_img": "images/pacabakoso_elev.png"
+          "elevation_img": "images/pacabakoso_elev.png",
+          "elevation_ascent": 825,
+          "elevation_descent": 827
         }
       ],
       "screenshot": "images/genuhosalo.png"
@@ -788,10 +895,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dozorucuco",
           "embed_src": "https://mapy.com/s/dozorucuco",
           "points": [],
-          "summary": "Trasa 8,4 km • 3:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dozorucuco.png",
-          "elevation_img": "images/dozorucuco_elev.png"
+          "elevation_img": "images/dozorucuco_elev.png",
+          "elevation_ascent": 675,
+          "elevation_descent": 0
         },
         {
           "name": "Ludvíkov-Karlova Studánka",
@@ -800,10 +908,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mogazamale",
           "embed_src": "https://mapy.com/s/mogazamale",
           "points": [],
-          "summary": "Trasa 17,2 km • 5:24 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mogazamale.png",
-          "elevation_img": "images/mogazamale_elev.png"
+          "elevation_img": "images/mogazamale_elev.png",
+          "elevation_ascent": 505,
+          "elevation_descent": 505
         },
         {
           "name": "Ludvíkov-Sokolí skály",
@@ -812,10 +921,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mokucumefo",
           "embed_src": "https://mapy.com/s/mokucumefo",
           "points": [],
-          "summary": "Trasa 13,6 km • 4:27 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mokucumefo.png",
-          "elevation_img": "images/mokucumefo_elev.png"
+          "elevation_img": "images/mokucumefo_elev.png",
+          "elevation_ascent": 365,
+          "elevation_descent": 365
         },
         {
           "name": "Ludvíkov-rozhledna Na Skalce",
@@ -824,10 +934,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rezocerasu",
           "embed_src": "https://mapy.com/s/rezocerasu",
           "points": [],
-          "summary": "Trasa 19,8 km • 6:14 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rezocerasu.png",
-          "elevation_img": "images/rezocerasu_elev.png"
+          "elevation_img": "images/rezocerasu_elev.png",
+          "elevation_ascent": 466,
+          "elevation_descent": 466
         },
         {
           "name": "Ludvíkov-okolo Žárového vrchu",
@@ -836,10 +947,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lobetevaza",
           "embed_src": "https://mapy.com/s/lobetevaza",
           "points": [],
-          "summary": "Trasa 13,2 km • 4:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lobetevaza.png",
-          "elevation_img": "images/lobetevaza_elev.png"
+          "elevation_img": "images/lobetevaza_elev.png",
+          "elevation_ascent": 513,
+          "elevation_descent": 513
         },
         {
           "name": "Lysůvky-Krnov-Ludvíkov",
@@ -848,10 +960,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nenujagega",
           "embed_src": "https://mapy.com/s/nenujagega",
           "points": [],
-          "summary": "Trasa 114,9 km • 1:38 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nenujagega.png",
-          "elevation_img": "images/nenujagega_elev.png"
+          "elevation_img": "images/nenujagega_elev.png",
+          "elevation_ascent": 693,
+          "elevation_descent": 466
         },
         {
           "name": "Lysůvky-Bruntál-Ludvíkov",
@@ -860,10 +973,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dotazokecu",
           "embed_src": "https://mapy.com/s/dotazokecu",
           "points": [],
-          "summary": "Trasa 118,5 km • 1:37 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dotazokecu.png",
-          "elevation_img": "images/dotazokecu_elev.png"
+          "elevation_img": "images/dotazokecu_elev.png",
+          "elevation_ascent": 823,
+          "elevation_descent": 596
         },
         {
           "name": "Lysůvky-Bruntál-Malá MorávkaLudvíkov",
@@ -872,10 +986,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lebofagupo",
           "embed_src": "https://mapy.com/s/lebofagupo",
           "points": [],
-          "summary": "Trasa 121,3 km • 1:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lebofagupo.png",
-          "elevation_img": "images/lebofagupo_elev.png"
+          "elevation_img": "images/lebofagupo_elev.png",
+          "elevation_ascent": 1099,
+          "elevation_descent": 872
         },
         {
           "name": "Ludvíkov-Anenský vrch-neděle",
@@ -884,10 +999,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/monejanura",
           "embed_src": "https://mapy.com/s/monejanura",
           "points": [],
-          "summary": "Trasa 16,1 km • 4:54 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/monejanura.png",
-          "elevation_img": "images/monejanura_elev.png"
+          "elevation_img": "images/monejanura_elev.png",
+          "elevation_ascent": 357,
+          "elevation_descent": 357
         },
         {
           "name": "Ludvíkov-Solná cesta-Bílý potok-sobota",
@@ -896,10 +1012,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/poboroculu",
           "embed_src": "https://mapy.com/s/poboroculu",
           "points": [],
-          "summary": "Trasa 32,3 km • 9:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/poboroculu.png",
-          "elevation_img": "images/poboroculu_elev.png"
+          "elevation_img": "images/poboroculu_elev.png",
+          "elevation_ascent": 901,
+          "elevation_descent": 901
         },
         {
           "name": "Ludvíkov-Anenský vrch-Freudenštejn",
@@ -908,10 +1025,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fegemucena",
           "embed_src": "https://mapy.com/s/fegemucena",
           "points": [],
-          "summary": "Trasa 22,5 km • 6:51 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fegemucena.png",
-          "elevation_img": "images/fegemucena_elev.png"
+          "elevation_img": "images/fegemucena_elev.png",
+          "elevation_ascent": 553,
+          "elevation_descent": 553
         },
         {
           "name": "Ludvíkov-Solná cesta-Bílý potok",
@@ -920,10 +1038,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kegofoceta",
           "embed_src": "https://mapy.com/s/kegofoceta",
           "points": [],
-          "summary": "Trasa 24,2 km • 7:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kegofoceta.png",
-          "elevation_img": "images/kegofoceta_elev.png"
+          "elevation_img": "images/kegofoceta_elev.png",
+          "elevation_ascent": 649,
+          "elevation_descent": 649
         },
         {
           "name": "Ludvíkov-Karlova Studánka-Anenský vrch",
@@ -932,10 +1051,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/putelujemu",
           "embed_src": "https://mapy.com/s/putelujemu",
           "points": [],
-          "summary": "Trasa 24,2 km • 7:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/putelujemu.png",
-          "elevation_img": "images/putelujemu_elev.png"
+          "elevation_img": "images/putelujemu_elev.png",
+          "elevation_ascent": 585,
+          "elevation_descent": 585
         },
         {
           "name": "Vidly-Švýcárna",
@@ -944,10 +1064,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lurorosuda",
           "embed_src": "https://mapy.com/s/lurorosuda",
           "points": [],
-          "summary": "Trasa 5,1 km • 2:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lurorosuda.png",
-          "elevation_img": "images/lurorosuda_elev.png"
+          "elevation_img": "images/lurorosuda_elev.png",
+          "elevation_ascent": 590,
+          "elevation_descent": 42
         },
         {
           "name": "Karlova Studánka - Praděd",
@@ -956,10 +1077,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jobugepava",
           "embed_src": "https://mapy.com/s/jobugepava",
           "points": [],
-          "summary": "Trasa 17 km • 5:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jobugepava.png",
-          "elevation_img": "images/jobugepava_elev.png"
+          "elevation_img": "images/jobugepava_elev.png",
+          "elevation_ascent": 675,
+          "elevation_descent": 675
         }
       ],
       "screenshot": "images/nedukonabu.png"
@@ -976,10 +1098,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cutofotaha",
           "embed_src": "https://mapy.com/s/cutofotaha",
           "points": [],
-          "summary": "Trasa 109 km • 33:17 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cutofotaha.png",
-          "elevation_img": "images/cutofotaha_elev.png"
+          "elevation_img": "images/cutofotaha_elev.png",
+          "elevation_ascent": 2213,
+          "elevation_descent": 1757
         },
         {
           "name": "02_Krušné_Hory-Boží Dar-Děčínský Sněžník",
@@ -988,10 +1111,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/raranocudu",
           "embed_src": "https://mapy.com/s/raranocudu",
           "points": [],
-          "summary": "Trasa 164,1 km • 47:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/raranocudu.png",
-          "elevation_img": "images/raranocudu_elev.png"
+          "elevation_img": "images/raranocudu_elev.png",
+          "elevation_ascent": 2417,
+          "elevation_descent": 3305
         },
         {
           "name": "03_Č- Švýcarsko- Lužické_hory",
@@ -1000,10 +1124,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nahukonane",
           "embed_src": "https://mapy.com/s/nahukonane",
           "points": [],
-          "summary": "Trasa 110,4 km • 36:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nahukonane.png",
-          "elevation_img": "images/nahukonane_elev.png"
+          "elevation_img": "images/nahukonane_elev.png",
+          "elevation_ascent": 3351,
+          "elevation_descent": 3181
         },
         {
           "name": "04_Jizerky_Krkonoše-Chrastava - Žacléř",
@@ -1012,10 +1137,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gakecuseme",
           "embed_src": "https://mapy.com/s/gakecuseme",
           "points": [],
-          "summary": "Trasa 110,8 km • 36:57 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gakecuseme.png",
-          "elevation_img": "images/gakecuseme_elev.png"
+          "elevation_img": "images/gakecuseme_elev.png",
+          "elevation_ascent": 3533,
+          "elevation_descent": 3216
         },
         {
           "name": "05_Adršpach_Broumov-Žacléř - Velké Poříčí",
@@ -1024,10 +1150,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jorapogahe",
           "embed_src": "https://mapy.com/s/jorapogahe",
           "points": [],
-          "summary": "Trasa 102,2 km • 34:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jorapogahe.png",
-          "elevation_img": "images/jorapogahe_elev.png"
+          "elevation_img": "images/jorapogahe_elev.png",
+          "elevation_ascent": 2616,
+          "elevation_descent": 2871
         },
         {
           "name": "06_Orlické_hory-Velké Poříčí-Králíky",
@@ -1036,10 +1163,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pegabodadu",
           "embed_src": "https://mapy.com/s/pegabodadu",
           "points": [],
-          "summary": "Trasa 92,3 km • 28:42 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pegabodadu.png",
-          "elevation_img": "images/pegabodadu_elev.png"
+          "elevation_img": "images/pegabodadu_elev.png",
+          "elevation_ascent": 2134,
+          "elevation_descent": 1923
         },
         {
           "name": "07_Králíky-Jeseník_Budiš nad Budišovkou",
@@ -1048,10 +1176,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hezakezaco",
           "embed_src": "https://mapy.com/s/hezakezaco",
           "points": [],
-          "summary": "Trasa 142,1 km • 45:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hezakezaco.png",
-          "elevation_img": "images/hezakezaco_elev.png"
+          "elevation_img": "images/hezakezaco_elev.png",
+          "elevation_ascent": 3927,
+          "elevation_descent": 3989
         },
         {
           "name": "08_Budišov nad Budišovkou_Hodslavice",
@@ -1060,10 +1189,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cehorucabu",
           "embed_src": "https://mapy.com/s/cehorucabu",
           "points": [],
-          "summary": "Trasa 61,9 km • 17:54 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cehorucabu.png",
-          "elevation_img": "images/cehorucabu_elev.png"
+          "elevation_img": "images/cehorucabu_elev.png",
+          "elevation_ascent": 845,
+          "elevation_descent": 1013
         },
         {
           "name": "09_Beskydy_Hodslavice-Nejvychodnejsi bod ČR",
@@ -1072,10 +1202,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kokocalene",
           "embed_src": "https://mapy.com/s/kokocalene",
           "points": [],
-          "summary": "Trasa 103,8 km • 36:32 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kokocalene.png",
-          "elevation_img": "images/kokocalene_elev.png"
+          "elevation_img": "images/kokocalene_elev.png",
+          "elevation_ascent": 4351,
+          "elevation_descent": 4196
         },
         {
           "name": "10_Rychlebske hory-alternativní",
@@ -1084,10 +1215,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fajamorete",
           "embed_src": "https://mapy.com/s/fajamorete",
           "points": [],
-          "summary": "Trasa 34,6 km • 11:45 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fajamorete.png",
-          "elevation_img": "images/fajamorete_elev.png"
+          "elevation_img": "images/fajamorete_elev.png",
+          "elevation_ascent": 1000,
+          "elevation_descent": 1724
         },
         {
           "name": "11_Beskydy, Javorníky",
@@ -1096,10 +1228,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/culuvobosu",
           "embed_src": "https://mapy.com/s/culuvobosu",
           "points": [],
-          "summary": "Trasa 115,1 km • 38:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/culuvobosu.png",
-          "elevation_img": "images/culuvobosu_elev.png"
+          "elevation_img": "images/culuvobosu_elev.png",
+          "elevation_ascent": 3072,
+          "elevation_descent": 3152
         },
         {
           "name": "12_Bílé Karpaty",
@@ -1108,10 +1241,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lapogegezu",
           "embed_src": "https://mapy.com/s/lapogegezu",
           "points": [],
-          "summary": "Trasa 97 km • 31:30 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lapogegezu.png",
-          "elevation_img": "images/lapogegezu_elev.png"
+          "elevation_img": "images/lapogegezu_elev.png",
+          "elevation_ascent": 2493,
+          "elevation_descent": 2582
         },
         {
           "name": "13_Dolnomoravský úval",
@@ -1120,10 +1254,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lerumumoke",
           "embed_src": "https://mapy.com/s/lerumumoke",
           "points": [],
-          "summary": "Trasa 134,9 km • 37:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lerumumoke.png",
-          "elevation_img": "images/lerumumoke_elev.png"
+          "elevation_img": "images/lerumumoke_elev.png",
+          "elevation_ascent": 1460,
+          "elevation_descent": 1545
         },
         {
           "name": "14_Podyjí",
@@ -1132,10 +1267,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gavohelofu",
           "embed_src": "https://mapy.com/s/gavohelofu",
           "points": [],
-          "summary": "Trasa 111,5 km • 31:04 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gavohelofu.png",
-          "elevation_img": "images/gavohelofu_elev.png"
+          "elevation_img": "images/gavohelofu_elev.png",
+          "elevation_ascent": 1045,
+          "elevation_descent": 952
         },
         {
           "name": "15_Česká Kanada",
@@ -1144,10 +1280,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rapeboporo",
           "embed_src": "https://mapy.com/s/rapeboporo",
           "points": [],
-          "summary": "Trasa 90 km • 27:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rapeboporo.png",
-          "elevation_img": "images/rapeboporo_elev.png"
+          "elevation_img": "images/rapeboporo_elev.png",
+          "elevation_ascent": 1348,
+          "elevation_descent": 1068
         },
         {
           "name": "16_Novohradské hory",
@@ -1156,10 +1293,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cuvetotofo",
           "embed_src": "https://mapy.com/s/cuvetotofo",
           "points": [],
-          "summary": "Trasa 134,8 km • 38:40 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cuvetotofo.png",
-          "elevation_img": "images/cuvetotofo_elev.png"
+          "elevation_img": "images/cuvetotofo_elev.png",
+          "elevation_ascent": 1463,
+          "elevation_descent": 1368
         },
         {
           "name": "17_Jižní Šumava",
@@ -1168,10 +1306,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/norezobade",
           "embed_src": "https://mapy.com/s/norezobade",
           "points": [],
-          "summary": "Trasa 82,2 km • 24:56 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/norezobade.png",
-          "elevation_img": "images/norezobade_elev.png"
+          "elevation_img": "images/norezobade_elev.png",
+          "elevation_ascent": 1826,
+          "elevation_descent": 1480
         },
         {
           "name": "18_Šumava",
@@ -1180,10 +1319,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fonehumoje",
           "embed_src": "https://mapy.com/s/fonehumoje",
           "points": [],
-          "summary": "Trasa 104,3 km • 32:01 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fonehumoje.png",
-          "elevation_img": "images/fonehumoje_elev.png"
+          "elevation_img": "images/fonehumoje_elev.png",
+          "elevation_ascent": 2433,
+          "elevation_descent": 2682
         },
         {
           "name": "19_Západní Šumava",
@@ -1192,10 +1332,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/canobakefu",
           "embed_src": "https://mapy.com/s/canobakefu",
           "points": [],
-          "summary": "Trasa 117,7 km • 36:09 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/canobakefu.png",
-          "elevation_img": "images/canobakefu_elev.png"
+          "elevation_img": "images/canobakefu_elev.png",
+          "elevation_ascent": 2568,
+          "elevation_descent": 2804
         },
         {
           "name": "20_Český les",
@@ -1204,10 +1345,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lorezanuhe",
           "embed_src": "https://mapy.com/s/lorezanuhe",
           "points": [],
-          "summary": "Trasa 134,6 km • 39:41 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lorezanuhe.png",
-          "elevation_img": "images/lorezanuhe_elev.png"
+          "elevation_img": "images/lorezanuhe_elev.png",
+          "elevation_ascent": 2000,
+          "elevation_descent": 1971
         },
         {
           "name": "30: Alternativa Vejprty",
@@ -1216,10 +1358,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/curatebena",
           "embed_src": "https://mapy.com/s/curatebena",
           "points": [],
-          "summary": "Trasa 27,6 km • 8:53 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/curatebena.png",
-          "elevation_img": "images/curatebena_elev.png"
+          "elevation_img": "images/curatebena_elev.png",
+          "elevation_ascent": 738,
+          "elevation_descent": 722
         },
         {
           "name": "31: Alternativa Nejsevernější bod ČR",
@@ -1228,10 +1371,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/joluvorehe",
           "embed_src": "https://mapy.com/s/joluvorehe",
           "points": [],
-          "summary": "Trasa 83,4 km • 26:24 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/joluvorehe.png",
-          "elevation_img": "images/joluvorehe_elev.png"
+          "elevation_img": "images/joluvorehe_elev.png",
+          "elevation_ascent": 1690,
+          "elevation_descent": 1658
         },
         {
           "name": "32: Alternativa_Východní_bod",
@@ -1240,10 +1384,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bahefezuma",
           "embed_src": "https://mapy.com/s/bahefezuma",
           "points": [],
-          "summary": "Trasa 58,7 km • 21:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bahefezuma.png",
-          "elevation_img": "images/bahefezuma_elev.png"
+          "elevation_img": "images/bahefezuma_elev.png",
+          "elevation_ascent": 2211,
+          "elevation_descent": 1762
         }
       ],
       "screenshot": "images/cuvofocomo.png"
@@ -1260,10 +1405,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gomalukudu",
           "embed_src": "https://mapy.com/s/gomalukudu",
           "points": [],
-          "summary": "Trasa 107,9 km • 8:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gomalukudu.png",
-          "elevation_img": "images/gomalukudu_elev.png"
+          "elevation_img": "images/gomalukudu_elev.png",
+          "elevation_ascent": 1818,
+          "elevation_descent": 1362
         },
         {
           "name": "02- Krušné hory na kole",
@@ -1272,10 +1418,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lolupokeva",
           "embed_src": "https://mapy.com/s/lolupokeva",
           "points": [],
-          "summary": "Trasa 159,3 km • 11:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lolupokeva.png",
-          "elevation_img": "images/lolupokeva_elev.png"
+          "elevation_img": "images/lolupokeva_elev.png",
+          "elevation_ascent": 1735,
+          "elevation_descent": 2617
         },
         {
           "name": "03-České Švýcarsko-Lužické hory na kole",
@@ -1284,10 +1431,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dosecozefo",
           "embed_src": "https://mapy.com/s/dosecozefo",
           "points": [],
-          "summary": "Trasa 152,4 km • 11:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dosecozefo.png",
-          "elevation_img": "images/dosecozefo_elev.png"
+          "elevation_img": "images/dosecozefo_elev.png",
+          "elevation_ascent": 2061,
+          "elevation_descent": 1884
         },
         {
           "name": "04-Jizerky a Krkonoše na kole",
@@ -1296,10 +1444,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gekecukeco",
           "embed_src": "https://mapy.com/s/gekecukeco",
           "points": [],
-          "summary": "Trasa 129,3 km • 11:28 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gekecukeco.png",
-          "elevation_img": "images/gekecukeco_elev.png"
+          "elevation_img": "images/gekecukeco_elev.png",
+          "elevation_ascent": 3741,
+          "elevation_descent": 3423
         },
         {
           "name": "05-Adršpach- Broumovsko na kole",
@@ -1308,10 +1457,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pezuhafebu",
           "embed_src": "https://mapy.com/s/pezuhafebu",
           "points": [],
-          "summary": "Trasa 96,6 km • 7:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pezuhafebu.png",
-          "elevation_img": "images/pezuhafebu_elev.png"
+          "elevation_img": "images/pezuhafebu_elev.png",
+          "elevation_ascent": 1477,
+          "elevation_descent": 1717
         },
         {
           "name": "06-Orlické na kole",
@@ -1320,10 +1470,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fehosacale",
           "embed_src": "https://mapy.com/s/fehosacale",
           "points": [],
-          "summary": "Trasa 106,4 km • 8:32 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fehosacale.png",
-          "elevation_img": "images/fehosacale_elev.png"
+          "elevation_img": "images/fehosacale_elev.png",
+          "elevation_ascent": 2156,
+          "elevation_descent": 1948
         },
         {
           "name": "07-Jeseníky na kole",
@@ -1332,10 +1483,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/podusazamo",
           "embed_src": "https://mapy.com/s/podusazamo",
           "points": [],
-          "summary": "Trasa 178,9 km • 14:24 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/podusazamo.png",
-          "elevation_img": "images/podusazamo_elev.png"
+          "elevation_img": "images/podusazamo_elev.png",
+          "elevation_ascent": 3819,
+          "elevation_descent": 3880
         },
         {
           "name": "08-Podbeskydí na kole",
@@ -1344,10 +1496,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hurufunoha",
           "embed_src": "https://mapy.com/s/hurufunoha",
           "points": [],
-          "summary": "Trasa 53,5 km • 3:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hurufunoha.png",
-          "elevation_img": "images/hurufunoha_elev.png"
+          "elevation_img": "images/hurufunoha_elev.png",
+          "elevation_ascent": 487,
+          "elevation_descent": 660
         },
         {
           "name": "09-Beskydy na kole",
@@ -1356,10 +1509,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/ravokutose",
           "embed_src": "https://mapy.com/s/ravokutose",
           "points": [],
-          "summary": "Trasa 120 km • 9:54 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/ravokutose.png",
-          "elevation_img": "images/ravokutose_elev.png"
+          "elevation_img": "images/ravokutose_elev.png",
+          "elevation_ascent": 2782,
+          "elevation_descent": 2633
         },
         {
           "name": "10-Rychlebky na kole alternativa",
@@ -1368,10 +1522,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lefalerelu",
           "embed_src": "https://mapy.com/s/lefalerelu",
           "points": [],
-          "summary": "Trasa 61,9 km • 5:12 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lefalerelu.png",
-          "elevation_img": "images/lefalerelu_elev.png"
+          "elevation_img": "images/lefalerelu_elev.png",
+          "elevation_ascent": 1302,
+          "elevation_descent": 1647
         },
         {
           "name": "11-Beskydy, Javorníky na kole",
@@ -1380,10 +1535,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/faretunure",
           "embed_src": "https://mapy.com/s/faretunure",
           "points": [],
-          "summary": "Trasa 130,6 km • 10:30 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/faretunure.png",
-          "elevation_img": "images/faretunure_elev.png"
+          "elevation_img": "images/faretunure_elev.png",
+          "elevation_ascent": 2561,
+          "elevation_descent": 2397
         },
         {
           "name": "12- Bílé Karpaty na kole",
@@ -1392,10 +1548,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/katavarogu",
           "embed_src": "https://mapy.com/s/katavarogu",
           "points": [],
-          "summary": "Trasa 101,8 km • 8:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/katavarogu.png",
-          "elevation_img": "images/katavarogu_elev.png"
+          "elevation_img": "images/katavarogu_elev.png",
+          "elevation_ascent": 1854,
+          "elevation_descent": 2204
         },
         {
           "name": "13-Dolnomoravský úval na kole",
@@ -1404,10 +1561,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/harocojofo",
           "embed_src": "https://mapy.com/s/harocojofo",
           "points": [],
-          "summary": "Trasa 141 km • 8:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/harocojofo.png",
-          "elevation_img": "images/harocojofo_elev.png"
+          "elevation_img": "images/harocojofo_elev.png",
+          "elevation_ascent": 676,
+          "elevation_descent": 748
         },
         {
           "name": "14-Podyjí na kole",
@@ -1416,10 +1574,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jojogufore",
           "embed_src": "https://mapy.com/s/jojogufore",
           "points": [],
-          "summary": "Trasa 107,9 km • 7:20 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jojogufore.png",
-          "elevation_img": "images/jojogufore_elev.png"
+          "elevation_img": "images/jojogufore_elev.png",
+          "elevation_ascent": 848,
+          "elevation_descent": 774
         },
         {
           "name": "15-Česká Kanada na kole",
@@ -1428,10 +1587,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nepovacomo",
           "embed_src": "https://mapy.com/s/nepovacomo",
           "points": [],
-          "summary": "Trasa 89,6 km • 6:45 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nepovacomo.png",
-          "elevation_img": "images/nepovacomo_elev.png"
+          "elevation_img": "images/nepovacomo_elev.png",
+          "elevation_ascent": 1139,
+          "elevation_descent": 865
         },
         {
           "name": "16- Novohradské hory na kole",
@@ -1440,10 +1600,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/getuhezezu",
           "embed_src": "https://mapy.com/s/getuhezezu",
           "points": [],
-          "summary": "Trasa 126,8 km • 9:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/getuhezezu.png",
-          "elevation_img": "images/getuhezezu_elev.png"
+          "elevation_img": "images/getuhezezu_elev.png",
+          "elevation_ascent": 1078,
+          "elevation_descent": 982
         },
         {
           "name": "17- Jižní Šumava na kole",
@@ -1452,10 +1613,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nalajecogo",
           "embed_src": "https://mapy.com/s/nalajecogo",
           "points": [],
-          "summary": "Trasa 73 km • 5:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nalajecogo.png",
-          "elevation_img": "images/nalajecogo_elev.png"
+          "elevation_img": "images/nalajecogo_elev.png",
+          "elevation_ascent": 959,
+          "elevation_descent": 754
         },
         {
           "name": "18-Šumava na kole",
@@ -1464,10 +1626,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/momebekevu",
           "embed_src": "https://mapy.com/s/momebekevu",
           "points": [],
-          "summary": "Trasa 103,3 km • 8:01 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/momebekevu.png",
-          "elevation_img": "images/momebekevu_elev.png"
+          "elevation_img": "images/momebekevu_elev.png",
+          "elevation_ascent": 1833,
+          "elevation_descent": 1951
         },
         {
           "name": "19-Západní Šumava na kole",
@@ -1476,10 +1639,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hajebaraga",
           "embed_src": "https://mapy.com/s/hajebaraga",
           "points": [],
-          "summary": "Trasa 115,8 km • 9:10 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hajebaraga.png",
-          "elevation_img": "images/hajebaraga_elev.png"
+          "elevation_img": "images/hajebaraga_elev.png",
+          "elevation_ascent": 2046,
+          "elevation_descent": 2259
         },
         {
           "name": "20-Český les na kole",
@@ -1488,10 +1652,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hupurodapa",
           "embed_src": "https://mapy.com/s/hupurodapa",
           "points": [],
-          "summary": "Trasa 130,4 km • 9:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hupurodapa.png",
-          "elevation_img": "images/hupurodapa_elev.png"
+          "elevation_img": "images/hupurodapa_elev.png",
+          "elevation_ascent": 1700,
+          "elevation_descent": 1700
         }
       ],
       "screenshot": "images/mukubehadu.png"
@@ -1508,10 +1673,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lokosavulo",
           "embed_src": "https://mapy.com/s/lokosavulo",
           "points": [],
-          "summary": "Trasa 87,5 km • 6:01 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lokosavulo.png",
-          "elevation_img": "images/lokosavulo_elev.png"
+          "elevation_img": "images/lokosavulo_elev.png",
+          "elevation_ascent": 683,
+          "elevation_descent": 682
         },
         {
           "name": "Kolem Lipna 2",
@@ -1520,22 +1686,24 @@ const DATA = {
           "share_link": "https://mapy.com/s/domajozocu",
           "embed_src": "https://mapy.com/s/domajozocu",
           "points": [],
-          "summary": "Trasa 94,8 km • 6:29 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/domajozocu.png",
-          "elevation_img": "images/domajozocu_elev.png"
+          "elevation_img": "images/domajozocu_elev.png",
+          "elevation_ascent": 673,
+          "elevation_descent": 674
         },
         {
           "name": "Svatý Tomáš",
           "description": "Trasa 18,3 km • 5:23 h",
           "type": "hiking",
-          "share_link": "https://mapy.com/s/gozehudafu",
-          "embed_src": "https://mapy.com/s/gozehudafu",
+          "share_link": "https://mapy.com/s/fohetusepa",
+          "embed_src": "https://mapy.com/s/fohetusepa",
           "points": [],
-          "summary": "Trasa 18,3 km • 5:23 h",
           "elevation_text": "Výškový profil",
-          "screenshot": "images/gozehudafu.png",
-          "elevation_img": "images/gozehudafu_elev.png"
+          "screenshot": "images/fohetusepa.png",
+          "elevation_img": "images/fohetusepa_elev.png",
+          "elevation_ascent": 329,
+          "elevation_descent": 329
         },
         {
           "name": "Plešné jezero 3",
@@ -1544,10 +1712,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/marehumujo",
           "embed_src": "https://mapy.com/s/marehumujo",
           "points": [],
-          "summary": "Trasa 82,9 km • 5:27 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/marehumujo.png",
-          "elevation_img": "images/marehumujo_elev.png"
+          "elevation_img": "images/marehumujo_elev.png",
+          "elevation_ascent": 636,
+          "elevation_descent": 636
         },
         {
           "name": "Okolo Lipna",
@@ -1556,10 +1725,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kumuvutube",
           "embed_src": "https://mapy.com/s/kumuvutube",
           "points": [],
-          "summary": "Trasa 90,3 km • 6:17 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kumuvutube.png",
-          "elevation_img": "images/kumuvutube_elev.png"
+          "elevation_img": "images/kumuvutube_elev.png",
+          "elevation_ascent": 765,
+          "elevation_descent": 764
         },
         {
           "name": "Plešné jezero",
@@ -1568,10 +1738,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mapajejebu",
           "embed_src": "https://mapy.com/s/mapajejebu",
           "points": [],
-          "summary": "Trasa 94 km • 6:31 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mapajejebu.png",
-          "elevation_img": "images/mapajejebu_elev.png"
+          "elevation_img": "images/mapajejebu_elev.png",
+          "elevation_ascent": 990,
+          "elevation_descent": 991
         },
         {
           "name": "Rožmberk - Horní Dvořiště",
@@ -1580,10 +1751,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nuhucanadu",
           "embed_src": "https://mapy.com/s/nuhucanadu",
           "points": [],
-          "summary": "Trasa 68,7 km • 5:23 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nuhucanadu.png",
-          "elevation_img": "images/nuhucanadu_elev.png"
+          "elevation_img": "images/nuhucanadu_elev.png",
+          "elevation_ascent": 1071,
+          "elevation_descent": 1071
         },
         {
           "name": "Zátoň-Rožmberk-2",
@@ -1592,10 +1764,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gebupubeze",
           "embed_src": "https://mapy.com/s/gebupubeze",
           "points": [],
-          "summary": "Trasa 77,9 km • 6:00 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gebupubeze.png",
-          "elevation_img": "images/gebupubeze_elev.png"
+          "elevation_img": "images/gebupubeze_elev.png",
+          "elevation_ascent": 1034,
+          "elevation_descent": 1034
         }
       ],
       "screenshot": "images/fucujuzeza.png",
@@ -1613,10 +1786,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/berofegesa",
           "embed_src": "https://mapy.com/s/berofegesa",
           "points": [],
-          "summary": "Trasa 42,5 km • 2:50 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/berofegesa.png",
-          "elevation_img": "images/berofegesa_elev.png"
+          "elevation_img": "images/berofegesa_elev.png",
+          "elevation_ascent": 434,
+          "elevation_descent": 434
         },
         {
           "name": "Jaroslavice 2",
@@ -1625,10 +1799,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jedupujaga",
           "embed_src": "https://mapy.com/s/jedupujaga",
           "points": [],
-          "summary": "Trasa 47,4 km • 2:57 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jedupujaga.png",
-          "elevation_img": "images/jedupujaga_elev.png"
+          "elevation_img": "images/jedupujaga_elev.png",
+          "elevation_ascent": 270,
+          "elevation_descent": 270
         },
         {
           "name": "Vranov 2",
@@ -1637,10 +1812,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jekanubudu",
           "embed_src": "https://mapy.com/s/jekanubudu",
           "points": [],
-          "summary": "Trasa 58,2 km • 4:02 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jekanubudu.png",
-          "elevation_img": "images/jekanubudu_elev.png"
+          "elevation_img": "images/jekanubudu_elev.png",
+          "elevation_ascent": 718,
+          "elevation_descent": 718
         },
         {
           "name": "Jaroslavice",
@@ -1649,10 +1825,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jerabehabu",
           "embed_src": "https://mapy.com/s/jerabehabu",
           "points": [],
-          "summary": "Trasa 55,6 km • 3:31 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jerabehabu.png",
-          "elevation_img": "images/jerabehabu_elev.png"
+          "elevation_img": "images/jerabehabu_elev.png",
+          "elevation_ascent": 328,
+          "elevation_descent": 328
         },
         {
           "name": "Hnanice-Nový Hrádek",
@@ -1661,10 +1838,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pucosuvadu",
           "embed_src": "https://mapy.com/s/pucosuvadu",
           "points": [],
-          "summary": "Trasa 49,8 km • 3:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pucosuvadu.png",
-          "elevation_img": "images/pucosuvadu_elev.png"
+          "elevation_img": "images/pucosuvadu_elev.png",
+          "elevation_ascent": 758,
+          "elevation_descent": 758
         },
         {
           "name": "Hnanice-Nový Hrádek-Hardegg",
@@ -1673,10 +1851,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fekedosele",
           "embed_src": "https://mapy.com/s/fekedosele",
           "points": [],
-          "summary": "Trasa 65 km • 4:36 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fekedosele.png",
-          "elevation_img": "images/fekedosele_elev.png"
+          "elevation_img": "images/fekedosele_elev.png",
+          "elevation_ascent": 931,
+          "elevation_descent": 931
         },
         {
           "name": "Jevišovice",
@@ -1685,10 +1864,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cucavovotu",
           "embed_src": "https://mapy.com/s/cucavovotu",
           "points": [],
-          "summary": "Trasa 53,6 km • 3:41 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cucavovotu.png",
-          "elevation_img": "images/cucavovotu_elev.png"
+          "elevation_img": "images/cucavovotu_elev.png",
+          "elevation_ascent": 624,
+          "elevation_descent": 624
         },
         {
           "name": "Hostěradice",
@@ -1697,10 +1877,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/panasolepu",
           "embed_src": "https://mapy.com/s/panasolepu",
           "points": [],
-          "summary": "Trasa 69,2 km • 4:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/panasolepu.png",
-          "elevation_img": "images/panasolepu_elev.png"
+          "elevation_img": "images/panasolepu_elev.png",
+          "elevation_ascent": 727,
+          "elevation_descent": 727
         },
         {
           "name": "Šatov-Hnanice-Nový Hrádek-Hardegg",
@@ -1709,10 +1890,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nacogoheho",
           "embed_src": "https://mapy.com/s/nacogoheho",
           "points": [],
-          "summary": "Trasa 56,8 km • 4:02 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nacogoheho.png",
-          "elevation_img": "images/nacogoheho_elev.png"
+          "elevation_img": "images/nacogoheho_elev.png",
+          "elevation_ascent": 831,
+          "elevation_descent": 831
         },
         {
           "name": "Vranov",
@@ -1721,10 +1903,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jagukurana",
           "embed_src": "https://mapy.com/s/jagukurana",
           "points": [],
-          "summary": "Trasa 65,7 km • 4:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jagukurana.png",
-          "elevation_img": "images/jagukurana_elev.png"
+          "elevation_img": "images/jagukurana_elev.png",
+          "elevation_ascent": 852,
+          "elevation_descent": 852
         },
         {
           "name": "Bítov-Vranov",
@@ -1733,10 +1916,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/holepusozo",
           "embed_src": "https://mapy.com/s/holepusozo",
           "points": [],
-          "summary": "Trasa 94,6 km • 6:37 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/holepusozo.png",
-          "elevation_img": "images/holepusozo_elev.png"
+          "elevation_img": "images/holepusozo_elev.png",
+          "elevation_ascent": 1220,
+          "elevation_descent": 1220
         },
         {
           "name": "Bítov-Vranov-2",
@@ -1745,10 +1929,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pobasazelo",
           "embed_src": "https://mapy.com/s/pobasazelo",
           "points": [],
-          "summary": "Trasa 92,7 km • 6:28 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pobasazelo.png",
-          "elevation_img": "images/pobasazelo_elev.png"
+          "elevation_img": "images/pobasazelo_elev.png",
+          "elevation_ascent": 1221,
+          "elevation_descent": 1221
         },
         {
           "name": "Moravský Krumlov",
@@ -1757,10 +1942,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hefotonebo",
           "embed_src": "https://mapy.com/s/hefotonebo",
           "points": [],
-          "summary": "Trasa 96,6 km • 6:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hefotonebo.png",
-          "elevation_img": "images/hefotonebo_elev.png"
+          "elevation_img": "images/hefotonebo_elev.png",
+          "elevation_ascent": 944,
+          "elevation_descent": 944
         },
         {
           "name": "Moravský Krumlov-2",
@@ -1769,10 +1955,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kekapanoga",
           "embed_src": "https://mapy.com/s/kekapanoga",
           "points": [],
-          "summary": "Trasa 88,1 km • 5:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kekapanoga.png",
-          "elevation_img": "images/kekapanoga_elev.png"
+          "elevation_img": "images/kekapanoga_elev.png",
+          "elevation_ascent": 967,
+          "elevation_descent": 967
         },
         {
           "name": "Jaroměřice-Jevišovice",
@@ -1781,10 +1968,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/guhaheloje",
           "embed_src": "https://mapy.com/s/guhaheloje",
           "points": [],
-          "summary": "Trasa 86,8 km • 5:45 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/guhaheloje.png",
-          "elevation_img": "images/guhaheloje_elev.png"
+          "elevation_img": "images/guhaheloje_elev.png",
+          "elevation_ascent": 818,
+          "elevation_descent": 818
         },
         {
           "name": "Niederfladnitz-Retz",
@@ -1793,10 +1981,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rakucocoze",
           "embed_src": "https://mapy.com/s/rakucocoze",
           "points": [],
-          "summary": "Trasa 72,2 km • 5:08 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rakucocoze.png",
-          "elevation_img": "images/rakucocoze_elev.png"
+          "elevation_img": "images/rakucocoze_elev.png",
+          "elevation_ascent": 1050,
+          "elevation_descent": 1050
         }
       ],
       "screenshot": "images/guhemuteta.png"
@@ -1813,10 +2002,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pulamunohe",
           "embed_src": "https://mapy.com/s/pulamunohe",
           "points": [],
-          "summary": "Trasa 46 km • 3:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pulamunohe.png",
-          "elevation_img": "images/pulamunohe_elev.png"
+          "elevation_img": "images/pulamunohe_elev.png",
+          "elevation_ascent": 446,
+          "elevation_descent": 448
         },
         {
           "name": "Bílý Kříž 2",
@@ -1825,10 +2015,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bubusecuva",
           "embed_src": "https://mapy.com/s/bubusecuva",
           "points": [],
-          "summary": "Trasa 43,1 km • 3:43 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bubusecuva.png",
-          "elevation_img": "images/bubusecuva_elev.png"
+          "elevation_img": "images/bubusecuva_elev.png",
+          "elevation_ascent": 900,
+          "elevation_descent": 893
         },
         {
           "name": "Bílý Kříž 1",
@@ -1837,10 +2028,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/madefutofu",
           "embed_src": "https://mapy.com/s/madefutofu",
           "points": [],
-          "summary": "Trasa 41,1 km • 3:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/madefutofu.png",
-          "elevation_img": "images/madefutofu_elev.png"
+          "elevation_img": "images/madefutofu_elev.png",
+          "elevation_ascent": 694,
+          "elevation_descent": 694
         },
         {
           "name": "Čeladná-Pustevny",
@@ -1849,10 +2041,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jofojevatu",
           "embed_src": "https://mapy.com/s/jofojevatu",
           "points": [],
-          "summary": "Trasa 36,7 km • 2:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jofojevatu.png",
-          "elevation_img": "images/jofojevatu_elev.png"
+          "elevation_img": "images/jofojevatu_elev.png",
+          "elevation_ascent": 775,
+          "elevation_descent": 763
         },
         {
           "name": "Frýdlant-Ostravice-Staškov-Malenovice",
@@ -1861,10 +2054,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lutamufere",
           "embed_src": "https://mapy.com/s/lutamufere",
           "points": [],
-          "summary": "Trasa 20,9 km • 1:42 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lutamufere.png",
-          "elevation_img": "images/lutamufere_elev.png"
+          "elevation_img": "images/lutamufere_elev.png",
+          "elevation_ascent": 425,
+          "elevation_descent": 421
         },
         {
           "name": "Hůrky-Ondřejník",
@@ -1873,10 +2067,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fedukafeza",
           "embed_src": "https://mapy.com/s/fedukafeza",
           "points": [],
-          "summary": "Trasa 24,1 km • 2:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fedukafeza.png",
-          "elevation_img": "images/fedukafeza_elev.png"
+          "elevation_img": "images/fedukafeza_elev.png",
+          "elevation_ascent": 628,
+          "elevation_descent": 220
         },
         {
           "name": "Brušperk-Příbor-Sklenov",
@@ -1885,10 +2080,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pulamunohe",
           "embed_src": "https://mapy.com/s/pulamunohe",
           "points": [],
-          "summary": "Trasa 46 km • 3:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pulamunohe.png",
-          "elevation_img": "images/pulamunohe_elev.png"
+          "elevation_img": "images/pulamunohe_elev.png",
+          "elevation_ascent": 446,
+          "elevation_descent": 448
         },
         {
           "name": "Ostravice-Visalaje-Krásná",
@@ -1897,10 +2093,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kedodudomu",
           "embed_src": "https://mapy.com/s/kedodudomu",
           "points": [],
-          "summary": "Trasa 26,3 km • 2:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kedodudomu.png",
-          "elevation_img": "images/kedodudomu_elev.png"
+          "elevation_img": "images/kedodudomu_elev.png",
+          "elevation_ascent": 607,
+          "elevation_descent": 582
         },
         {
           "name": "Ostravice - kolem Šance",
@@ -1909,10 +2106,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pesovudeja",
           "embed_src": "https://mapy.com/s/pesovudeja",
           "points": [],
-          "summary": "Trasa 40,7 km • 3:10 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pesovudeja.png",
-          "elevation_img": "images/pesovudeja_elev.png"
+          "elevation_img": "images/pesovudeja_elev.png",
+          "elevation_ascent": 682,
+          "elevation_descent": 682
         }
       ],
       "screenshot": "images/rasukerofe.png"
@@ -1930,10 +2128,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fejudobefa",
           "embed_src": "https://mapy.com/s/fejudobefa",
           "points": [],
-          "summary": "Trasa 12,4 km • 4:31 h",
           "elevation_text": "",
           "screenshot": "images/fejudobefa.png",
-          "elevation_img": "images/fejudobefa_elev.png"
+          "elevation_img": "images/fejudobefa_elev.png",
+          "elevation_ascent": 614,
+          "elevation_descent": 615
         },
         {
           "name": "Radhošť 1",
@@ -1943,10 +2142,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gonopefemo",
           "embed_src": "https://mapy.com/s/gonopefemo",
           "points": [],
-          "summary": "Trasa 20,5 km • 6:52 h",
           "elevation_text": "",
           "screenshot": "images/gonopefemo.png",
-          "elevation_img": "images/gonopefemo_elev.png"
+          "elevation_img": "images/gonopefemo_elev.png",
+          "elevation_ascent": 694,
+          "elevation_descent": 703
         },
         {
           "name": "Metylovice-Ondřejník-Skalka",
@@ -1956,10 +2156,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lusumeceje",
           "embed_src": "https://mapy.com/s/lusumeceje",
           "points": [],
-          "summary": "Trasa 15,6 km • 5:28 h",
           "elevation_text": "",
           "screenshot": "images/lusumeceje.png",
-          "elevation_img": "images/lusumeceje_elev.png"
+          "elevation_img": "images/lusumeceje_elev.png",
+          "elevation_ascent": 653,
+          "elevation_descent": 653
         },
         {
           "name": "Štramberk-Bílá hora",
@@ -1968,10 +2169,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lunakafaha",
           "embed_src": "https://mapy.com/s/lunakafaha",
           "points": [],
-          "summary": "Trasa 6,8 km • 2:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lunakafaha.png",
-          "elevation_img": "images/lunakafaha_elev.png"
+          "elevation_img": "images/lunakafaha_elev.png",
+          "elevation_ascent": 349,
+          "elevation_descent": 349
         },
         {
           "name": "Kopřivnice-Červený kámen",
@@ -1980,10 +2182,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/metugazaha",
           "embed_src": "https://mapy.com/s/metugazaha",
           "points": [],
-          "summary": "Trasa 8,1 km • 2:54 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/metugazaha.png",
-          "elevation_img": "images/metugazaha_elev.png"
+          "elevation_img": "images/metugazaha_elev.png",
+          "elevation_ascent": 351,
+          "elevation_descent": 351
         },
         {
           "name": "Čeladná-Čertův mlýn-Pustevny",
@@ -1992,10 +2195,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/budahojere",
           "embed_src": "https://mapy.com/s/budahojere",
           "points": [],
-          "summary": "Trasa 9,7 km • 4:04 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/budahojere.png",
-          "elevation_img": "images/budahojere_elev.png"
+          "elevation_img": "images/budahojere_elev.png",
+          "elevation_ascent": 741,
+          "elevation_descent": 234
         },
         {
           "name": "Velký Javorník 1",
@@ -2004,10 +2208,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kanuhumuve",
           "embed_src": "https://mapy.com/s/kanuhumuve",
           "points": [],
-          "summary": "Trasa 4,1 km • 1:56 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kanuhumuve.png",
-          "elevation_img": "images/kanuhumuve_elev.png"
+          "elevation_img": "images/kanuhumuve_elev.png",
+          "elevation_ascent": 502,
+          "elevation_descent": 0
         },
         {
           "name": "Velký Javorník 2",
@@ -2016,10 +2221,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dofurujeke",
           "embed_src": "https://mapy.com/s/dofurujeke",
           "points": [],
-          "summary": "Trasa 3,9 km • 1:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dofurujeke.png",
-          "elevation_img": "images/dofurujeke_elev.png"
+          "elevation_img": "images/dofurujeke_elev.png",
+          "elevation_ascent": 435,
+          "elevation_descent": 0
         }
       ],
       "screenshot": "images/lazufozevo.png"
@@ -2036,10 +2242,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/havunukesa",
           "embed_src": "https://mapy.com/s/havunukesa",
           "points": [],
-          "summary": "Trasa 14,2 km • 5:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/havunukesa.png",
-          "elevation_img": "images/havunukesa_elev.png"
+          "elevation_img": "images/havunukesa_elev.png",
+          "elevation_ascent": 878,
+          "elevation_descent": 878
         },
         {
           "name": "LH10",
@@ -2048,10 +2255,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/metosocebe",
           "embed_src": "https://mapy.com/s/metosocebe",
           "points": [],
-          "summary": "Trasa 18,5 km • 6:40 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/metosocebe.png",
-          "elevation_img": "images/metosocebe_elev.png"
+          "elevation_img": "images/metosocebe_elev.png",
+          "elevation_ascent": 933,
+          "elevation_descent": 933
         },
         {
           "name": "LH11",
@@ -2060,10 +2268,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hasobugaco",
           "embed_src": "https://mapy.com/s/hasobugaco",
           "points": [],
-          "summary": "Trasa 10,7 km • 4:21 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hasobugaco.png",
-          "elevation_img": "images/hasobugaco_elev.png"
+          "elevation_img": "images/hasobugaco_elev.png",
+          "elevation_ascent": 795,
+          "elevation_descent": 795
         },
         {
           "name": "LH12",
@@ -2072,10 +2281,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hemokakejo",
           "embed_src": "https://mapy.com/s/hemokakejo",
           "points": [],
-          "summary": "Trasa 13,5 km • 5:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hemokakejo.png",
-          "elevation_img": "images/hemokakejo_elev.png"
+          "elevation_img": "images/hemokakejo_elev.png",
+          "elevation_ascent": 827,
+          "elevation_descent": 827
         },
         {
           "name": "LH13",
@@ -2084,10 +2294,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rahofeduma",
           "embed_src": "https://mapy.com/s/rahofeduma",
           "points": [],
-          "summary": "Trasa 15,6 km • 5:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rahofeduma.png",
-          "elevation_img": "images/rahofeduma_elev.png"
+          "elevation_img": "images/rahofeduma_elev.png",
+          "elevation_ascent": 889,
+          "elevation_descent": 889
         },
         {
           "name": "LH14",
@@ -2096,10 +2307,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/negazefego",
           "embed_src": "https://mapy.com/s/negazefego",
           "points": [],
-          "summary": "Trasa 15,7 km • 5:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/negazefego.png",
-          "elevation_img": "images/negazefego_elev.png"
+          "elevation_img": "images/negazefego_elev.png",
+          "elevation_ascent": 905,
+          "elevation_descent": 905
         },
         {
           "name": "LH15",
@@ -2108,10 +2320,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gagevajome",
           "embed_src": "https://mapy.com/s/gagevajome",
           "points": [],
-          "summary": "Trasa 12,2 km • 4:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gagevajome.png",
-          "elevation_img": "images/gagevajome_elev.png"
+          "elevation_img": "images/gagevajome_elev.png",
+          "elevation_ascent": 857,
+          "elevation_descent": 857
         },
         {
           "name": "LH2",
@@ -2120,10 +2333,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nenerenoro",
           "embed_src": "https://mapy.com/s/nenerenoro",
           "points": [],
-          "summary": "Trasa 13,5 km • 5:08 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nenerenoro.png",
-          "elevation_img": "images/nenerenoro_elev.png"
+          "elevation_img": "images/nenerenoro_elev.png",
+          "elevation_ascent": 839,
+          "elevation_descent": 839
         },
         {
           "name": "LH3",
@@ -2132,10 +2346,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fogerazabu",
           "embed_src": "https://mapy.com/s/fogerazabu",
           "points": [],
-          "summary": "Trasa 15,6 km • 5:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fogerazabu.png",
-          "elevation_img": "images/fogerazabu_elev.png"
+          "elevation_img": "images/fogerazabu_elev.png",
+          "elevation_ascent": 905,
+          "elevation_descent": 905
         },
         {
           "name": "LH4",
@@ -2144,10 +2359,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/resecoretu",
           "embed_src": "https://mapy.com/s/resecoretu",
           "points": [],
-          "summary": "Trasa 14,2 km • 5:21 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/resecoretu.png",
-          "elevation_img": "images/resecoretu_elev.png"
+          "elevation_img": "images/resecoretu_elev.png",
+          "elevation_ascent": 865,
+          "elevation_descent": 865
         },
         {
           "name": "LH5",
@@ -2156,10 +2372,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kuganudabo",
           "embed_src": "https://mapy.com/s/kuganudabo",
           "points": [],
-          "summary": "Trasa 14,9 km • 5:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kuganudabo.png",
-          "elevation_img": "images/kuganudabo_elev.png"
+          "elevation_img": "images/kuganudabo_elev.png",
+          "elevation_ascent": 852,
+          "elevation_descent": 852
         },
         {
           "name": "LH6",
@@ -2168,10 +2385,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/basopuhata",
           "embed_src": "https://mapy.com/s/basopuhata",
           "points": [],
-          "summary": "Trasa 15 km • 5:38 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/basopuhata.png",
-          "elevation_img": "images/basopuhata_elev.png"
+          "elevation_img": "images/basopuhata_elev.png",
+          "elevation_ascent": 900,
+          "elevation_descent": 900
         },
         {
           "name": "LH7",
@@ -2180,10 +2398,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/meropazoha",
           "embed_src": "https://mapy.com/s/meropazoha",
           "points": [],
-          "summary": "Trasa 14,9 km • 5:31 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/meropazoha.png",
-          "elevation_img": "images/meropazoha_elev.png"
+          "elevation_img": "images/meropazoha_elev.png",
+          "elevation_ascent": 865,
+          "elevation_descent": 848
         },
         {
           "name": "LH8",
@@ -2192,10 +2411,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gesosadago",
           "embed_src": "https://mapy.com/s/gesosadago",
           "points": [],
-          "summary": "Trasa 12,1 km • 4:37 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gesosadago.png",
-          "elevation_img": "images/gesosadago_elev.png"
+          "elevation_img": "images/gesosadago_elev.png",
+          "elevation_ascent": 732,
+          "elevation_descent": 760
         },
         {
           "name": "LH9",
@@ -2204,10 +2424,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fodunugaga",
           "embed_src": "https://mapy.com/s/fodunugaga",
           "points": [],
-          "summary": "Trasa 16,5 km • 6:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fodunugaga.png",
-          "elevation_img": "images/fodunugaga_elev.png"
+          "elevation_img": "images/fodunugaga_elev.png",
+          "elevation_ascent": 1013,
+          "elevation_descent": 1013
         },
         {
           "name": "Mazák-LH-Zbuj-LH-Mazák",
@@ -2216,10 +2437,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jumamebuje",
           "embed_src": "https://mapy.com/s/jumamebuje",
           "points": [],
-          "summary": "Trasa 27 km • 10:08 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jumamebuje.png",
-          "elevation_img": "images/jumamebuje_elev.png"
+          "elevation_img": "images/jumamebuje_elev.png",
+          "elevation_ascent": 1670,
+          "elevation_descent": 1670
         }
       ],
       "screenshot": "images/kugedeceho.png"
@@ -2237,10 +2459,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rekegatulo",
           "embed_src": "https://mapy.com/s/rekegatulo",
           "points": [],
-          "summary": "Trasa 41,3 km • 2:52 h",
           "elevation_text": "",
           "screenshot": "images/rekegatulo.png",
-          "elevation_img": "images/rekegatulo_elev.png"
+          "elevation_img": "images/rekegatulo_elev.png",
+          "elevation_ascent": 416,
+          "elevation_descent": 418
         }
       ],
       "screenshot": "images/dolapesehe.png"
@@ -2257,10 +2480,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dupegufete",
           "embed_src": "https://mapy.com/s/dupegufete",
           "points": [],
-          "summary": "Trasa 11,4 km • 1:05 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dupegufete.png",
-          "elevation_img": "images/dupegufete_elev.png"
+          "elevation_img": "images/dupegufete_elev.png",
+          "elevation_ascent": 438,
+          "elevation_descent": 457
         },
         {
           "name": "Kolem Smrku 2",
@@ -2269,10 +2493,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fatovusaze",
           "embed_src": "https://mapy.com/s/fatovusaze",
           "points": [],
-          "summary": "Trasa 29,2 km • 2:35 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fatovusaze.png",
-          "elevation_img": "images/fatovusaze_elev.png"
+          "elevation_img": "images/fatovusaze_elev.png",
+          "elevation_ascent": 988,
+          "elevation_descent": 994
         },
         {
           "name": "Kolem Smrku 3",
@@ -2281,10 +2506,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hojocucoje",
           "embed_src": "https://mapy.com/s/hojocucoje",
           "points": [],
-          "summary": "Trasa 29,2 km • 2:23 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hojocucoje.png",
-          "elevation_img": "images/hojocucoje_elev.png"
+          "elevation_img": "images/hojocucoje_elev.png",
+          "elevation_ascent": 822,
+          "elevation_descent": 828
         },
         {
           "name": "Kolem Smrku 4",
@@ -2293,10 +2519,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dupegufete",
           "embed_src": "https://mapy.com/s/dupegufete",
           "points": [],
-          "summary": "Trasa 11,4 km • 1:05 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dupegufete.png",
-          "elevation_img": "images/dupegufete_elev.png"
+          "elevation_img": "images/dupegufete_elev.png",
+          "elevation_ascent": 438,
+          "elevation_descent": 457
         },
         {
           "name": "Kolem Smrku",
@@ -2305,10 +2532,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/behufajela",
           "embed_src": "https://mapy.com/s/behufajela",
           "points": [],
-          "summary": "Trasa 23,9 km • 1:58 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/behufajela.png",
-          "elevation_img": "images/behufajela_elev.png"
+          "elevation_img": "images/behufajela_elev.png",
+          "elevation_ascent": 644,
+          "elevation_descent": 644
         }
       ],
       "screenshot": "images/juvozehega.png"
@@ -2325,10 +2553,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/momodumapo",
           "embed_src": "https://mapy.com/s/momodumapo",
           "points": [],
-          "summary": "Trasa 13,7 km • 4:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/momodumapo.png",
-          "elevation_img": "images/momodumapo_elev.png"
+          "elevation_img": "images/momodumapo_elev.png",
+          "elevation_ascent": 575,
+          "elevation_descent": 565
         },
         {
           "name": "Lednice a okolí",
@@ -2337,10 +2566,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bopajazele",
           "embed_src": "https://mapy.com/s/bopajazele",
           "points": [],
-          "summary": "Trasa 58,8 km • 3:32 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bopajazele.png",
-          "elevation_img": "images/bopajazele_elev.png"
+          "elevation_img": "images/bopajazele_elev.png",
+          "elevation_ascent": 105,
+          "elevation_descent": 107
         },
         {
           "name": "Břeclav-Lanžhot",
@@ -2349,10 +2579,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dakabohogu",
           "embed_src": "https://mapy.com/s/dakabohogu",
           "points": [],
-          "summary": "Trasa 86,5 km • 5:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dakabohogu.png",
-          "elevation_img": "images/dakabohogu_elev.png"
+          "elevation_img": "images/dakabohogu_elev.png",
+          "elevation_ascent": 34,
+          "elevation_descent": 34
         },
         {
           "name": "Mikulov-Valtice",
@@ -2361,10 +2592,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gecofusake",
           "embed_src": "https://mapy.com/s/gecofusake",
           "points": [],
-          "summary": "Trasa 69,2 km • 4:28 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gecofusake.png",
-          "elevation_img": "images/gecofusake_elev.png"
+          "elevation_img": "images/gecofusake_elev.png",
+          "elevation_ascent": 330,
+          "elevation_descent": 331
         },
         {
           "name": "Nové mlýny",
@@ -2373,10 +2605,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hajorezugu",
           "embed_src": "https://mapy.com/s/hajorezugu",
           "points": [],
-          "summary": "Trasa 72,5 km • 4:40 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hajorezugu.png",
-          "elevation_img": "images/hajorezugu_elev.png"
+          "elevation_img": "images/hajorezugu_elev.png",
+          "elevation_ascent": 373,
+          "elevation_descent": 373
         }
       ],
       "screenshot": "images/dutadudubo.png"
@@ -2393,10 +2626,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/laganaguru",
           "embed_src": "https://mapy.com/s/laganaguru",
           "points": [],
-          "summary": "Trasa 23,9 km • 2:05 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/laganaguru.png",
-          "elevation_img": "images/laganaguru_elev.png"
+          "elevation_img": "images/laganaguru_elev.png",
+          "elevation_ascent": 644,
+          "elevation_descent": 644
         },
         {
           "name": "Čeladná-Pustevny",
@@ -2405,10 +2639,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pafarecace",
           "embed_src": "https://mapy.com/s/pafarecace",
           "points": [],
-          "summary": "Trasa 36,7 km • 2:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pafarecace.png",
-          "elevation_img": "images/pafarecace_elev.png"
+          "elevation_img": "images/pafarecace_elev.png",
+          "elevation_ascent": 775,
+          "elevation_descent": 763
         },
         {
           "name": "Bílý kříž 2",
@@ -2417,10 +2652,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rofonukeko",
           "embed_src": "https://mapy.com/s/rofonukeko",
           "points": [],
-          "summary": "Trasa 43,1 km • 3:43 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rofonukeko.png",
-          "elevation_img": "images/rofonukeko_elev.png"
+          "elevation_img": "images/rofonukeko_elev.png",
+          "elevation_ascent": 900,
+          "elevation_descent": 893
         },
         {
           "name": "Bílý kříž 1",
@@ -2429,10 +2665,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gapotogoca",
           "embed_src": "https://mapy.com/s/gapotogoca",
           "points": [],
-          "summary": "Trasa 41,1 km • 3:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gapotogoca.png",
-          "elevation_img": "images/gapotogoca_elev.png"
+          "elevation_img": "images/gapotogoca_elev.png",
+          "elevation_ascent": 702,
+          "elevation_descent": 695
         },
         {
           "name": "Zbuj",
@@ -2441,10 +2678,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kafojatume",
           "embed_src": "https://mapy.com/s/kafojatume",
           "points": [],
-          "summary": "Trasa 51,3 km • 3:39 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kafojatume.png",
-          "elevation_img": "images/kafojatume_elev.png"
+          "elevation_img": "images/kafojatume_elev.png",
+          "elevation_ascent": 574,
+          "elevation_descent": 574
         },
         {
           "name": "Ostravice-LH3",
@@ -2453,10 +2691,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kofubadopa",
           "embed_src": "https://mapy.com/s/kofubadopa",
           "points": [],
-          "summary": "Trasa 18,2 km • 2:04 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kofubadopa.png",
-          "elevation_img": "images/kofubadopa_elev.png"
+          "elevation_img": "images/kofubadopa_elev.png",
+          "elevation_ascent": 977,
+          "elevation_descent": 85
         },
         {
           "name": "Ostravice-Lysa hora",
@@ -2465,10 +2704,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fopujoreke",
           "embed_src": "https://mapy.com/s/fopujoreke",
           "points": [],
-          "summary": "Trasa 17,7 km • 2:00 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fopujoreke.png",
-          "elevation_img": "images/fopujoreke_elev.png"
+          "elevation_img": "images/fopujoreke_elev.png",
+          "elevation_ascent": 952,
+          "elevation_descent": 60
         },
         {
           "name": "Ostravice-LH2",
@@ -2477,10 +2717,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/resusafojo",
           "embed_src": "https://mapy.com/s/resusafojo",
           "points": [],
-          "summary": "Trasa 15,2 km • 1:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/resusafojo.png",
-          "elevation_img": "images/resusafojo_elev.png"
+          "elevation_img": "images/resusafojo_elev.png",
+          "elevation_ascent": 906,
+          "elevation_descent": 19
         },
         {
           "name": "Ostravice-Butořanka-Zbuj",
@@ -2489,10 +2730,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jocepujujo",
           "embed_src": "https://mapy.com/s/jocepujujo",
           "points": [],
-          "summary": "Trasa 59,8 km • 4:29 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jocepujujo.png",
-          "elevation_img": "images/jocepujujo_elev.png"
+          "elevation_img": "images/jocepujujo_elev.png",
+          "elevation_ascent": 885,
+          "elevation_descent": 902
         },
         {
           "name": "Kolem Šance-Podolánky",
@@ -2501,10 +2743,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nozacelegu",
           "embed_src": "https://mapy.com/s/nozacelegu",
           "points": [],
-          "summary": "Trasa 79 km • 5:26 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nozacelegu.png",
-          "elevation_img": "images/nozacelegu_elev.png"
+          "elevation_img": "images/nozacelegu_elev.png",
+          "elevation_ascent": 749,
+          "elevation_descent": 756
         },
         {
           "name": "Ostravice-Butořanka",
@@ -2513,10 +2756,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/porerozata",
           "embed_src": "https://mapy.com/s/porerozata",
           "points": [],
-          "summary": "Trasa 59,1 km • 4:20 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/porerozata.png",
-          "elevation_img": "images/porerozata_elev.png"
+          "elevation_img": "images/porerozata_elev.png",
+          "elevation_ascent": 860,
+          "elevation_descent": 861
         },
         {
           "name": "BT-Frýdlant-Grůň",
@@ -2525,10 +2769,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gosasacete",
           "embed_src": "https://mapy.com/s/gosasacete",
           "points": [],
-          "summary": "Trasa 42,2 km • 3:17 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gosasacete.png",
-          "elevation_img": "images/gosasacete_elev.png"
+          "elevation_img": "images/gosasacete_elev.png",
+          "elevation_ascent": 665,
+          "elevation_descent": 665
         },
         {
           "name": "Ondráš-Mazák",
@@ -2537,10 +2782,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kobotenara",
           "embed_src": "https://mapy.com/s/kobotenara",
           "points": [],
-          "summary": "Trasa 9,3 km • 54 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kobotenara.png",
-          "elevation_img": "images/kobotenara_elev.png"
+          "elevation_img": "images/kobotenara_elev.png",
+          "elevation_ascent": 296,
+          "elevation_descent": 427
         },
         {
           "name": "Zbuj-Mazák",
@@ -2549,10 +2795,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jamamokupe",
           "embed_src": "https://mapy.com/s/jamamokupe",
           "points": [],
-          "summary": "Trasa 15 km • 1:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jamamokupe.png",
-          "elevation_img": "images/jamamokupe_elev.png"
+          "elevation_img": "images/jamamokupe_elev.png",
+          "elevation_ascent": 367,
+          "elevation_descent": 681
         },
         {
           "name": "Zbuj-Mazák-2",
@@ -2561,10 +2808,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/deravatato",
           "embed_src": "https://mapy.com/s/deravatato",
           "points": [],
-          "summary": "Trasa 22,3 km • 1:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/deravatato.png",
-          "elevation_img": "images/deravatato_elev.png"
+          "elevation_img": "images/deravatato_elev.png",
+          "elevation_ascent": 588,
+          "elevation_descent": 902
         }
       ],
       "screenshot": "images/gesucapeno.png"
@@ -2581,10 +2829,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cehuducuca",
           "embed_src": "https://mapy.com/s/cehuducuca",
           "points": [],
-          "summary": "Trasa 54,1 km • 3:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cehuducuca.png",
-          "elevation_img": "images/cehuducuca_elev.png"
+          "elevation_img": "images/cehuducuca_elev.png",
+          "elevation_ascent": 665,
+          "elevation_descent": 665
         },
         {
           "name": "Herálec-Milovy-Kamenice",
@@ -2593,10 +2842,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/papagabopa",
           "embed_src": "https://mapy.com/s/papagabopa",
           "points": [],
-          "summary": "Trasa 52,8 km • 3:53 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/papagabopa.png",
-          "elevation_img": "images/papagabopa_elev.png"
+          "elevation_img": "images/papagabopa_elev.png",
+          "elevation_ascent": 722,
+          "elevation_descent": 722
         },
         {
           "name": "Herálec-ŽnS-NMaM",
@@ -2605,10 +2855,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/manadakufa",
           "embed_src": "https://mapy.com/s/manadakufa",
           "points": [],
-          "summary": "Trasa 73,3 km • 5:08 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/manadakufa.png",
-          "elevation_img": "images/manadakufa_elev.png"
+          "elevation_img": "images/manadakufa_elev.png",
+          "elevation_ascent": 743,
+          "elevation_descent": 743
         },
         {
           "name": "Devět skal-Perníčky",
@@ -2617,10 +2868,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nunabutufa",
           "embed_src": "https://mapy.com/s/nunabutufa",
           "points": [],
-          "summary": "Trasa 21,4 km • 6:23 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nunabutufa.png",
-          "elevation_img": "images/nunabutufa_elev.png"
+          "elevation_img": "images/nunabutufa_elev.png",
+          "elevation_ascent": 402,
+          "elevation_descent": 402
         },
         {
           "name": "Trasa x",
@@ -2629,10 +2881,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fofonodulo",
           "embed_src": "https://mapy.com/s/fofonodulo",
           "points": [],
-          "summary": "Trasa 24,3 km • 1:46 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fofonodulo.png",
-          "elevation_img": "images/fofonodulo_elev.png"
+          "elevation_img": "images/fofonodulo_elev.png",
+          "elevation_ascent": 298,
+          "elevation_descent": 294
         },
         {
           "name": "Kučerů mlýn",
@@ -2641,10 +2894,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bakoselozu",
           "embed_src": "https://mapy.com/s/bakoselozu",
           "points": [],
-          "summary": "Trasa 13 km • 1:01 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bakoselozu.png",
-          "elevation_img": "images/bakoselozu_elev.png"
+          "elevation_img": "images/bakoselozu_elev.png",
+          "elevation_ascent": 210,
+          "elevation_descent": 204
         },
         {
           "name": "Karlštejn",
@@ -2653,10 +2907,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fomekocaga",
           "embed_src": "https://mapy.com/s/fomekocaga",
           "points": [],
-          "summary": "Trasa 16,1 km • 1:12 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fomekocaga.png",
-          "elevation_img": "images/fomekocaga_elev.png"
+          "elevation_img": "images/fomekocaga_elev.png",
+          "elevation_ascent": 237,
+          "elevation_descent": 237
         },
         {
           "name": "Devět skal",
@@ -2665,10 +2920,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nozevupuho",
           "embed_src": "https://mapy.com/s/nozevupuho",
           "points": [],
-          "summary": "Trasa 12,3 km • 3:45 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nozevupuho.png",
-          "elevation_img": "images/nozevupuho_elev.png"
+          "elevation_img": "images/nozevupuho_elev.png",
+          "elevation_ascent": 289,
+          "elevation_descent": 283
         },
         {
           "name": "Perníčky",
@@ -2677,10 +2933,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hotubumasa",
           "embed_src": "https://mapy.com/s/hotubumasa",
           "points": [],
-          "summary": "Trasa 9,3 km • 2:42 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hotubumasa.png",
-          "elevation_img": "images/hotubumasa_elev.png"
+          "elevation_img": "images/hotubumasa_elev.png",
+          "elevation_ascent": 125,
+          "elevation_descent": 122
         },
         {
           "name": "Žďár nad Sázavou",
@@ -2689,10 +2946,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jatufakuha",
           "embed_src": "https://mapy.com/s/jatufakuha",
           "points": [],
-          "summary": "Trasa 79,9 km • 5:35 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jatufakuha.png",
-          "elevation_img": "images/jatufakuha_elev.png"
+          "elevation_img": "images/jatufakuha_elev.png",
+          "elevation_ascent": 739,
+          "elevation_descent": 739
         },
         {
           "name": "Nové Město na Moravě",
@@ -2701,10 +2959,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/burolafeba",
           "embed_src": "https://mapy.com/s/burolafeba",
           "points": [],
-          "summary": "Trasa 48,2 km • 3:41 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/burolafeba.png",
-          "elevation_img": "images/burolafeba_elev.png"
+          "elevation_img": "images/burolafeba_elev.png",
+          "elevation_ascent": 745,
+          "elevation_descent": 740
         },
         {
           "name": "Jimramov",
@@ -2713,10 +2972,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nafulumolo",
           "embed_src": "https://mapy.com/s/nafulumolo",
           "points": [],
-          "summary": "Trasa 47,8 km • 3:38 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nafulumolo.png",
-          "elevation_img": "images/nafulumolo_elev.png"
+          "elevation_img": "images/nafulumolo_elev.png",
+          "elevation_ascent": 732,
+          "elevation_descent": 732
         }
       ],
       "screenshot": "images/fatelafapu.png"
@@ -2733,10 +2993,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cururerolu",
           "embed_src": "https://mapy.com/s/cururerolu",
           "points": [],
-          "summary": "Trasa 50,9 km • 50 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cururerolu.png",
-          "elevation_img": "images/cururerolu_elev.png"
+          "elevation_img": "images/cururerolu_elev.png",
+          "elevation_ascent": 525,
+          "elevation_descent": 382
         },
         {
           "name": "Brno Míša",
@@ -2745,10 +3006,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bucobusero",
           "embed_src": "https://mapy.com/s/bucobusero",
           "points": [],
-          "summary": "Trasa 163,2 km • 1:35 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bucobusero.png",
-          "elevation_img": "images/bucobusero_elev.png"
+          "elevation_img": "images/bucobusero_elev.png",
+          "elevation_ascent": 634,
+          "elevation_descent": 742
         },
         {
           "name": "Černá cesta 119/47",
@@ -2757,9 +3019,10 @@ const DATA = {
           "share_link": "https://mapy.com/s/pehupujela",
           "embed_src": "https://mapy.com/s/pehupujela",
           "points": [],
-          "summary": "Adresa",
           "elevation_text": "",
-          "screenshot": "images/pehupujela.png"
+          "screenshot": "images/pehupujela.png",
+          "elevation_ascent": null,
+          "elevation_descent": null
         },
         {
           "name": "běh Brušperk",
@@ -2768,10 +3031,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kuzufozele",
           "embed_src": "https://mapy.com/s/kuzufozele",
           "points": [],
-          "summary": "Trasa 19,7 km • 5:33 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kuzufozele.png",
-          "elevation_img": "images/kuzufozele_elev.png"
+          "elevation_img": "images/kuzufozele_elev.png",
+          "elevation_ascent": 166,
+          "elevation_descent": 166
         },
         {
           "name": "běh Brušperk 2",
@@ -2780,10 +3044,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fejajebada",
           "embed_src": "https://mapy.com/s/fejajebada",
           "points": [],
-          "summary": "Trasa 20,8 km • 5:43 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fejajebada.png",
-          "elevation_img": "images/fejajebada_elev.png"
+          "elevation_img": "images/fejajebada_elev.png",
+          "elevation_ascent": 167,
+          "elevation_descent": 167
         }
       ],
       "screenshot": "images/fabozaloso.png"
@@ -2800,10 +3065,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gojevesahu",
           "embed_src": "https://mapy.com/s/gojevesahu",
           "points": [],
-          "summary": "Trasa 13,7 km • 5:11 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gojevesahu.png",
-          "elevation_img": "images/gojevesahu_elev.png"
+          "elevation_img": "images/gojevesahu_elev.png",
+          "elevation_ascent": 697,
+          "elevation_descent": 697
         },
         {
           "name": "Javorový",
@@ -2812,10 +3078,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gohaceneje",
           "embed_src": "https://mapy.com/s/gohaceneje",
           "points": [],
-          "summary": "Trasa 13 km • 4:30 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gohaceneje.png",
-          "elevation_img": "images/gohaceneje_elev.png"
+          "elevation_img": "images/gohaceneje_elev.png",
+          "elevation_ascent": 547,
+          "elevation_descent": 547
         },
         {
           "name": "Ostravice-IC-Zbuj-LH",
@@ -2824,10 +3091,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dorojolobe",
           "embed_src": "https://mapy.com/s/dorojolobe",
           "points": [],
-          "summary": "Trasa 7,8 km • 3:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dorojolobe.png",
-          "elevation_img": "images/dorojolobe_elev.png"
+          "elevation_img": "images/dorojolobe_elev.png",
+          "elevation_ascent": 905,
+          "elevation_descent": 0
         },
         {
           "name": "Ostravice-Opicarna-LH",
@@ -2836,10 +3104,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jereparuve",
           "embed_src": "https://mapy.com/s/jereparuve",
           "points": [],
-          "summary": "Trasa 5,7 km • 3:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jereparuve.png",
-          "elevation_img": "images/jereparuve_elev.png"
+          "elevation_img": "images/jereparuve_elev.png",
+          "elevation_ascent": 781,
+          "elevation_descent": 0
         },
         {
           "name": "Malenovice-LH",
@@ -2848,10 +3117,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/bovotukuze",
           "embed_src": "https://mapy.com/s/bovotukuze",
           "points": [],
-          "summary": "Trasa 6,2 km • 3:16 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/bovotukuze.png",
-          "elevation_img": "images/bovotukuze_elev.png"
+          "elevation_img": "images/bovotukuze_elev.png",
+          "elevation_ascent": 842,
+          "elevation_descent": 0
         },
         {
           "name": "Ostravice-Grůň-Ostravice",
@@ -2860,10 +3130,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nunezasanu",
           "embed_src": "https://mapy.com/s/nunezasanu",
           "points": [],
-          "summary": "Trasa 22,6 km • 1:59 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nunezasanu.png",
-          "elevation_img": "images/nunezasanu_elev.png"
+          "elevation_img": "images/nunezasanu_elev.png",
+          "elevation_ascent": 456,
+          "elevation_descent": 454
         },
         {
           "name": "Prašivá-Kotař-Ropička",
@@ -2872,10 +3143,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jegagavujo",
           "embed_src": "https://mapy.com/s/jegagavujo",
           "points": [],
-          "summary": "Trasa 17,6 km • 6:05 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jegagavujo.png",
-          "elevation_img": "images/jegagavujo_elev.png"
+          "elevation_img": "images/jegagavujo_elev.png",
+          "elevation_ascent": 558,
+          "elevation_descent": 558
         },
         {
           "name": "kolem Šance",
@@ -2884,10 +3156,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mujetodada",
           "embed_src": "https://mapy.com/s/mujetodada",
           "points": [],
-          "summary": "Trasa 38,1 km • 2:52 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mujetodada.png",
-          "elevation_img": "images/mujetodada_elev.png"
+          "elevation_img": "images/mujetodada_elev.png",
+          "elevation_ascent": 520,
+          "elevation_descent": 502
         },
         {
           "name": "Trasa z Palkovice 288 do Hraniční 28",
@@ -2896,10 +3169,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jomahocasa",
           "embed_src": "https://mapy.com/s/jomahocasa",
           "points": [],
-          "summary": "Trasa 90,2 km • 6:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jomahocasa.png",
-          "elevation_img": "images/jomahocasa_elev.png"
+          "elevation_img": "images/jomahocasa_elev.png",
+          "elevation_ascent": 1240,
+          "elevation_descent": 1233
         },
         {
           "name": "Malenovice-Lysá hora",
@@ -2908,10 +3182,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pujavaveje",
           "embed_src": "https://mapy.com/s/pujavaveje",
           "points": [],
-          "summary": "Trasa 16,3 km • 2:19 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pujavaveje.png",
-          "elevation_img": "images/pujavaveje_elev.png"
+          "elevation_img": "images/pujavaveje_elev.png",
+          "elevation_ascent": 873,
+          "elevation_descent": 47
         },
         {
           "name": "Ostravice-Martina-Pustevny-Raztoka-Ostravice",
@@ -2920,10 +3195,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cecubekeku",
           "embed_src": "https://mapy.com/s/cecubekeku",
           "points": [],
-          "summary": "Trasa 51,7 km • 4:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cecubekeku.png",
-          "elevation_img": "images/cecubekeku_elev.png"
+          "elevation_img": "images/cecubekeku_elev.png",
+          "elevation_ascent": 1225,
+          "elevation_descent": 1220
         },
         {
           "name": "Kolo Ostravice-Grun-BK-Podolanky-Ostravice",
@@ -2932,10 +3208,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/jegozomoro",
           "embed_src": "https://mapy.com/s/jegozomoro",
           "points": [],
-          "summary": "Trasa 59,2 km • 4:55 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/jegozomoro.png",
-          "elevation_img": "images/jegozomoro_elev.png"
+          "elevation_img": "images/jegozomoro_elev.png",
+          "elevation_ascent": 1132,
+          "elevation_descent": 1131
         }
       ],
       "screenshot": "images/famofepubo.png"
@@ -2952,10 +3229,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/holahemesa",
           "embed_src": "https://mapy.com/s/holahemesa",
           "points": [],
-          "summary": "Trasa 13,5 km • 1:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/holahemesa.png",
-          "elevation_img": "images/holahemesa_elev.png"
+          "elevation_img": "images/holahemesa_elev.png",
+          "elevation_ascent": 261,
+          "elevation_descent": 248
         },
         {
           "name": "Přes Hůrky 1",
@@ -2964,10 +3242,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dahatosofe",
           "embed_src": "https://mapy.com/s/dahatosofe",
           "points": [],
-          "summary": "Trasa 8,5 km • 43 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dahatosofe.png",
-          "elevation_img": "images/dahatosofe_elev.png"
+          "elevation_img": "images/dahatosofe_elev.png",
+          "elevation_ascent": 219,
+          "elevation_descent": 202
         },
         {
           "name": "33-Fryčovice-Kubánkov",
@@ -2976,10 +3255,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/melosopoma",
           "embed_src": "https://mapy.com/s/melosopoma",
           "points": [],
-          "summary": "Trasa 12,3 km • 1:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/melosopoma.png",
-          "elevation_img": "images/melosopoma_elev.png"
+          "elevation_img": "images/melosopoma_elev.png",
+          "elevation_ascent": 367,
+          "elevation_descent": 55
         },
         {
           "name": "Fryčovice-Kubánkov",
@@ -2988,10 +3268,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nodefutaka",
           "embed_src": "https://mapy.com/s/nodefutaka",
           "points": [],
-          "summary": "Trasa 7,4 km • 47 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nodefutaka.png",
-          "elevation_img": "images/nodefutaka_elev.png"
+          "elevation_img": "images/nodefutaka_elev.png",
+          "elevation_ascent": 358,
+          "elevation_descent": 37
         },
         {
           "name": "Fryčovice-Ml.stud.-Hukvaldy-Fryčovice",
@@ -3000,10 +3281,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/fekebacadu",
           "embed_src": "https://mapy.com/s/fekebacadu",
           "points": [],
-          "summary": "Trasa 16,5 km • 1:21 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/fekebacadu.png",
-          "elevation_img": "images/fekebacadu_elev.png"
+          "elevation_img": "images/fekebacadu_elev.png",
+          "elevation_ascent": 363,
+          "elevation_descent": 373
         },
         {
           "name": "Fryčovice-Ml.stud.-Hukvaldy-Fryčovice 2",
@@ -3012,10 +3294,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/rasubameda",
           "embed_src": "https://mapy.com/s/rasubameda",
           "points": [],
-          "summary": "Trasa 20,1 km • 1:44 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/rasubameda.png",
-          "elevation_img": "images/rasubameda_elev.png"
+          "elevation_img": "images/rasubameda_elev.png",
+          "elevation_ascent": 556,
+          "elevation_descent": 556
         },
         {
           "name": "Fryčovice-Ml.stud.",
@@ -3024,10 +3307,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nehejegave",
           "embed_src": "https://mapy.com/s/nehejegave",
           "points": [],
-          "summary": "Trasa 20,9 km • 1:49 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nehejegave.png",
-          "elevation_img": "images/nehejegave_elev.png"
+          "elevation_img": "images/nehejegave_elev.png",
+          "elevation_ascent": 594,
+          "elevation_descent": 593
         },
         {
           "name": "33-Minipivovar",
@@ -3036,10 +3320,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/budakacoco",
           "embed_src": "https://mapy.com/s/budakacoco",
           "points": [],
-          "summary": "Trasa 16,6 km • 1:13 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/budakacoco.png",
-          "elevation_img": "images/budakacoco_elev.png"
+          "elevation_img": "images/budakacoco_elev.png",
+          "elevation_ascent": 244,
+          "elevation_descent": 279
         },
         {
           "name": "33-Rybí",
@@ -3048,10 +3333,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nosobumufa",
           "embed_src": "https://mapy.com/s/nosobumufa",
           "points": [],
-          "summary": "Trasa 13,3 km • 1:02 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nosobumufa.png",
-          "elevation_img": "images/nosobumufa_elev.png"
+          "elevation_img": "images/nosobumufa_elev.png",
+          "elevation_ascent": 242,
+          "elevation_descent": 233
         },
         {
           "name": "33-Košice-Rybí",
@@ -3060,10 +3346,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hehazareno",
           "embed_src": "https://mapy.com/s/hehazareno",
           "points": [],
-          "summary": "Trasa 16,5 km • 1:28 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hehazareno.png",
-          "elevation_img": "images/hehazareno_elev.png"
+          "elevation_img": "images/hehazareno_elev.png",
+          "elevation_ascent": 255,
+          "elevation_descent": 242
         },
         {
           "name": "33-Košice-Rybí-Ml.stud.-33",
@@ -3072,10 +3359,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/penapeluza",
           "embed_src": "https://mapy.com/s/penapeluza",
           "points": [],
-          "summary": "Trasa 33 km • 2:56 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/penapeluza.png",
-          "elevation_img": "images/penapeluza_elev.png"
+          "elevation_img": "images/penapeluza_elev.png",
+          "elevation_ascent": 653,
+          "elevation_descent": 656
         },
         {
           "name": "Hukvaldy-Ml.stud.-Hůrky",
@@ -3084,10 +3372,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gaguzorobo",
           "embed_src": "https://mapy.com/s/gaguzorobo",
           "points": [],
-          "summary": "Trasa 5,6 km • 47 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gaguzorobo.png",
-          "elevation_img": "images/gaguzorobo_elev.png"
+          "elevation_img": "images/gaguzorobo_elev.png",
+          "elevation_ascent": 362,
+          "elevation_descent": 115
         },
         {
           "name": "Fryčovice-Rybí",
@@ -3096,22 +3385,24 @@ const DATA = {
           "share_link": "https://mapy.com/s/hamofulago",
           "embed_src": "https://mapy.com/s/hamofulago",
           "points": [],
-          "summary": "Trasa 8,5 km • 52 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hamofulago.png",
-          "elevation_img": "images/hamofulago_elev.png"
+          "elevation_img": "images/hamofulago_elev.png",
+          "elevation_ascent": 219,
+          "elevation_descent": 202
         },
         {
           "name": "Rybí-Ondřejník",
           "description": "Trasa 11 km • 1:09 h",
           "type": "bike",
-          "share_link": "https://mapy.com/s/gavumufono",
-          "embed_src": "https://mapy.com/s/gavumufono",
+          "share_link": "https://mapy.com/s/cabasevolu",
+          "embed_src": "https://mapy.com/s/cabasevolu",
           "points": [],
-          "summary": "Trasa 11 km • 1:09 h",
           "elevation_text": "Výškový profil",
-          "screenshot": "images/gavumufono.png",
-          "elevation_img": "images/gavumufono_elev.png"
+          "screenshot": "images/cabasevolu.png",
+          "elevation_img": "images/cabasevolu_elev.png",
+          "elevation_ascent": 415,
+          "elevation_descent": 0
         },
         {
           "name": "33-Rybí-Ondřejník",
@@ -3120,10 +3411,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gogemoleta",
           "embed_src": "https://mapy.com/s/gogemoleta",
           "points": [],
-          "summary": "Trasa 24,1 km • 2:06 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gogemoleta.png",
-          "elevation_img": "images/gogemoleta_elev.png"
+          "elevation_img": "images/gogemoleta_elev.png",
+          "elevation_ascent": 628,
+          "elevation_descent": 220
         }
       ],
       "screenshot": "images/jugejoresa.png"
@@ -3140,10 +3432,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/dutuzaseja",
           "embed_src": "https://mapy.com/s/dutuzaseja",
           "points": [],
-          "summary": "Trasa 19,8 km • 6:44 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/dutuzaseja.png",
-          "elevation_img": "images/dutuzaseja_elev.png"
+          "elevation_img": "images/dutuzaseja_elev.png",
+          "elevation_ascent": 727,
+          "elevation_descent": 732
         },
         {
           "name": "Bělá-ŠvýcárnaVidly",
@@ -3152,10 +3445,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lepehenubu",
           "embed_src": "https://mapy.com/s/lepehenubu",
           "points": [],
-          "summary": "Trasa 10,9 km • 4:31 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lepehenubu.png",
-          "elevation_img": "images/lepehenubu_elev.png"
+          "elevation_img": "images/lepehenubu_elev.png",
+          "elevation_ascent": 730,
+          "elevation_descent": 571
         },
         {
           "name": "Červená hora-Keprník-2",
@@ -3164,10 +3458,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/mapunofode",
           "embed_src": "https://mapy.com/s/mapunofode",
           "points": [],
-          "summary": "Trasa 15,7 km • 6:03 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/mapunofode.png",
-          "elevation_img": "images/mapunofode_elev.png"
+          "elevation_img": "images/mapunofode_elev.png",
+          "elevation_ascent": 861,
+          "elevation_descent": 861
         },
         {
           "name": "Červená hora-Keprník",
@@ -3176,10 +3471,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/lesomofase",
           "embed_src": "https://mapy.com/s/lesomofase",
           "points": [],
-          "summary": "Trasa 16,2 km • 6:05 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/lesomofase.png",
-          "elevation_img": "images/lesomofase_elev.png"
+          "elevation_img": "images/lesomofase_elev.png",
+          "elevation_ascent": 822,
+          "elevation_descent": 846
         },
         {
           "name": "Ludvíkov-Filipovice",
@@ -3188,10 +3484,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kodosumate",
           "embed_src": "https://mapy.com/s/kodosumate",
           "points": [],
-          "summary": "Trasa 22,2 km • 26 min",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kodosumate.png",
-          "elevation_img": "images/kodosumate_elev.png"
+          "elevation_img": "images/kodosumate_elev.png",
+          "elevation_ascent": 491,
+          "elevation_descent": 392
         },
         {
           "name": "Zelinkovice-Ludvíkov",
@@ -3200,10 +3497,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gulateraja",
           "embed_src": "https://mapy.com/s/gulateraja",
           "points": [],
-          "summary": "Trasa 114,5 km • 1:47 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gulateraja.png",
-          "elevation_img": "images/gulateraja_elev.png"
+          "elevation_img": "images/gulateraja_elev.png",
+          "elevation_ascent": 806,
+          "elevation_descent": 573
         },
         {
           "name": "Mnichov-Praděd",
@@ -3212,10 +3510,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/kubuzunafo",
           "embed_src": "https://mapy.com/s/kubuzunafo",
           "points": [],
-          "summary": "Trasa 20,9 km • 2:21 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/kubuzunafo.png",
-          "elevation_img": "images/kubuzunafo_elev.png"
+          "elevation_img": "images/kubuzunafo_elev.png",
+          "elevation_ascent": 1012,
+          "elevation_descent": 79
         },
         {
           "name": "Mnichov-Rejvíz",
@@ -3224,10 +3523,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/nepodekoko",
           "embed_src": "https://mapy.com/s/nepodekoko",
           "points": [],
-          "summary": "Trasa 13,6 km • 1:01 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/nepodekoko.png",
-          "elevation_img": "images/nepodekoko_elev.png"
+          "elevation_img": "images/nepodekoko_elev.png",
+          "elevation_ascent": 233,
+          "elevation_descent": 29
         },
         {
           "name": "Trasa Mnichov-Praděd 27.6.2020",
@@ -3236,10 +3536,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/cavepufulo",
           "embed_src": "https://mapy.com/s/cavepufulo",
           "points": [],
-          "summary": "Trasa 62,8 km • 5:21 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/cavepufulo.png",
-          "elevation_img": "images/cavepufulo_elev.png"
+          "elevation_img": "images/cavepufulo_elev.png",
+          "elevation_ascent": 1389,
+          "elevation_descent": 1379
         },
         {
           "name": "Trasa Mnichov-Praděd 2",
@@ -3248,10 +3549,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/pomahokaso",
           "embed_src": "https://mapy.com/s/pomahokaso",
           "points": [],
-          "summary": "Trasa 68,9 km • 5:56 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/pomahokaso.png",
-          "elevation_img": "images/pomahokaso_elev.png"
+          "elevation_img": "images/pomahokaso_elev.png",
+          "elevation_ascent": 1732,
+          "elevation_descent": 1743
         },
         {
           "name": "Trasa Mnichov-Praděd",
@@ -3260,10 +3562,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/poramenava",
           "embed_src": "https://mapy.com/s/poramenava",
           "points": [],
-          "summary": "Trasa 64,2 km • 5:23 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/poramenava.png",
-          "elevation_img": "images/poramenava_elev.png"
+          "elevation_img": "images/poramenava_elev.png",
+          "elevation_ascent": 1489,
+          "elevation_descent": 1500
         },
         {
           "name": "Jeseníky 2",
@@ -3272,10 +3575,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gomazazeca",
           "embed_src": "https://mapy.com/s/gomazazeca",
           "points": [],
-          "summary": "Trasa 47,5 km • 4:09 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gomazazeca.png",
-          "elevation_img": "images/gomazazeca_elev.png"
+          "elevation_img": "images/gomazazeca_elev.png",
+          "elevation_ascent": 1141,
+          "elevation_descent": 1149
         },
         {
           "name": "Jeseníky 3",
@@ -3284,10 +3588,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/hoferotusu",
           "embed_src": "https://mapy.com/s/hoferotusu",
           "points": [],
-          "summary": "Trasa 52 km • 4:29 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/hoferotusu.png",
-          "elevation_img": "images/hoferotusu_elev.png"
+          "elevation_img": "images/hoferotusu_elev.png",
+          "elevation_ascent": 1215,
+          "elevation_descent": 1217
         },
         {
           "name": "Jeseníky 4",
@@ -3296,10 +3601,11 @@ const DATA = {
           "share_link": "https://mapy.com/s/gefefunuto",
           "embed_src": "https://mapy.com/s/gefefunuto",
           "points": [],
-          "summary": "Trasa 54 km • 4:25 h",
           "elevation_text": "Výškový profil",
           "screenshot": "images/gefefunuto.png",
-          "elevation_img": "images/gefefunuto_elev.png"
+          "elevation_img": "images/gefefunuto_elev.png",
+          "elevation_ascent": 1106,
+          "elevation_descent": 1108
         }
       ],
       "screenshot": "images/jumoneveba.png"
